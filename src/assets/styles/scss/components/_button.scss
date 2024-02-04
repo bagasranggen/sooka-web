@@ -1,0 +1,6 @@
+.btn {
+    &--disabled {
+        pointer-events: none;
+        opacity: var(--bs-btn-disabled-opacity);
+    }
+}

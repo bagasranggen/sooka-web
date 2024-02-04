@@ -1,0 +1,37 @@
+// Calculate single column from container
+@function single-col($bp: "xs") {
+    $sc: 0;
+
+    @if ($bp == "xxl") {
+        $sc: 1320px/12;
+    } @else if ($bp == "xl") {
+        $sc: 1140px/12;
+    } @else if ($bp == "lg") {
+        $sc: 920px/12;
+    } @else if ($bp == "md") {
+        $sc: 720px/12;
+    } @else if ($bp == "sm") {
+        $sc: 540px/12;
+    } @else {
+        $sc: 100%/12;
+    }
+
+    @return $sc;
+}
+
+// Update bootstrap spacing value
+@function make-space($space) {
+    $s: ();
+
+    @for $i from 0 through $space {
+        $s: map-merge($s,
+            (
+                $i: (
+                    $spacer * $i,
+                ),
+            )
+        );
+    }
+
+    @return $s;
+}

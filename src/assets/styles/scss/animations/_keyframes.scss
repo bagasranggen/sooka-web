@@ -1,0 +1,41 @@
+@include keyframe(circle) {
+    0% {
+        top: 60px;
+        height: 5px;
+        border-radius: 50px 50px 25px 25px;
+        transform: scaleX(1.7);
+    }
+    40% {
+        height: 20px;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+    100% {
+        top: 0%;
+    }
+}
+
+@include keyframe(shadow) {
+    0% {
+        transform: scaleX(1.5);
+    }
+    40% {
+        transform: scaleX(1);
+        opacity: .7;
+    }
+    100% {
+        transform: scaleX(.2);
+        opacity: .4;
+    }
+}
+
+@keyframes pulse-scale {
+    0% {
+        scale: .85;
+        background-color: var(--pulse-bg-end, inherit);
+    }
+    100% {
+        background-color: var(--pulse-bg-start, inherit);
+        scale: 1;
+    }
+}

@@ -1,0 +1,9 @@
+%pre-fade-in-animation {
+    &:not([style]) {
+        visibility: hidden;
+    }
+}
+
+[data-animation="fade-in"] {
+    @extend %pre-fade-in-animation;
+}

@@ -1,0 +1,58 @@
+// Color
+
+
+// Reset
+$font-size-base: 1.6rem;
+$line-height-base: 1.8;
+//$reset-link-hover-color:
+
+// Typography
+$font-sets: (
+    montserrat: ('Montserrat')
+);
+
+// Spacing
+$spacing: 15;
+$max: 6rem;
+$spacer: 1rem !default;
+$spacers: make-space($spacing);
+
+// Navbar
+$navbar-padding-y: 0;
+
+// Transition Speed
+$transition-speed: .25s;
+
+// Grid Spacing
+$grid-gutter-width: 3rem !default;
+
+// Overlay
+$overlays: 6;
+
+// Preloader
+$preloader-bg: transparentize(#F5F5F5, .35);
+
+// Spinner
+//$spinner-dot-color: $p-dark;
+
+// Input
+$input-bg: transparent;
+$input-border-radius: 0;
+$input-border-color: transparentize(#F5F5F5, .35);
+//$input-focus-border-color: $p-dark;
+
+// Input Validation
+//$form-feedback-font-size: 12px;
+//$form-feedback-font-style:          $form-text-font-style;
+//$form-feedback-valid-color:         $success;
+//$form-feedback-invalid-color:       $danger;
+
+// Floating Input
+$form-floating-height: 5rem;
+$form-floating-padding-x: 0;
+$form-floating-padding-y: .5rem;
+$form-floating-input-padding-t: 2rem;
+$form-floating-input-padding-b: .5rem;
+$form-floating-label-transform: scale(.5) translateY(-.85rem) translateX(.15rem);
+$form-floating-transition-timing: .15s;
+$form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
