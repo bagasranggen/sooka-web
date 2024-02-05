@@ -1,7 +1,11 @@
+import React from "react";
 import type { Metadata } from "next";
+
+import "@fontsource/mulish";
 
 import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
+
 import Navigation from "@/components/layout/navigation/Navigation";
 
 export const metadata: Metadata = {

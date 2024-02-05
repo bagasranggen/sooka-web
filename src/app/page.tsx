@@ -1,11 +1,5 @@
-import { Container } from "react-bootstrap";
+import HomepageIndex from "@/components/page/homepage/HomepageIndex";
 
-export default function Home() {
-    return (
-        <>
-            <Container>
-                <h1>HELLO WORLD</h1>
-            </Container>
-        </>
-    );
-}
+const Home = () => <HomepageIndex />;
+
+export default Home;
