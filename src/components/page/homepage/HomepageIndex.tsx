@@ -8,7 +8,7 @@ export type HomepageIndexProps = {};
 const HomepageIndex = ({}: HomepageIndexProps): React.ReactElement => {
     return <>
         <Slider
-            variant="imgage"
+            variant="image"
             items={BANNER_CAROUSELS} />
     </>;
 };

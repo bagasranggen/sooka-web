@@ -1,7 +1,7 @@
 import SliderImage from "@/components/common/slider/sliderImage/SliderImage";
 
 export const SLIDER_VARIANTS = {
-    IMAGE: 'imgage'
+    IMAGE: 'image'
 } as const;
 
 export const SLIDER_HANDLES = {
