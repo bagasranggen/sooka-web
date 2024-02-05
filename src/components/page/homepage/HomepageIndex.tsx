@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Slider from "@/components/common/slider/Slider";
-import { BANNER_CAROUSELS } from "@/libs/mock";
+import Slider from '@/components/common/slider/Slider';
+import { BANNER_CAROUSELS } from '@/libs/mock';
 
 export type HomepageIndexProps = {};
 

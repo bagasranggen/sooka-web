@@ -1,19 +1,20 @@
 'use client';
 
 import React from 'react';
-import { SLIDER_VARIANTS } from "@/libs/handles";
-import type { LinkProps } from "@/libs/@types";
-import { getImageProps, ImageProps } from "next/image";
+import { SLIDER_VARIANTS } from '@/libs/handles';
+import type { LinkProps } from '@/libs/@types';
+import { getBackgroundImage } from '@/libs/utils';
+import { getImageProps, ImageProps } from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { getBackgroundImage } from "@/libs/utils";
+import Link from 'next/link';
 
 export type SliderImageItemProps = {
     link: LinkProps;
-    image: ImageProps;
+    image: ImageProps[];
 }
 
 export type SliderImageProps = {
@@ -29,21 +30,31 @@ const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
             delay: 2500,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
-        }}>
+        }}
+        speed={900}
+        className="slider-image">
         {items.map((item: SliderImageItemProps, i: number) => {
-            const { props: { srcSet } } = getImageProps(item.image);
-            const backgroundImage = getBackgroundImage(srcSet);
+            const ConditionalLink: any = item?.link?.href ? Link : React.Fragment;
+            const conditionProps = item?.link?.href ? {
+                ...item?.link,
+                className: 'slider-image__item',
+            } : {};
 
-            console.log(backgroundImage);
+            const { props: { srcSet: srcMobile } } = getImageProps(item.image[0]);
+            const { props: { srcSet: srcDesktop } } = getImageProps(item.image[1]);
+            const backgroundImageMobile = getBackgroundImage(srcMobile);
+            const backgroundImageDesktop = getBackgroundImage(srcDesktop);
+            const style = {
+                '--background-sm': backgroundImageMobile,
+                '--background-lg': backgroundImageDesktop,
+            } as React.CSSProperties;
 
             return <SwiperSlide
                 key={i}
-                style={{
-                    height: '100vh',
-                    backgroundImage,
-                    backgroundSize: "cover",
-                    backgroundPosition: 'center center'
-                }}>Slide {i + 1}</SwiperSlide>;
+                className="oly--20"
+                style={style}>
+                <ConditionalLink {...conditionProps} />
+            </SwiperSlide>;
         })}
     </Swiper>
 );

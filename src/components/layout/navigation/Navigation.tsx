@@ -1,19 +1,20 @@
 'use client';
 
 import React from 'react';
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 export type NavigationProps = {};
 
 const Navigation = ({}: NavigationProps): React.ReactElement => (
     <Navbar
         expand="lg"
-        className="bg-body-tertiary">
+        fixed="top"
+        bg="transparent">
         <Container>
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href="#home">SOOKA</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
+                <Nav className="ms-auto">
                     <Nav.Link href="#home">Home</Nav.Link>
                     <Nav.Link href="#link">Link</Nav.Link>
                     <NavDropdown

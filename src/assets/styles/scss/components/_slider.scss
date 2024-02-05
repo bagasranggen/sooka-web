@@ -1,0 +1,39 @@
+.slider {
+    &-image {
+        --swiper-navigation-color: #{$white};
+        --swiper-navigation-sides-offset: 30px;
+        --swiper-wrapper-transition-timing-function: cubic-bezier(.66, .19, .63, .68);
+
+        .swiper {
+            &-slide {
+                height: 100vh;
+                background-size: cover;
+                background-position: center;
+                background-image: var(--background-sm);
+
+                @include media-breakpoint-up(lg) {
+                    background-image: var(--background-lg);
+                }
+            }
+
+            &-button {
+                &-prev,
+                &-next {
+                    @include media-breakpoint-up(lg) {
+                        @include hover() {
+                            transform: scale(1.2);
+                        }
+
+                        @include make-transition(transform);
+                    }
+                }
+            }
+        }
+
+        &__item {
+            @extend %d-block;
+
+            height: 100%;
+        }
+    }
+}

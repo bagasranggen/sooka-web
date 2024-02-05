@@ -1,14 +1,30 @@
 import { faker } from '@faker-js/faker';
-import { SliderImageItemProps } from "@/components/common/slider/sliderImage/SliderImage";
+import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
+import { createMockData } from '@/libs/factory';
 
-export const BANNER_CAROUSELS: SliderImageItemProps[] = Array(5).fill(0).map((_: any, i: number) => ({
-    image: {
-        src: faker.image.urlPicsumPhotos({ width: 1920, height: 1080 }),
-        width: 1920,
-        height: 1080,
-        alt: '',
+const BANNER_IMAGE_SIZE = [
+    {
+        width: 1200,
+        height: 900,
     },
-    link: {
-        href: '/'
+    {
+        width: 2560,
+        height: 1080,
     }
-}));
+];
+
+export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_: any, i: number) => {
+    const image = faker.image.urlPicsumPhotos();
+
+    return {
+        image: BANNER_IMAGE_SIZE.map((size: { width: number; height: number }) => ({
+            src: image.replace('640', size.width.toString()).replace('480', size.height.toString()),
+            width: size.width,
+            height: size.height,
+            alt: '',
+        })),
+        link: {
+            href: '/',
+        }
+    };
+});
