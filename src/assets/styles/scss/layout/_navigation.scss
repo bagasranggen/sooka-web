@@ -1,10 +1,62 @@
+%navigation-link {
+    text-transform: uppercase;
+    letter-spacing: .2rem;
+}
+
+%navbar-active {
+    --bs-primary-rgb: #{$sooka-primary-rgb};
+    --bs-navbar-active-color: #{$sooka-dark};
+    --bs-navbar-hover-color: #{$sooka-dark};
+}
+
 .navbar {
     --bs-navbar-nav-link-padding-x: #{$navbar-link-padding-x};
 
+    @include media-breakpoint-down(lg) {
+        @include make-transition(background-color, .3s);
+    }
+
+    &-brand {
+        max-width: 10rem;
+
+        @include media-breakpoint-down(lg) {
+            svg path {
+                @include make-transition(fill, .3s);
+            }
+        }
+
+        @include media-breakpoint-up(lg) {
+            max-width: 15rem;
+        }
+    }
+
     .nav {
         &-link {
-            text-transform: uppercase;
-            letter-spacing: .2rem;
+            @extend %navigation-link;
+        }
+    }
+
+    &:not([class*='--open']) {
+        @include media-breakpoint-down(lg) {
+            @include make-transition(background-color, .3s, .15s);
+
+            .navbar {
+                &-brand {
+                    svg path {
+                        @include make-transition(fill, .3s, .15s);
+                    }
+                }
+            }
+        }
+    }
+
+    &--open {
+        @extend %navbar-active;
+    }
+
+    &.bg {
+        &-primary {
+            @extend %navbar-active;
         }
     }
 }

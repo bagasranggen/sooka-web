@@ -1,0 +1,24 @@
+.offcanvas {
+    &--navigation {
+        --bs-offcanvas-width: 22.5rem;
+        --bs-offcanvas-padding-x: calc(#{$grid-gutter-width} * 0.5);
+        --bs-offcanvas-padding-y: #{$grid-gutter-width};
+        --bs-offcanvas-bg: #{$sooka-primary};
+        --bs-offcanvas-color: #{$sooka-light};
+
+        .list-unstyled {
+            li {
+                &:not(:first-child) {
+                    margin-top: 1.5rem;
+                }
+            }
+
+            a {
+                @extend %navigation-link;
+
+                color: $sooka-light;
+                font-weight: 600;
+            }
+        }
+    }
+}

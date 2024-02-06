@@ -6,10 +6,14 @@ import { usePathname } from 'next/navigation';
 
 import type { NavigationItemProps } from '@/libs/@types';
 import { NAVIGATION, NAVIGATION_TRANSPARENT } from '@/libs/mock';
-import { getActivePath } from '@/libs/utils';
+import { getActivePath, NavigationEvents } from '@/libs/utils';
 
-import { Container, Nav, Navbar, NavDropdown, Offcanvas } from 'react-bootstrap';
+import { useMeasure } from "react-use";
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+
 import Button from '@/components/common/button/Button';
+import Offcanvas from "@/components/layout/offcanvas/Offcanvas";
+import Icon from "@/components/common/icon/Icon";
 
 export type NavigationProps = {};
 
@@ -19,17 +23,33 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
     const isTransparent = NAVIGATION_TRANSPARENT.includes(active);
 
     const [ show, setShow ] = useState<boolean>(false);
+    const [ navRef, { height, y, bottom } ] = useMeasure();
+    const navbarHeight = height + (y * 2);
 
     return <>
+        <NavigationEvents endHandler={() => setShow(false)} />
 
         <Navbar
+            className={show ? 'navbar--open' : ''}
+            ref={navRef as unknown as React.RefObject<HTMLElement>}
             expand="lg"
-            {...isTransparent && { fixed: 'top' }}
-            data-bs-theme={isTransparent ? 'light' : 'dark'}
-            bg="transparent">
+            {...{ [isTransparent ? 'fixed' : 'sticky']: 'top' }}
+            data-bs-theme="light"
+            bg={(isTransparent && !show) ? 'transparent' : 'primary'}>
             <Container>
-                <Navbar.Brand as={Link} href="/">SOOKA</Navbar.Brand>
-                <Button variant="nav-toggle" className="d-lg-none" isOpen={show} event={{ onClick: () => setShow(!show) }} />
+                <Navbar.Brand
+                    as={Link}
+                    href="/">
+                    <Icon
+                        variant="sooka"
+                        color={(isTransparent && !show) ? "primary" : 'light'} />
+                </Navbar.Brand>
+                <Button
+                    variant="nav-toggle"
+                    color="light"
+                    className="d-lg-none"
+                    isOpen={show}
+                    event={{ onClick: () => setShow(!show) }} />
                 {/*<Navbar.Toggle*/}
                 {/*    onClick={() => {*/}
                 {/*        console.log('click');*/}
@@ -37,7 +57,11 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
                 <Navbar.Collapse>
                     <Nav className="ms-auto">
                         {NAVIGATION.map((nav: NavigationItemProps, i: number) => {
-                            return <Nav.Link key={i} as={Link} href={nav.href as string} active={nav.href === active}>{nav.label}</Nav.Link>;
+                            return <Nav.Link
+                                key={i}
+                                as={Link}
+                                href={nav.href as string}
+                                active={nav.href === active}>{nav.label}</Nav.Link>;
                         })}
                         {/*<NavDropdown
                         title="Dropdown"
@@ -57,17 +81,11 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
             </Container>
         </Navbar>
 
-        <Offcanvas show={show} backdrop={false} onHide={() => setShow(!show)} style={{ top: '88px' }}>
-            <Offcanvas.Body>
-                <ul className="list-unstyled">
-                    {NAVIGATION.map((nav: NavigationItemProps, i: number) => {
-                        return <li key={i}>
-                            <Link href={nav.href as string}>{nav.label}</Link>
-                        </li>;
-                    })}
-                </ul>
-            </Offcanvas.Body>
-        </Offcanvas>
+        <Offcanvas
+            variant="navigation"
+            items={NAVIGATION}
+            state={{ show, setShow }}
+            option={{ style: { top: navbarHeight } }} />
     </>;
 };
 

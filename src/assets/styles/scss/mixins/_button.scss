@@ -1,3 +1,93 @@
 @mixin btn-nav-toggle() {
-    
+    --btn-width: 2.5rem;
+    --btn-height: 2.5rem;
+    --btn-icon-height: .2rem;
+    --btn-transform-scale-x: 1.4;
+
+    @extend %position-relative, %d-flex;
+
+    width: var(--btn-width);
+    height: var(--btn-height);
+
+    .btn {
+        &__icon {
+            @extend %d-block, %position-absolute;
+
+            top: 50%;
+            width: 50%;
+            height: var(--btn-icon-height);
+            background-color: var(--btn-icon-color);
+            transform: translateY(-50%);
+
+            @include make-transition(background-color, .25s);
+
+            &:before,
+            &:after {
+                @extend %d-block, %position-absolute;
+
+                content: '';
+                left: 0;
+                width: 100%;
+                height: var(--btn-icon-height);
+                background-color: var(--btn-icon-color);
+
+                @include make-transition(transform margin, .25s)
+            }
+
+            &:before {
+                margin-top: .4rem;
+                top: calc((var(--btn-height) / -2) - (var(--btn-icon-height) / -2));
+            }
+
+            &:after {
+                margin-top: -.4rem;
+                top: calc((var(--btn-height) / 2) - (var(--btn-icon-height) / 2));
+            }
+
+            &--left {
+                left: 0;
+            }
+
+            &--right {
+                right: 0;
+            }
+        }
+    }
+
+    &.btn--open {
+        .btn {
+            &__icon {
+                background-color: transparent;
+
+                &:before,
+                &:after {
+                    margin-top: 0;
+                }
+
+                &--left {
+                    &:before {
+                        transform: rotateZ(45deg) scaleX(var(--btn-transform-scale-x)) translate(4px, 4px);
+                    }
+
+                    &:after {
+                        transform: rotateZ(-45deg) scaleX(var(--btn-transform-scale-x)) translate(4px, -4px);
+                    }
+                }
+
+                &--right {
+                    &:before {
+                        transform: rotateZ(-45deg) scaleX(var(--btn-transform-scale-x)) translate(-4px, 4px);
+                    }
+
+                    &:after {
+                        transform: rotateZ(45deg) scaleX(var(--btn-transform-scale-x)) translate(-4px, -4px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@mixin btn-nav-toggle-color($color) {
+    --btn-icon-color: #{$color};
 }
