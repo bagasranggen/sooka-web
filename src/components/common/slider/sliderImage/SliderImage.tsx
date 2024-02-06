@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+
 import { SLIDER_VARIANTS } from '@/libs/handles';
 import type { LinkProps } from '@/libs/@types';
 import { getBackgroundImage } from '@/libs/utils';
@@ -10,7 +12,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import Link from 'next/link';
 
 export type SliderImageItemProps = {
     link: LinkProps;
