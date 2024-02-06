@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { LinkProps as NextLinkProps } from "next/link";
+import { LinkProps as NextLinkProps } from 'next/link';
 import type { NumericRange, CreateArrayWithLengthX } from '@/libs/@types';
 
-export type NavigationItemProps = { url: string, label: string };
+export type NavigationItemProps = NextLinkProps & { label: string };
+export type NavigationProps = NavigationItemProps[];
 export type LinkProps = NextLinkProps & { openNewTab?: boolean }
 export type ScreenProps = { width: number; height: number; orientation: 'landscape' | 'portrait'; };
 export type BreakpointsProps = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
