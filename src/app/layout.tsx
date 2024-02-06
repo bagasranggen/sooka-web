@@ -8,6 +8,7 @@ import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
 
 import Navigation from '@/components/layout/navigation/Navigation';
+import Footer from "@/components/layout/footer/Footer";
 
 export const metadata: Metadata = {
     title: {
@@ -21,8 +22,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
         <body>
-            <Navigation />
-            {children}
+        <Navigation />
+        {children}
+        <Footer />
         </body>
         </html>
     );

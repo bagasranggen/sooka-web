@@ -13,6 +13,8 @@
     --bs-navbar-nav-link-padding-x: #{$navbar-link-padding-x};
 
     @include media-breakpoint-down(lg) {
+        --bs-navbar-padding-y: 1.5rem;
+        
         @include make-transition(background-color, .3s);
     }
 

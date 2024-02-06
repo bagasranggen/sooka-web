@@ -1,0 +1,12 @@
+.footer {
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+    background-color: $sooka-primary;
+    color: $sooka-light;
+
+    &__logo {
+        @extend %mx-auto;
+
+        max-width: 25rem;
+    }
+}

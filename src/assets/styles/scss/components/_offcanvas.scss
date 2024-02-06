@@ -1,6 +1,6 @@
 .offcanvas {
     &--navigation {
-        --bs-offcanvas-width: 22.5rem;
+        --bs-offcanvas-width: 12.5rem;
         --bs-offcanvas-padding-x: calc(#{$grid-gutter-width} * 0.5);
         --bs-offcanvas-padding-y: #{$grid-gutter-width};
         --bs-offcanvas-bg: #{$sooka-primary};
@@ -9,7 +9,7 @@
         .list-unstyled {
             li {
                 &:not(:first-child) {
-                    margin-top: 1.5rem;
+                    margin-top: 2rem;
                 }
             }
 
