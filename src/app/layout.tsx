@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import type { Metadata } from 'next';
 
 import '@fontsource/mulish';
@@ -10,6 +10,7 @@ import '../assets/styles/scss/main.scss';
 import { Providers, reduxStore } from '@/store/redux';
 import Navigation from '@/components/layout/navigation/Navigation';
 import Footer from '@/components/layout/footer/Footer';
+import MainLayout from '@/components/layout/mainLayout/MainLayout';
 
 export const metadata: Metadata = {
     title: {
@@ -29,9 +30,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {...layout.height && { style: layout.height } as React.HTMLAttributes<HTMLElement>}>
             <Providers>
                 <Navigation />
-                <main>
-                    {children}
-                </main>
+                <Suspense fallback={null}>
+                    <MainLayout>{children}</MainLayout>
+                </Suspense>
                 <Footer />
             </Providers>
         </body>
