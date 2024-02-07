@@ -2,14 +2,17 @@
     &--navigation {
         --bs-offcanvas-width: 12.5rem;
         --bs-offcanvas-padding-x: calc(#{$grid-gutter-width} * 0.5);
-        --bs-offcanvas-padding-y: #{$grid-gutter-width};
+        --bs-offcanvas-padding-y: calc(#{$grid-gutter-width} * 0.5);
         --bs-offcanvas-bg: #{$sooka-primary};
         --bs-offcanvas-color: #{$sooka-light};
+        --bs-offcanvas-border-width: 0;
+
+        top: var(--navigation-height, 0) !important;
 
         .list-unstyled {
             li {
                 &:not(:first-child) {
-                    margin-top: 2rem;
+                    margin-top: 1rem;
                 }
             }
 

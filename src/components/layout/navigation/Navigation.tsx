@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -8,26 +8,33 @@ import type { NavigationItemProps } from '@/libs/@types';
 import { NAVIGATION, NAVIGATION_TRANSPARENT } from '@/libs/mock';
 import { getActivePath, NavigationEvents } from '@/libs/utils';
 
-import { useMeasure } from "react-use";
+import { useMeasure } from 'react-use';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 import Button from '@/components/common/button/Button';
-import Offcanvas from "@/components/layout/offcanvas/Offcanvas";
-import Icon from "@/components/common/icon/Icon";
+import Offcanvas from '@/components/layout/offcanvas/Offcanvas';
+import Icon from '@/components/common/icon/Icon';
+import { layoutSlice, useDispatch } from '@/store/redux';
 
 export type NavigationProps = {};
 
 const Navigation = ({}: NavigationProps): React.ReactElement => {
+    const dispatch = useDispatch();
     const pathname = usePathname();
     const active = getActivePath(pathname);
     const isTransparent = NAVIGATION_TRANSPARENT.includes(active);
 
     const [ show, setShow ] = useState<boolean>(false);
-    const [ navRef, { height, y, bottom } ] = useMeasure();
+    const [ navRef, { height, y } ] = useMeasure();
     const navbarHeight = height + (y * 2);
 
+    dispatch(layoutSlice.actions.layoutHeight({ '--navigation-height': `${navbarHeight}px` }));
+
     return <>
-        <NavigationEvents endHandler={() => setShow(false)} />
+        <Suspense
+            fallback={null}>
+            <NavigationEvents endHandler={() => setShow(false)} />
+        </Suspense>
 
         <Navbar
             className={show ? 'navbar--open' : ''}
@@ -42,7 +49,7 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
                     href="/">
                     <Icon
                         variant="sooka"
-                        color={(isTransparent && !show) ? "primary" : 'light'} />
+                        color={(isTransparent && !show) ? 'primary' : 'light'} />
                 </Navbar.Brand>
                 <Button
                     variant="nav-toggle"
@@ -84,8 +91,7 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
         <Offcanvas
             variant="navigation"
             items={NAVIGATION}
-            state={{ show, setShow }}
-            option={{ style: { top: navbarHeight } }} />
+            state={{ show, setShow }} />
     </>;
 };
 

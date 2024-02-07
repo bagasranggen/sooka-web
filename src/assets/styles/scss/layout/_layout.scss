@@ -1,0 +1,17 @@
+nav.navbar {
+    ~ main {
+        --footer-spacing: 15rem;
+    }
+
+    &.fixed-top {
+        ~ main {
+            min-height: calc(100vh - (var(--footer-height, 0) + var(--footer-spacing)));
+        }
+    }
+
+    &.sticky-top {
+        ~ main {
+            min-height: calc(100vh - (var(--navigation-height, 0) + var(--footer-height, 0) + var(--footer-spacing)));
+        }
+    }
+}

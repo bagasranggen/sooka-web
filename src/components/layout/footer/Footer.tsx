@@ -1,11 +1,24 @@
+'use client';
+
 import React from 'react';
-import { Col, Container, Row } from "react-bootstrap";
-import Icon from "@/components/common/icon/Icon";
+
+import { layoutSlice, useDispatch } from '@/store/redux';
+
+import { Col, Container, Row } from 'react-bootstrap';
+import { useMeasure } from 'react-use';
+
+import Icon from '@/components/common/icon/Icon';
 
 export type FooterProps = {};
 
-const Footer = ({}: FooterProps): React.ReactElement => (
-    <footer className="mt-15 footer">
+const Footer = ({}: FooterProps): React.ReactElement => {
+    const dispatch = useDispatch();
+    const [ footerRef, { height, top } ] = useMeasure();
+    const footerHeight = height + top + 40;
+
+    dispatch(layoutSlice.actions.layoutHeight({ '--footer-height': `${footerHeight}px` }));
+
+    return <footer ref={footerRef as unknown as React.RefObject<HTMLElement>} className="mt-15 footer">
         <Container>
             <Row className="justify-content-center">
                 <Col lg={10}>
@@ -30,7 +43,7 @@ const Footer = ({}: FooterProps): React.ReactElement => (
                 </Col>
             </Row>
         </Container>
-    </footer>
-);
+    </footer>;
+};
 
 export default Footer;
