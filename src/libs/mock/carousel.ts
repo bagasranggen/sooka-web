@@ -14,6 +14,7 @@ const BANNER_IMAGE_SIZE = [
 ];
 
 export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_: any, i: number) => {
+    const alt = faker.commerce.productAdjective();
     const image = faker.image.urlLoremFlickr({ category: 'food' });
 
     return {
@@ -21,7 +22,7 @@ export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_
             src: image.replace('640', size.width.toString()).replace('480', size.height.toString()),
             width: size.width,
             height: size.height,
-            alt: '',
+            alt,
         })),
         link: {
             href: '/',
