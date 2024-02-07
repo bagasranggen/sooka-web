@@ -6,13 +6,14 @@
 
         .swiper {
             &-slide {
-                height: 100vh;
+                height: 60vh;
                 background-size: cover;
                 background-position: center;
                 background-image: var(--background-sm);
 
                 @include media-breakpoint-up(lg) {
                     background-image: var(--background-lg);
+                    height: 100vh;
                 }
             }
 
