@@ -7,8 +7,9 @@ import '@fontsource/mulish/600.css';
 import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
 
+import { Providers, reduxStore } from '@/store/redux';
 import Navigation from '@/components/layout/navigation/Navigation';
-import Footer from "@/components/layout/footer/Footer";
+import Footer from '@/components/layout/footer/Footer';
 
 export const metadata: Metadata = {
     title: {
@@ -19,12 +20,20 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+    const { layout } = reduxStore.getState();
+
     return (
         <html lang="en">
-        <body>
-        <Navigation />
-        {children}
-        <Footer />
+        <body
+            suppressHydrationWarning={true}
+            {...layout.height && { style: layout.height } as React.HTMLAttributes<HTMLElement>}>
+            <Providers>
+                <Navigation />
+                <main>
+                    {children}
+                </main>
+                <Footer />
+            </Providers>
         </body>
         </html>
     );
