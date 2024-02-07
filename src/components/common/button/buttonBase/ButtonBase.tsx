@@ -31,7 +31,7 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
             return <button {...rest} onClick={event?.onClick}>{props.children}</button>;
 
         case 'anchor':
-            return <Link {...props}>{props.children}</Link>;
+            return <Link {...props} >{props.children}</Link>;
     }
 };
 

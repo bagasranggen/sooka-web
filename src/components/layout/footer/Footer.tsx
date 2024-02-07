@@ -18,7 +18,7 @@ const Footer = ({}: FooterProps): React.ReactElement => {
 
     dispatch(layoutSlice.actions.layoutHeight({ '--footer-height': `${footerHeight}px` }));
 
-    return <footer ref={footerRef as unknown as React.RefObject<HTMLElement>} className="mt-15 footer">
+    return <footer ref={footerRef as unknown as React.RefObject<HTMLElement>} className="mt-10 footer">
         <Container>
             <Row className="justify-content-center">
                 <Col lg={10}>

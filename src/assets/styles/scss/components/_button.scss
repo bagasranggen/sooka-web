@@ -26,4 +26,12 @@
             }
         }
     }
+
+    &--ripple {
+        @include btn-ripple();
+
+        &.btn--light {
+            @include btn-ripple-color(transparent, $sooka-primary, $sooka-dark, $sooka-light, $sooka-dark, $sooka-primary);
+        }
+    }
 }

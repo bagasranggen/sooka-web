@@ -1,7 +1,8 @@
 import React from 'react';
-import { OffcanvasNavigationProps } from "@/components/layout/offcanvas/offcanvasNavigation/OffcanvasNavigation";
-import { createDynamicElement } from "@/libs/factory";
-import { OFFCANVAS_HANDLES } from "@/libs/handles/offcanvas";
+
+import { createDynamicElement } from '@/libs/factory';
+import { OFFCANVAS_HANDLES } from '@/libs/handles/';
+import type { OffcanvasNavigationProps } from '@/components/layout/offcanvas/offcanvasNavigation/OffcanvasNavigation';
 
 export type OffcanvasProps = OffcanvasNavigationProps;
 
