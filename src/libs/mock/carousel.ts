@@ -14,7 +14,7 @@ const BANNER_IMAGE_SIZE = [
 ];
 
 export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_: any, i: number) => {
-    const image = faker.image.urlPicsumPhotos();
+    const image = faker.image.urlLoremFlickr({ category: 'food' });
 
     return {
         image: BANNER_IMAGE_SIZE.map((size: { width: number; height: number }) => ({
