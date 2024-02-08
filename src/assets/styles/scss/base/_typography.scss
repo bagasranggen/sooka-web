@@ -1,4 +1,6 @@
 @include make-font-families();
+@include make-font-sizes();
+@include make-font-weights();
 
 %base-heading {
     font-weight: 800;

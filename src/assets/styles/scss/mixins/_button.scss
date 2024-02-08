@@ -95,17 +95,11 @@
 @mixin btn-ripple() {
     --bs-btn-padding-x: 2rem;
 
-    --btn-ripple-bg: #{$sooka-dark};
-    --btn-ripple-bg-hover: #{$sooka-primary};
-    --btn-ripple-color: #{$sooka-light};
-    --btn-ripple-color-hover: #{$sooka-dark};
-    --btn-ripple-border-color: #{$sooka-dark};
-    --btn-ripple-border-color-hover: #{$sooka-primary};
-
     @extend %position-relative, %overflow-hidden;
 
     color: var(--btn-ripple-color);
     font-weight: 600;
+    letter-spacing: .15rem;
     border-radius: 0;
     border: solid 1px var(--btn-ripple-border-color);
     background-color: var(--btn-ripple-bg);
@@ -146,6 +140,11 @@
             pointer-events: none;
         }
     }
+}
+
+@mixin btn-ripple-size($fs, $py) {
+    --bs-btn-font-size: #{$fs};
+    --bs-btn-padding-y: #{$py};
 }
 
 @mixin btn-ripple-color($bg, $bg-hover, $color, $color-hover, $border-color,$border-color-hover) {

@@ -3,7 +3,9 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import Button from '@/components/common/button/Button';
 import Picture from '@/components/common/picture/Picture';
-import { BANNER_CAROUSELS } from '@/libs/mock';
+import { BANNER_CAROUSELS, PRODUCT_CATEGORY, PRODUCT_LISTING } from '@/libs/mock';
+import Card from "@/components/common/card/Card";
+import Filter from "@/components/common/filter/Filter";
 
 export type AboutIndexProps = {};
 
@@ -15,12 +17,12 @@ const AboutIndex = ({}: AboutIndexProps): React.ReactElement => {
 
     return <>
         <Container className="mt-10">
-            <Button
-                type="anchor"
-                variant="ripple"
-                color="light"
-                href="/">TEST</Button>
-            <Picture items={BANNER_CAROUSELS[0].image} />
+            <Filter
+                variant="product"
+                items={PRODUCT_CATEGORY} />
+            <Card
+                variant="image"
+                items={PRODUCT_LISTING} />
         </Container>
     </>;
 };

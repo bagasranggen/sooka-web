@@ -442,7 +442,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.9.2":
+"@popperjs/core@npm:^2.11.6, @popperjs/core@npm:^2.11.8, @popperjs/core@npm:^2.9.2":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: 4681e682abc006d25eb380d0cf3efc7557043f53b6aea7a5057d0d1e7df849a00e281cd8ea79c902a35a414d7919621fc2ba293ecec05f413598e0b23d5a1e63
@@ -3908,6 +3908,7 @@ __metadata:
   dependencies:
     "@faker-js/faker": "npm:^8.4.0"
     "@fontsource/mulish": "npm:^5.0.16"
+    "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.1.0"
     "@types/bootstrap": "npm:^5"
     "@types/node": "npm:^20"

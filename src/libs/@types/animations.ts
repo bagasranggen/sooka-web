@@ -11,9 +11,14 @@ export type AnimationTypeProps = typeof COMMON_ANIMATIONS.TYPE[keyof typeof COMM
 export type AnimationButtonProps = typeof COMMON_ANIMATIONS.BUTTON[keyof typeof COMMON_ANIMATIONS.BUTTON];
 
 export type AnimationProps = {
-    type: AnimationTypeProps | AnimationButtonProps;
+    type: Exclude<AnimationTypeProps, typeof COMMON_ANIMATIONS.TYPE['IMAGE_ZOOM']> | AnimationButtonProps;
     delay?: number;
 }
+
+export type ImageZoomAnimationProps = {
+    type: typeof COMMON_ANIMATIONS.TYPE['IMAGE_ZOOM'];
+};
+
 //
 // export type BlendingAnimationColorProps = typeof COMMON_COLOR[keyof typeof COMMON_COLOR];
 //

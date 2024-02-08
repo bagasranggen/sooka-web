@@ -64,3 +64,14 @@ $form-floating-input-padding-b: .5rem;
 $form-floating-label-transform: scale(.5) translateY(-.85rem) translateX(.15rem);
 $form-floating-transition-timing: .15s;
 $form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
+
+// Font Sizes
+$font-sizes-set: (
+    10: 1rem,
+    12: 1.2rem,
+    14: 1.4rem,
+    28: 2.8rem,
+);
+
+// Font Weight
+$font-weights-set: 100, 200, 400, 700;

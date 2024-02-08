@@ -6,7 +6,8 @@ import { createAnimationHandles } from '@/libs/factory/createAnimationHandles';
 
 export const COMMON_ANIMATIONS = {
     TYPE: {
-        FADE_IN: 'fade-in'
+        FADE_IN: 'fade-in',
+        IMAGE_ZOOM: 'image-zoom',
     } as const,
     BUTTON: {
         RIPPLE: 'ripple',

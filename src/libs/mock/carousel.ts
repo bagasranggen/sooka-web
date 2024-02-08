@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
 import { createMockData } from '@/libs/factory';
+import { resizeFakerImage } from '@/libs/utils';
 
 const BANNER_IMAGE_SIZE = [
     {
@@ -19,7 +20,7 @@ export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_
 
     return {
         image: BANNER_IMAGE_SIZE.map((size: { width: number; height: number }) => ({
-            src: image.replace('640', size.width.toString()).replace('480', size.height.toString()),
+            src: resizeFakerImage(image, size.width, size.height),
             width: size.width,
             height: size.height,
             alt,

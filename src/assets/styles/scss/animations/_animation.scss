@@ -7,3 +7,20 @@
 [data-animation="fade-in"] {
     @extend %pre-fade-in-animation;
 }
+
+picture[data-animation='image-zoom'] {
+    @include media-breakpoint-up(lg) {
+        position: relative;
+        overflow: hidden;
+
+        img {
+            @include make-transition(transform, .2s);
+        }
+
+        @include hover() {
+            img {
+                transform: scale(1.2);
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+.card {
+    &--image {
+        --bs-card-border-width: 0;
+        --bs-card-caption-padding-x: 3rem;
+        --bs-card-animation-duration: .2s;
+
+        h3 {
+            @extend %fw-700, %fs-12, %text-uppercase, %mb-0;
+
+            letter-spacing: .15rem;
+        }
+
+        h2 {
+            @extend %fw-200, %fs-28, %mb-0;
+        }
+
+        .btn {
+            @include media-breakpoint-up(lg) {
+                position: absolute;
+                left: var(--bs-card-caption-padding-x);
+                bottom: 0;
+                transform: translateY(130%);
+
+                @include make-transition(transform, var(--bs-card-animation-duration));
+            }
+        }
+
+        .card {
+            &__caption {
+                @extend %position-absolute;
+
+                bottom: 0;
+                left: 0;
+                width: 80%;
+                padding: 3rem var(--bs-card-caption-padding-x) 0;
+                background-color: $sooka-light;
+
+                @include media-breakpoint-up(lg) {
+                    overflow: hidden;
+                }
+
+                p {
+                    @extend %fs-14;
+
+                    b {
+                        @extend %fs-10, %text-uppercase;
+
+                        letter-spacing: .1rem;
+                    }
+                }
+            }
+        }
+
+        @include media-breakpoint-up(lg) {
+            .card {
+                &__caption {
+                    @include make-transition(padding, var(--bs-card-animation-duration))
+                }
+            }
+
+            @include hover() {
+                .card {
+                    &__caption {
+                        padding-bottom: 5rem;
+                    }
+                }
+
+                .btn {
+                    transform: none;
+                }
+            }
+        }
+    }
+}

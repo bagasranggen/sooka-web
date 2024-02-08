@@ -1,4 +1,6 @@
 import { createMockData } from '@/libs/factory';
+import { faker } from '@faker-js/faker';
+import { resizeFakerImage } from '@/libs/utils';
 
 const PRODUCT_LISTING_IMAGE_SIZE = [
     {
@@ -12,4 +14,18 @@ const PRODUCT_LISTING_IMAGE_SIZE = [
     },
 ];
 
-export const PRODUCT_LISTING = createMockData(10).map((_: any, i: number) => ({}));
+export const PRODUCT_LISTING = createMockData(10).map((_: any, i: number) => {
+    const name = faker.commerce.product();
+    const productImage = faker.image.urlPicsumPhotos();
+
+    return {
+        name,
+        images: PRODUCT_LISTING_IMAGE_SIZE.map((image: any) => ({
+            src: resizeFakerImage(productImage, image.width, image.height),
+            width: image.width,
+            height: image.height,
+            alt: name,
+            ...image?.media ? { media: image.media } : {},
+        }))
+    };
+});

@@ -30,8 +30,22 @@
     &--ripple {
         @include btn-ripple();
 
-        &.btn--light {
-            @include btn-ripple-color(transparent, $sooka-primary, $sooka-dark, $sooka-light, $sooka-dark, $sooka-primary);
+        &.btn {
+            &--sm {
+                @include btn-ripple-size(1.3rem, .35rem);
+            }
+
+            &--primary {
+                @include btn-ripple-color($sooka-primary, $sooka-light, $sooka-light, $sooka-primary, $sooka-primary, $sooka-primary);
+            }
+
+            &--light {
+                @include btn-ripple-color(transparent, $sooka-primary, $sooka-primary, $sooka-light, $sooka-primary, $sooka-primary);
+            }
+
+            &--dark {
+                @include btn-ripple-color($sooka-dark, $sooka-light, $sooka-light, $sooka-dark, $sooka-dark, $sooka-dark);
+            }
         }
     }
 }

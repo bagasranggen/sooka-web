@@ -1,0 +1,23 @@
+.list {
+    &--filter-product {
+        li {
+            @extend %fw-700, %fs-14, %text-uppercase;
+
+            letter-spacing: .1rem;
+        }
+
+        a {
+            color: $sooka-dark;
+
+            @include media-breakpoint-up(lg) {
+                @include hover() {
+                    color: lighten($sooka-primary, 20);
+                }
+            }
+
+            &.active {
+                color: $sooka-primary;
+            }
+        }
+    }
+}

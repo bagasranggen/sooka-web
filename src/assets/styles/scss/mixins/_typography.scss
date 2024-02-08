@@ -19,3 +19,31 @@
         }
     }
 }
+
+@mixin make-font-sizes($breakpoints: $grid-breakpoints) {
+    @each $key, $value in $font-sizes-set {
+        @each $breakpoint in map-keys($breakpoints) {
+            $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+            %fs#{$infix}-#{$key} {
+                @include media-breakpoint-up($breakpoint) {
+                    font-size: $value !important;
+                }
+            }
+        }
+    }
+}
+
+@mixin make-font-weights($breakpoints: $grid-breakpoints) {
+    @each $value in $font-weights-set {
+        @each $breakpoint in map-keys($breakpoints) {
+            $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+            %fw#{$infix}-#{$value} {
+                @include media-breakpoint-up($breakpoint) {
+                    font-weight: $value !important;
+                }
+            }
+        }
+    }
+}

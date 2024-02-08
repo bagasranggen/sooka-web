@@ -1,42 +1,46 @@
 import React from 'react';
 import { getImageProps, ImageProps } from 'next/image';
+import { createAnimation } from "@/libs/factory";
+import { AnimationProps, ImageZoomAnimationProps } from "@/libs/@types";
 
 export type PictureItemProps = {
-    // image: ImageProps
-    isImage: boolean;
     media?: number;
 } & ImageProps;
 
 export type PictureProps = {
     items: PictureItemProps[];
+    animation?: ImageZoomAnimationProps;
 };
 
-const PictureItem = (item: PictureItemProps): React.ReactElement => {
-    const Image: keyof React.JSX.IntrinsicElements = item.isImage ? 'img' : 'source';
-
+const PictureItemSource = (item: PictureItemProps): React.ReactElement => {
     const { props: image } = getImageProps(item);
-    const { isImage, style, ...rest } = image;
-    let props = {};
 
-    if (item.isImage) {
-        props = {
-            className: 'img-fluid'
-        };
-    } else {
-        props = {
-            media: '(min-width: 768px)'
-        };
-    }
+    const props = {
+        ...image,
+        ...item?.media ? { media: `(min-width: ${item.media}px)` } : {},
+    };
 
-    return <Image {...rest} {...props} />;
+    // eslint-disable-next-line jsx-a11y/alt-text
+    return <source {...props as any} />;
 };
 
-const Picture = ({ items }: PictureProps): React.ReactElement => {
-    return <picture>
-        {items.map((item: PictureItemProps, i: number) => <PictureItem
-            key={i}
-            isImage={items.length - 1 === i}
-            {...item} />)}
+const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
+    const { props: image } = getImageProps(item);
+    const props = {
+        ...image,
+        className: 'img-fluid'
+    };
+
+    return <img {...props as any} />;
+};
+
+const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
+    return <picture {...animation?.type ? createAnimation({ type: animation.type }) : {}}>
+        {items.map((item: PictureItemProps, i: number) => {
+            const Image = items.length - 1 === i ? PictureItemImg : PictureItemSource;
+            // eslint-disable-next-line jsx-a11y/alt-text
+            return <Image key={i} {...item} />;
+        })}
     </picture>;
 };
 
