@@ -1,4 +1,3 @@
-import type { IconType } from 'react-icons';
 import type { LinkProps } from 'next/link';
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
