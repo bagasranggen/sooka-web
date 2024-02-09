@@ -1,11 +1,15 @@
 import React from 'react';
 
 import { CARD_VARIANTS } from '@/libs/handles/card';
+
 import { Col, Row } from 'react-bootstrap';
-import Picture, { PictureItemProps } from "@/components/common/picture/Picture";
-import Button from "@/components/common/button/Button";
+import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
+import Button from '@/components/common/button/Button';
 
 export type CardImageItemProps = {
+    name: string;
+    category: string;
+    ingredients: string;
     images: PictureItemProps[];
 }
 
@@ -14,14 +18,25 @@ export type CardImageProps = {
     items: CardImageItemProps[];
 };
 
-const CardImageItem = ({ images }: CardImageItemProps): React.ReactElement => {
+const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.ReactElement => (
+    <Col>
+        <div className="my-8 text-center fw-bold">
+            {children}
+        </div>
+    </Col>
+);
+
+const CardImageItem = ({ name, category, ingredients, images }: CardImageItemProps): React.ReactElement => {
     return <Col>
         <figure className="card card--image">
             <Picture items={images} />
             <figcaption className="card__caption">
-                <h3>Category</h3>
-                <h2>Product Name</h2>
-                <p className="mb-0"><b>Ingredients: </b>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                {/*<h3>{category}</h3>*/}
+                <h2>{name}</h2>
+                <p>
+                    <b>Ingredients: </b>
+                    {ingredients}
+                </p>
                 <Button
                     type="anchor"
                     href="/"
@@ -33,12 +48,14 @@ const CardImageItem = ({ images }: CardImageItemProps): React.ReactElement => {
     </Col>;
 };
 
-const CardImage = ({ items, variant }: CardImageProps): React.ReactElement => (
-    <Row className={`row-cols-2 gy-4 gx-8`}>
-        {items.map((item: CardImageItemProps, i: number) => <CardImageItem
-            images={item.images}
-            key={i} />)}
-    </Row>
-);
+const CardImage = ({ items }: CardImageProps): React.ReactElement => {
+    const isEmpty = items.length === 0;
+
+    return (
+        <Row className={`${isEmpty ? '' : 'row-cols-1 row-cols-md-2 '}gy-4 gx-lg-8`}>
+            {!isEmpty ? items.map((item: CardImageItemProps, i: number) => <CardImageItem key={i} {...item} />) : <CardImageEmpty>No Product Found</CardImageEmpty>}
+        </Row>
+    );
+};
 
 export default CardImage;

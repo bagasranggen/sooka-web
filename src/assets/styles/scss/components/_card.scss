@@ -11,7 +11,7 @@
         }
 
         h2 {
-            @extend %fw-200, %fs-28, %mb-0;
+            @extend %fw-200, %fs-24, %fs-lg-28, %mb-1, %mb-lg-0;
         }
 
         .btn {
@@ -27,20 +27,20 @@
 
         .card {
             &__caption {
-                @extend %position-absolute;
-
-                bottom: 0;
-                left: 0;
-                width: 80%;
-                padding: 3rem var(--bs-card-caption-padding-x) 0;
-                background-color: $sooka-light;
+                padding-top: 1rem;
 
                 @include media-breakpoint-up(lg) {
                     overflow: hidden;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 80%;
+                    padding: 3rem var(--bs-card-caption-padding-x) 0;
+                    background-color: $sooka-light;
                 }
 
                 p {
-                    @extend %fs-14;
+                    @extend %fs-14, %mb-lg-0;
 
                     b {
                         @extend %fs-10, %text-uppercase;

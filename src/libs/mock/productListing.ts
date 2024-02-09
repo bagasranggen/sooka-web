@@ -20,6 +20,8 @@ export const PRODUCT_LISTING = createMockData(10).map((_: any, i: number) => {
 
     return {
         name,
+        category: faker.commerce.productMaterial().toLowerCase(),
+        ingredients: faker.commerce.productDescription(),
         images: PRODUCT_LISTING_IMAGE_SIZE.map((image: any) => ({
             src: resizeFakerImage(productImage, image.width, image.height),
             width: image.width,

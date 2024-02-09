@@ -1,9 +1,17 @@
 .list {
     &--filter-product {
         li {
-            @extend %fw-700, %fs-14, %text-uppercase;
+            @extend %fw-700, %fs-10, %fs-md-14, %text-uppercase;
 
             letter-spacing: .1rem;
+
+            &:not(:last-child) {
+                margin-right: .75rem;
+                
+                @include media-breakpoint-up(lg) {
+                    margin-right: 1.25rem;
+                }
+            }
         }
 
         a {
