@@ -29,7 +29,9 @@ const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.Reac
 const CardImageItem = ({ name, category, ingredients, images }: CardImageItemProps): React.ReactElement => {
     return <Col>
         <figure className="card card--image">
-            <Picture items={images} />
+            <Picture
+                items={images}
+                animation={{ type: 'image-zoom' }} />
             <figcaption className="card__caption">
                 {/*<h3>{category}</h3>*/}
                 <h2>{name}</h2>

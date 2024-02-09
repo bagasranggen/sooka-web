@@ -5,12 +5,17 @@ import { resizeFakerImage } from '@/libs/utils';
 const PRODUCT_LISTING_IMAGE_SIZE = [
     {
         media: 992,
-        width: 1200,
-        height: 1362,
+        width: 800,
+        height: 908,
     },
     {
+        media: 576,
         width: 600,
         height: 681,
+    },
+    {
+        width: 400,
+        height: 454,
     },
 ];
 
