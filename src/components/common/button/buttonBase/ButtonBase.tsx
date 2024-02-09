@@ -1,6 +1,7 @@
 import React from 'react';
 
-import Link, { LinkProps } from 'next/link';
+import Link from 'next/link';
+import type { LinkProps } from '@/libs/@types';
 import { BUTTON_TYPES } from '@/libs/handles';
 
 export type ButtonCommonProps = {
@@ -26,12 +27,14 @@ export type ButtonBaseProps = ButtonAnchorProps | ButtonRegularProps;
 const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
     switch (props.type) {
         case 'button':
-            const { event, ...rest } = props;
+            const { event, ...restButton } = props;
 
-            return <button {...rest} onClick={event?.onClick}>{props.children}</button>;
+            return <button {...restButton} onClick={event?.onClick}>{props.children}</button>;
 
         case 'anchor':
-            return <Link {...props} >{props.children}</Link>;
+            const { openNewTab, ...restAnchor } = props;
+
+            return <Link {...restAnchor} {...openNewTab ? { target: '_blank' } : {}}>{props.children}</Link>;
     }
 };
 

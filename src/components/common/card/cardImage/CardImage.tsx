@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { CARD_VARIANTS } from '@/libs/handles/card';
+import { CARD_VARIANTS } from '@/libs/handles';
+import { getWhatsappEncoded } from '@/libs/utils';
 
 import { Col, Row } from 'react-bootstrap';
 import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
@@ -41,10 +42,11 @@ const CardImageItem = ({ name, category, ingredients, images }: CardImageItemPro
                 </p>
                 <Button
                     type="anchor"
-                    href="/"
+                    href={`getWhatsappEncoded(name)`}
                     size="sm"
                     variant="ripple"
-                    color="primary">BUY</Button>
+                    color="primary"
+                    openNewTab>BUY</Button>
             </figcaption>
         </figure>
     </Col>;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { getImageProps, ImageProps } from 'next/image';
-import { createAnimation } from "@/libs/factory";
-import { AnimationProps, ImageZoomAnimationProps } from "@/libs/@types";
+import { createAnimation } from '@/libs/factory';
+import { AnimationProps, ImageZoomAnimationProps } from '@/libs/@types';
 
 export type PictureItemProps = {
     media?: number;
@@ -31,6 +31,7 @@ const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
         className: 'img-fluid'
     };
 
+    // eslint-disable-next-line jsx-a11y/alt-text
     return <img {...props as any} />;
 };
 

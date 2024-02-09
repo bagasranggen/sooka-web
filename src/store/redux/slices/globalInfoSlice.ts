@@ -1,7 +1,7 @@
 import type { LinkProps } from 'next/link';
 
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { CONTACT_NUMBER, FOOTER_ADDRESS, FOOTER_SOCIAL_MEDIA } from '@/libs/mock';
+import { CONTACT, FOOTER_ADDRESS, FOOTER_SOCIAL_MEDIA } from '@/libs/mock';
 
 export interface GlobalInfoSocialState {
     icon: string;
@@ -21,7 +21,7 @@ const initialState: GlobalInfoSliceState = {
         openHour: FOOTER_ADDRESS.OPEN_HOUR
     },
     socialMedia: FOOTER_SOCIAL_MEDIA,
-    contactNumber: CONTACT_NUMBER,
+    contactNumber: CONTACT.NUMBER,
 };
 
 export const globalInfoSlice = createSlice({

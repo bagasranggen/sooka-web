@@ -1,4 +1,13 @@
-export const CONTACT_NUMBER = process.env.NEXT_PUBLIC_CP;
+export const CONTACT = {
+    NUMBER: process.env.NEXT_PUBLIC_CP,
+    GREETINGS: (product: string) => {
+        if (!product) return '';
+
+        return `Hai, Sooka!
+
+Saya ingin pesan *${product}*, apakah masih tersedia?`;
+    },
+};
 
 export const FOOTER_ADDRESS = {
     ADDRESS: '8655 S BLACKSTONE AVENUE, CHICAGO, IL',
