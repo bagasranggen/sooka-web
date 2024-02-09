@@ -1,0 +1,23 @@
+@mixin make-color-sets($breakpoints: $grid-breakpoints, $placeholder, $style) {
+    @each $key, $value in $bg-color-sets {
+        @each $breakpoint in map-keys($breakpoints) {
+            $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+            %#{$placeholder}#{$infix}-#{$key} {
+                @include media-breakpoint-up($breakpoint) {
+                    #{$style}: $value;
+                }
+            }
+        }
+    }
+}
+
+@mixin link-hover-color($color, $hover-color) {
+    &:not(:hover) {
+        --bs-link-color-rgb: #{$color};
+    }
+
+    @include hover() {
+        --bs-link-hover-color-rgb: #{$hover-color};
+    }
+}

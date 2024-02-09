@@ -2,7 +2,9 @@
 $sooka-primary: #F7613F;
 $sooka-primary-rgb: 247, 97, 63;
 $sooka-dark: #323031;
+$sooka-dark-rgb: 50, 48, 49;
 $sooka-light: #FFF;
+$sooka-light-rgb: 255, 255, 255;
 
 // Reset
 $font-size-base: 1.6rem;
@@ -65,14 +67,25 @@ $form-floating-label-transform: scale(.5) translateY(-.85rem) translateX(.15rem)
 $form-floating-transition-timing: .15s;
 $form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
 
+// Background Colors
+$bg-color-sets: (
+    primary: $sooka-primary,
+    dark: $sooka-dark,
+    light: $sooka-light,
+);
+
 // Font Sizes
 $font-sizes-set: (
     10: 1rem,
     12: 1.2rem,
     14: 1.4rem,
+    20: 2rem,
     24: 2.4rem,
     28: 2.8rem,
+    30: 3rem,
+    60: 6rem,
+    80: 8rem,
 );
 
 // Font Weight
-$font-weights-set: 100, 200, 400, 700;
+$font-weights-set: 100, 200, 400, 600, 700;
