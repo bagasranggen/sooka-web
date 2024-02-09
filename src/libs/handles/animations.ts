@@ -1,7 +1,6 @@
 import { buttonRipple } from '@/libs/animations/buttons/ButtonRipple';
 
 import { BUTTON_VARIANTS } from '@/libs/handles/button';
-import { getObjectByValue } from '@/libs/utils/getObjectByValue';
 import { createAnimationHandles } from '@/libs/factory/createAnimationHandles';
 
 export const COMMON_ANIMATIONS = {
@@ -11,7 +10,6 @@ export const COMMON_ANIMATIONS = {
     } as const,
     BUTTON: {
         RIPPLE: 'ripple',
-        // ...getObjectByValue(BUTTON_VARIANTS, BUTTON_VARIANTS.RIPPLE),
     } as const,
     ATTRIBUTES: {
         TYPE: 'data-animation',
