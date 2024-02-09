@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 import '@fontsource/mulish';
 import '@fontsource/mulish/200.css';
+import '@fontsource/mulish/600.css';
 import '@fontsource/mulish/700.css';
 
 import '../assets/styles/scss/bootstrap.scss';
@@ -29,13 +30,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <body
             suppressHydrationWarning={true}
             {...layout.height && { style: layout.height } as React.HTMLAttributes<HTMLElement>}>
-        <Providers>
-            <Navigation />
-            <Suspense fallback={null}>
-                <MainLayout>{children}</MainLayout>
-            </Suspense>
-            <Footer />
-        </Providers>
+            <Providers>
+                <Navigation />
+                <Suspense fallback={null}>
+                    <MainLayout>{children}</MainLayout>
+                </Suspense>
+                <Footer />
+            </Providers>
         </body>
         </html>
     );

@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 
-import { layoutSlice, useDispatch } from '@/store/redux';
+import { type GlobalInfoSocialState, layoutSlice, reduxStore, useDispatch } from '@/store/redux';
 
 import { Col, Container, Row } from 'react-bootstrap';
+import * as CiIcon from 'react-icons/ci';
 import { useMeasure } from 'react-use';
 
 import Icon from '@/components/common/icon/Icon';
@@ -13,30 +15,49 @@ export type FooterProps = {};
 
 const Footer = ({}: FooterProps): React.ReactElement => {
     const dispatch = useDispatch();
+    const { globalInfo } = reduxStore.getState();
     const [ footerRef, { height, top } ] = useMeasure();
     const footerHeight = height + top + 40;
 
     dispatch(layoutSlice.actions.layoutHeight({ '--footer-height': `${footerHeight}px` }));
 
-    return <footer ref={footerRef as unknown as React.RefObject<HTMLElement>} className="mt-10 footer">
+    return <footer
+        ref={footerRef as unknown as React.RefObject<HTMLElement>}
+        className="mt-10 footer">
         <Container>
             <Row className="justify-content-center">
-                <Col lg={10}>
+                <Col lg={11}>
                     <div className="footer__logo">
                         <Icon
                             variant="sooka"
                             color="light" />
                     </div>
 
-                    <div className="mt-5">
-                        <Row className="justify-content-between">
-                            <Col lg="auto">
-                                Lorem ipsum dolor sit amet.
-
+                    <div className="mt-3 mt-lg-5">
+                        <Row className="justify-content-center justify-content-sm-between align-items-center text-center text-sm-start gy-2">
+                            <Col sm="auto">
+                                <div className="footer__address">
+                                    <p>{globalInfo.storeInfo.address}</p>
+                                    <p>{globalInfo.storeInfo.openHour}</p>
+                                </div>
                             </Col>
-                            <Col lg="auto">
-                                Lorem ipsum dolor sit amet.
+                            <Col sm="auto">
+                                <ul className="list-inline">
+                                    {globalInfo.socialMedia.map((footer: GlobalInfoSocialState, i: number) => {
+                                        const RIcon = CiIcon[footer.icon as keyof typeof CiIcon];
 
+                                        return <li
+                                            key={i}
+                                            className="list-inline-item">
+                                            <Link
+                                                href={footer?.href ?? ''}
+                                                target="_blank"
+                                                title={footer.label}>
+                                                <RIcon fontSize={30} />
+                                            </Link>
+                                        </li>;
+                                    })}
+                                </ul>
                             </Col>
                         </Row>
                     </div>

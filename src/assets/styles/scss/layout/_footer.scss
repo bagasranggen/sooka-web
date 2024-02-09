@@ -1,12 +1,43 @@
 .footer {
-    padding-top: 7rem;
-    padding-bottom: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
     background-color: $sooka-primary;
     color: $sooka-light;
+
+    @include media-breakpoint-up(lg) {
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+    }
 
     &__logo {
         @extend %mx-auto;
 
-        max-width: 25rem;
+        max-width: 20rem;
+
+        @include media-breakpoint-up(lg) {
+            max-width: 25rem;
+        }
+    }
+
+    &__address {
+        p {
+            @extend %fw-600, %fs-14, %text-uppercase;
+
+            margin-bottom: 0;
+            line-height: 1.4;
+        }
+    }
+
+    .list-inline {
+        &-item {
+            &:not(:last-child) {
+                margin-right: 1.5rem;
+            }
+
+            a {
+                @include make-transition(color);
+                @include link-hover-color($sooka-light-rgb, $sooka-dark-rgb);
+            }
+        }
     }
 }
