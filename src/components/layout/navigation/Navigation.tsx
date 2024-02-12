@@ -14,12 +14,10 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Button from '@/components/common/button/Button';
 import Offcanvas from '@/components/layout/offcanvas/Offcanvas';
 import Icon from '@/components/common/icon/Icon';
-import { layoutSlice, useDispatch } from '@/store/redux';
 
 export type NavigationProps = {};
 
 const Navigation = ({}: NavigationProps): React.ReactElement => {
-    const dispatch = useDispatch();
     const pathname = usePathname();
     const active = getActivePath(pathname);
     const isTransparent = NAVIGATION_TRANSPARENT.includes(active);
@@ -32,6 +30,7 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
     const mouseWheel = useMouseWheel();
     const { y: yScroll } = useWindowScroll();
     const [ transform, setTransform ] = useState<number>(0);
+
     const isCenter = yScroll > navbarHeight;
     const bgIsTransparent = isTransparent && !show && !isCenter;
 
@@ -45,7 +44,7 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
 
         switch (direction) {
             case 'down': // Scroll Down
-                if (transform >= (navbarHeight * -1)) setTransform((prev: number) => isCenter ? navbarHeight * -1 : prev + movement);
+                if (transform >= (navbarHeight * -1) && yScroll > 0) setTransform((prev: number) => isCenter ? navbarHeight * -1 : prev + movement);
                 break;
 
             default: // Scroll Up
@@ -59,10 +58,8 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
 
     const style: React.CSSProperties = {
         transform: `translateY(${transform}px)`,
-        // ...(transform === 0 || isCenter) ? { '--transition': 'transform' } : {},
+        ...((transform === 0 || isCenter) && yScroll > 0) ? { '--transition': 'transform' } : {},
     } as React.CSSProperties;
-
-    dispatch(layoutSlice.actions.layoutHeight({ '--navigation-height': `${navbarHeight}px` }));
 
     return <>
         <Suspense
@@ -74,7 +71,8 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
             className={navbarClass}
             ref={navRef as unknown as React.RefObject<HTMLElement>}
             expand="lg"
-            {...{ [isTransparent ? 'fixed' : 'sticky']: 'top' }}
+            // {...{ [isTransparent ? 'fixed' : 'sticky']: 'top' }}
+            fixed="top"
             data-bs-theme="light"
             bg={bgIsTransparent ? 'transparent' : 'primary'}
             style={style}>
@@ -92,10 +90,6 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
                     className="d-lg-none"
                     isOpen={show}
                     event={{ onClick: () => setShow(!show) }} />
-                {/*<Navbar.Toggle*/}
-                {/*    onClick={() => {*/}
-                {/*        console.log('click');*/}
-                {/*    }} />*/}
                 <Navbar.Collapse>
                     <Nav className="ms-auto">
                         {NAVIGATION.map((nav: NavigationItemProps, i: number) => {
@@ -105,19 +99,6 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
                                 href={nav.href as string}
                                 active={nav.href === active}>{nav.label}</Nav.Link>;
                         })}
-                        {/*<NavDropdown
-                        title="Dropdown"
-                        id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                            Another action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                            Separated link
-                        </NavDropdown.Item>
-                    </NavDropdown>*/}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
