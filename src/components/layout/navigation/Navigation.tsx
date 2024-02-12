@@ -1,14 +1,14 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import type { NavigationItemProps } from '@/libs/@types';
 import { NAVIGATION, NAVIGATION_TRANSPARENT } from '@/libs/mock';
-import { getActivePath, NavigationEvents } from '@/libs/utils';
+import { getActivePath, joinClassnameString, NavigationEvents } from '@/libs/utils';
 
-import { useMeasure } from 'react-use';
+import { useMeasure, useMouseWheel, useWindowScroll } from 'react-use';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 import Button from '@/components/common/button/Button';
@@ -28,6 +28,40 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
     const [ navRef, { height, y } ] = useMeasure();
     const navbarHeight = height + (y * 2);
 
+    const prevMouseWheel = useRef<number>(0);
+    const mouseWheel = useMouseWheel();
+    const { y: yScroll } = useWindowScroll();
+    const [ transform, setTransform ] = useState<number>(0);
+    const isCenter = yScroll > navbarHeight;
+    const bgIsTransparent = isTransparent && !show && !isCenter;
+
+    const navbarIsOpenClass = show ? 'navbar--open' : '';
+    const navbarIsCenterClass = isCenter ? 'navbar--center' : '';
+    const navbarClass = joinClassnameString([ navbarIsOpenClass, navbarIsCenterClass ]);
+
+    useLayoutEffect(() => {
+        const movement = prevMouseWheel.current - mouseWheel;
+        const direction = movement < 0 ? 'down' : 'up';
+
+        switch (direction) {
+            case 'down': // Scroll Down
+                if (transform >= (navbarHeight * -1)) setTransform((prev: number) => isCenter ? navbarHeight * -1 : prev + movement);
+                break;
+
+            default: // Scroll Up
+                if (transform <= 0) setTransform((prev: number) => 0);
+                break;
+        }
+
+        prevMouseWheel.current = mouseWheel;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [ height, mouseWheel ]);
+
+    const style: React.CSSProperties = {
+        transform: `translateY(${transform}px)`,
+        // ...(transform === 0 || isCenter) ? { '--transition': 'transform' } : {},
+    } as React.CSSProperties;
+
     dispatch(layoutSlice.actions.layoutHeight({ '--navigation-height': `${navbarHeight}px` }));
 
     return <>
@@ -37,19 +71,20 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
         </Suspense>
 
         <Navbar
-            className={show ? 'navbar--open' : ''}
+            className={navbarClass}
             ref={navRef as unknown as React.RefObject<HTMLElement>}
             expand="lg"
             {...{ [isTransparent ? 'fixed' : 'sticky']: 'top' }}
             data-bs-theme="light"
-            bg={(isTransparent && !show) ? 'transparent' : 'primary'}>
+            bg={bgIsTransparent ? 'transparent' : 'primary'}
+            style={style}>
             <Container>
                 <Navbar.Brand
                     as={Link}
                     href="/">
                     <Icon
                         variant="sooka"
-                        color={(isTransparent && !show) ? 'primary' : 'light'} />
+                        color={bgIsTransparent ? 'primary' : 'light'} />
                 </Navbar.Brand>
                 <Button
                     variant="nav-toggle"

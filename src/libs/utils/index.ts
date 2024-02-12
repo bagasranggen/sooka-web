@@ -4,5 +4,6 @@ export * from './getAnimationProps';
 export * from './getBackgroundImage';
 export * from './getObjectByValue';
 export * from './getWhatsappEncoded';
+export * from './joinClassnameString';
 export * from './resizeFakerImage';
 export * from './NavigationEvents';

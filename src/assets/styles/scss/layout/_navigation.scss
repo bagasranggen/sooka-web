@@ -1,6 +1,6 @@
 %navigation-link {
     @extend %text-uppercase;
-    
+
     letter-spacing: .2rem;
 }
 
@@ -12,21 +12,29 @@
 
 .navbar {
     --bs-navbar-nav-link-padding-x: #{$navbar-link-padding-x};
+    --bs-navbar-transition-speed: .3s;
 
     @include media-breakpoint-down(lg) {
         --bs-navbar-padding-y: 1.5rem;
+    }
 
-        @include make-transition(background-color, .3s);
+    @include make-transition(background-color, var(--bs-navbar-transition-speed));
+
+    @include media-breakpoint-up(lg) {
+        &[style*='--transition'] {
+            @include make-variants-transition(var(--transition) var(--bs-navbar-transition-speed), background-color var(--bs-navbar-transition-speed));
+        }
     }
 
     &-brand {
         max-width: 10rem;
 
-        @include media-breakpoint-down(lg) {
-            svg path {
-                @include make-transition(fill, .3s);
-            }
+        //@include media-breakpoint-down(lg) {
+        svg path {
+            @include make-transition(fill, var(--bs-navbar-transition-speed));
         }
+
+        //}
 
         @include media-breakpoint-up(lg) {
             max-width: 15rem;
@@ -41,12 +49,12 @@
 
     &:not([class*='--open']) {
         @include media-breakpoint-down(lg) {
-            @include make-transition(background-color, .3s, .15s);
+            @include make-transition(background-color, var(--bs-navbar-transition-speed), .15s);
 
             .navbar {
                 &-brand {
                     svg path {
-                        @include make-transition(fill, .3s, .15s);
+                        @include make-transition(fill, var(--bs-navbar-transition-speed), .15s);
                     }
                 }
             }
