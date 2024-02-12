@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
 import { createMockData } from '@/libs/factory';
-import { resizeFakerImage } from '@/libs/utils';
+import { resizeFakerImage } from '@/libs/utils/resizeFakerImage';
 
 const BANNER_IMAGE_SIZE = [
     {
