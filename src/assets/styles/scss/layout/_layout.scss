@@ -1,13 +1,6 @@
-.mt {
-    &--top {
-        margin-top: var(--bs-navbar-height);
-    }
-}
-
 .ts {
-    &--margin {
-        margin-top: var(--bs-navbar-height);
-
+    &--margin,
+    &--padding {
         &.ts--primary {
             @extend %position-relative;
 
@@ -15,12 +8,31 @@
                 @extend %position-absolute;
 
                 content: '';
-                top: calc(var(--bs-navbar-height) * -1);
                 left: 0;
                 width: 100%;
                 height: var(--bs-navbar-height);
                 background-color: $sooka-primary;
                 pointer-events: none;
+            }
+        }
+    }
+
+    &--margin {
+        margin-top: var(--bs-navbar-height);
+
+        &.ts--primary {
+            &:before {
+                top: calc(var(--bs-navbar-height) * -1);
+            }
+        }
+    }
+
+    &--padding {
+        padding-top: var(--bs-navbar-height);
+
+        &.ts--primary {
+            &:before {
+                top: 0;
             }
         }
     }

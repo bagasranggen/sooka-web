@@ -9,6 +9,10 @@ export const NAVIGATION: NavigationProps = [
         href: '/cakes',
         label: 'Cakes'
     },
+    {
+        href: '/contact-us',
+        label: 'Contact Us'
+    },
 ];
 
 export const NAVIGATION_TRANSPARENT: string[] = [ '/' ];

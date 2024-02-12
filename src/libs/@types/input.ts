@@ -1,0 +1,1 @@
+export type InputTypeProps = 'text' | 'email' | 'number' | 'tel';
