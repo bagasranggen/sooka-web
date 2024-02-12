@@ -1,28 +1,19 @@
-'use client';
-
 import React from 'react';
 import Link from 'next/link';
 
-import { type GlobalInfoSocialState, layoutSlice, reduxStore, useDispatch } from '@/store/redux';
+import { type GlobalInfoSocialState, reduxStore } from '@/store/redux';
 
 import { Col, Container, Row } from 'react-bootstrap';
 import * as CiIcon from 'react-icons/ci';
-import { useMeasure } from 'react-use';
 
 import Icon from '@/components/common/icon/Icon';
 
 export type FooterProps = {};
 
 const Footer = ({}: FooterProps): React.ReactElement => {
-    const dispatch = useDispatch();
     const { globalInfo } = reduxStore.getState();
-    const [ footerRef, { height, top } ] = useMeasure();
-    const footerHeight = height + top + 40;
-
-    dispatch(layoutSlice.actions.layoutHeight({ '--footer-height': `${footerHeight}px` }));
 
     return <footer
-        ref={footerRef as unknown as React.RefObject<HTMLElement>}
         className="mt-10 footer">
         <Container>
             <Row className="justify-content-center">
