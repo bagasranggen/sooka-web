@@ -11,7 +11,7 @@ export type BannerSectionProps = {
 };
 
 const BannerSection = ({ title, description }: BannerSectionProps): React.ReactElement => (
-    <section className="banner banner--section">
+    <section className="ts--margin ts--primary banner banner--section">
         <Container>
             <div className="banner__title">
                 <h1>{title}</h1>

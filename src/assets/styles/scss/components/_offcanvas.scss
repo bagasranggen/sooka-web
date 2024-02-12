@@ -7,7 +7,7 @@
         --bs-offcanvas-color: #{$sooka-light};
         --bs-offcanvas-border-width: 0;
 
-        top: var(--navigation-height, 0) !important;
+        top: var(--bs-navbar-height, 0) !important;
 
         .list-unstyled {
             li {

@@ -14,6 +14,8 @@
     --bs-navbar-nav-link-padding-x: #{$navbar-link-padding-x};
     --bs-navbar-transition-speed: .3s;
 
+    height: var(--bs-navbar-height);
+
     @include media-breakpoint-down(lg) {
         --bs-navbar-padding-y: 1.5rem;
     }

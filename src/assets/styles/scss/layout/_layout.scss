@@ -1,17 +1,27 @@
-nav.navbar {
-    ~ main {
-        --footer-spacing: 10rem;
+.mt {
+    &--top {
+        margin-top: var(--bs-navbar-height);
     }
+}
 
-    &.fixed-top {
-        ~ main {
-            min-height: calc(100vh - (var(--footer-height, 0) + var(--footer-spacing)));
-        }
-    }
+.ts {
+    &--margin {
+        margin-top: var(--bs-navbar-height);
 
-    &.sticky-top {
-        ~ main {
-            min-height: calc(100vh - (var(--navigation-height, 0) + var(--footer-height, 0) + var(--footer-spacing)));
+        &.ts--primary {
+            @extend %position-relative;
+
+            &:before {
+                @extend %position-absolute;
+
+                content: '';
+                top: calc(var(--bs-navbar-height) * -1);
+                left: 0;
+                width: 100%;
+                height: var(--bs-navbar-height);
+                background-color: $sooka-primary;
+                pointer-events: none;
+            }
         }
     }
 }
