@@ -38,33 +38,11 @@ const FormContact = ({}: FormContactProps): React.ReactElement => {
 
     return (
         <form onSubmit={handleSubmit(onSubmitHandler)}>
-            <FormRender items={FORM_CONTACT} />
-            {/*{FORM_CONTACT.map((form: any, i: number) => {*/}
-            {/*    // const { handle, ...rest } = form;*/}
+            <FormRender
+                items={FORM_CONTACT}
+                hook={{ register: register }} />
 
-            {/*    return <Row key={i}>*/}
-            {/*        {form.children.map((f: any, idx: number) => {*/}
-            {/*            return <Col*/}
-            {/*                key={idx}>*/}
-            {/*                <Input*/}
-            {/*                    variant="floating"*/}
-            {/*                    input={{ type: f.type, id: f.handle, label: 'label' }}*/}
-            {/*                    hook={{ register, name: f.handle }} />*/}
-            {/*            </Col>;*/}
-            {/*        })}*/}
-            {/*    </Row>;*/}
-
-            {/*    // return <Input*/}
-            {/*    //     key={i}*/}
-            {/*    //     variant="floating"*/}
-            {/*    //     input={{ type: form.type, id: form.handle, label: 'label' }}*/}
-            {/*    //     hook={{ register, name: form.handle }} />;*/}
-            {/*    // return <input*/}
-            {/*    //     key={i}*/}
-            {/*    //     {...register(handles)}*/}
-            {/*    //     {...rest} />;*/}
-            {/*})}*/}
-            <button type="submit">submit</button>
+            {/*<button type="submit">submit</button>*/}
         </form>
     );
 };

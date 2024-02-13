@@ -16,6 +16,7 @@ export type SpacingBreakpointsProps = Partial<Record<BreakpointsProps, SpacingIt
 export type SpacingProps = {
     spacing?: Partial<Record<SpacingDirectionProps, SpacingItemProps | SpacingBreakpointsProps>>
 };
+export type ResponsiveClassProps = Partial<Record<'sm' | 'md' | 'lg' | 'xl' | 'xxl', NumericRange<CreateArrayWithLengthX<0>, 12>>>;
 export type PageParamsProps = {
     params: { slug: string };
     searchParams?: { [key: string]: string | string[] | undefined };

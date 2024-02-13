@@ -9,11 +9,15 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
     {
         children: [
             {
+                size: {
+                    sm: 8,
+                    lg: 6,
+                },
                 variant: 'floating',
                 input: {
-                    type: 'text',
+                    //     type: 'text',
                     id: FORM_CONTACT_INPUT.FIRST_NAME,
-                    label: 'label',
+                    //     label: 'label',
                 },
 
             },

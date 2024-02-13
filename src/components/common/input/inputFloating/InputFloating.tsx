@@ -5,23 +5,28 @@ import { INPUT_VARIANTS } from '@/libs/handles';
 
 import { Path, UseFormRegister } from 'react-hook-form';
 
-type InputHookValue = { [key: string]: string | number } | any;
+export type InputHookValue = { [key: string]: string | number } | any;
 
 export type InputFloatingProps = {
     variant: typeof INPUT_VARIANTS.FLOATING;
+    className?: string;
     hook?: {
-        name: Path<InputHookValue>;
+        //     name: Path<InputHookValue>;
         register: UseFormRegister<InputHookValue>;
         required?: boolean;
         valueAsNumber?: boolean;
         pattern?: any;
     };
-    className?: string;
     input: {
-        type?: InputTypeProps;
+        // type?: InputTypeProps;
         id: string;
-        label: string;
+        //     label: string;
     };
+    // options?: {
+    //     required?: boolean;
+    //     valueAsNumber?: boolean;
+    //     pattern?: any;
+    // }
     validation?: {
         isError?: boolean;
         message?: string;
@@ -37,11 +42,13 @@ const InputFloating = ({ hook, input, validation }: InputFloatingProps): React.R
     return <div className="input-group input-group--floating">
         <div className={`form-floating${validation?.isError ? ' is-invalid' : ''}`}>
             <input
-                type={input.type ?? 'text'}
+                // type={input.type ?? 'text'}
                 className="form-control"
-                placeholder={input.label}
-                id={input.id} {...hook ? hook.register(hook.name, hookOptions) : {}} />
-            <label htmlFor="floatingInput">{input.label}</label>
+                placeholder={'input.label'}
+                // id={input.id}
+                {...hook ? hook.register(input.id, hookOptions) : {}}
+            />
+            <label htmlFor="floatingInput">{'input.label'}</label>
         </div>
         {(validation?.isError && validation?.message) && <div className="invalid-feedback">{validation?.message}</div>}
     </div>;

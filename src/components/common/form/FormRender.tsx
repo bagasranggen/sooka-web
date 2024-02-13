@@ -1,38 +1,50 @@
+'use client';
+
 import React from 'react';
 
-import { FORM_CONTACT } from '@/libs/form';
-
-import { Col, Row } from 'react-bootstrap';
 import Input, { InputProps } from '@/components/common/input/Input';
+import type { UseFormRegister } from "react-hook-form";
+import type { InputHookValue } from "@/components/common/input/inputFloating/InputFloating";
+import type { ResponsiveClassProps } from "@/libs/@types";
+import { getResponsiveClass } from "@/libs/utils";
 
-export type FormRenderItemProps = Omit<InputProps, 'hook'>
+export type FormRenderItemProps = {
+    size: ResponsiveClassProps;
+} & Omit<InputProps, 'hook'>;
 
 export type FormRenderProps = {
+    hook: {
+        register: UseFormRegister<InputHookValue>
+    };
     items: Array<{
         children: FormRenderItemProps[];
     }>;
 };
 
-const FormRender = ({ items }: FormRenderProps): React.ReactElement => (
+const FormRender = ({ items, hook }: FormRenderProps): React.ReactElement => (
     <>
-        {items.map((item: any, i: number) => {
-            // const { handle, ...rest } = form;
+        {/*{items.map((item: any, i: number) => {*/}
+        {/*    return <div*/}
+        {/*        className="row"*/}
+        {/*        key={i}>*/}
+        {/*        {item.children.map((input: FormRenderItemProps, idx: number) => {*/}
 
-            return <Row key={i}>
-                {item.children.map((input: any, idx: number) => {
-                    const {} = input;
-
-                    return <div
-                        key={idx}>
-                        <>INPUT</>
-                        {/*<Input*/}
-                        {/*    variant="floating"*/}
-                        {/*    input={{ type: f.type, id: f.handle, label: 'label' }}*/}
-                        {/*    hook={{ register, name: f.handle }} />*/}
-                    </div>;
-                })}
-            </Row>;
-        })}
+        {/*            return <div*/}
+        {/*                className={'columnClass'}*/}
+        {/*                key={idx}>*/}
+        {/*                /!*<Input*!/*/}
+        {/*                /!*    // variant="floating"*!/*/}
+        {/*                /!*    // {...hook.register(input.input.id)}*!/*/}
+        {/*                /!*    hook={{ register: hook.register }}*!/*/}
+        {/*                /!*    {...input}*!/*/}
+        {/*                /!*    // {...inputProps}*!/*/}
+        {/*                /!*    // input={{ type: f.type, id: f.handle, label: 'label' }}*!/*/}
+        {/*                /!*    // hook={{ register, name: f.handle }}*!/*/}
+        {/*                /!*/>*!/*/}
+        {/*            </div>;*/}
+        {/*        })}*/}
+        {/*    </div>;*/}
+        {/*})}*/}
     </>
 );
 
