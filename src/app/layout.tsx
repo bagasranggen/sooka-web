@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 
 import '@fontsource/mulish';
 import '@fontsource/mulish/200.css';
+import '@fontsource/mulish/300.css';
 import '@fontsource/mulish/600.css';
 import '@fontsource/mulish/700.css';
 

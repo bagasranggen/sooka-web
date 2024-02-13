@@ -1,8 +1,10 @@
-import FormRender, { FormRenderProps } from '@/components/common/form/FormRender';
+import type { FormRenderProps } from '@/components/common/form/FormRender';
+import { COMMON_REGEX, ERROR_MESSAGE } from '@/libs/data';
 
 export const FORM_CONTACT_INPUT = {
     FIRST_NAME: 'firstName',
-    LAST_NAME: 'lastName',
+    EMAIL: 'email',
+    MESSAGE: 'message',
 } as const;
 
 export const FORM_CONTACT: FormRenderProps['items'] = [
@@ -10,21 +12,61 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
         children: [
             {
                 size: {
-                    sm: 8,
                     lg: 6,
                 },
                 variant: 'floating',
                 input: {
-                    //     type: 'text',
+                    type: 'text',
                     id: FORM_CONTACT_INPUT.FIRST_NAME,
-                    //     label: 'label',
+                    label: 'First Name',
                 },
-
+                options: {
+                    required: true,
+                },
+                validation: {
+                    message: ERROR_MESSAGE.REQUIRED
+                },
             },
-            // {
-            //     handle: FORM_CONTACT_INPUT.LAST_NAME,
-            //     type: 'text'
-            // },
+            {
+                size: {
+                    lg: 6,
+                },
+                variant: 'floating',
+                input: {
+                    type: 'email',
+                    id: FORM_CONTACT_INPUT.EMAIL,
+                    label: 'Email',
+                },
+                options: {
+                    required: true,
+                    pattern: COMMON_REGEX.EMAIL_VALIDATION,
+                },
+                validation: {
+                    message: ERROR_MESSAGE.REQUIRED,
+                    additionalMessage: 'Email is not valid'
+                },
+            },
+        ]
+    },
+    {
+        children: [
+
+            {
+                size: {},
+                variant: 'floating',
+                input: {
+                    type: 'textarea',
+                    height: 150,
+                    id: FORM_CONTACT_INPUT.MESSAGE,
+                    label: 'Send us some message',
+                },
+                options: {
+                    required: true,
+                },
+                validation: {
+                    message: ERROR_MESSAGE.REQUIRED
+                },
+            },
         ]
     },
 

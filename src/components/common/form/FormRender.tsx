@@ -1,50 +1,59 @@
-'use client';
-
 import React from 'react';
 
+import { getResponsiveClass, joinClassnameString } from '@/libs/utils';
+import type { CreateArrayWithLengthX, NumericRange, ResponsiveClassProps } from '@/libs/@types';
+
+import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 import Input, { InputProps } from '@/components/common/input/Input';
-import type { UseFormRegister } from "react-hook-form";
-import type { InputHookValue } from "@/components/common/input/inputFloating/InputFloating";
-import type { ResponsiveClassProps } from "@/libs/@types";
-import { getResponsiveClass } from "@/libs/utils";
+import type { InputHookValue } from '@/components/common/input/inputFloating/InputFloating';
 
 export type FormRenderItemProps = {
     size: ResponsiveClassProps;
+    validation?: {
+        additionalMessage?: string;
+    };
 } & Omit<InputProps, 'hook'>;
 
 export type FormRenderProps = {
+    spacing: NumericRange<CreateArrayWithLengthX<0>, 15>;
     hook: {
-        register: UseFormRegister<InputHookValue>
+        register: UseFormRegister<InputHookValue>;
+        errors: FieldErrors<InputHookValue>;
     };
     items: Array<{
         children: FormRenderItemProps[];
     }>;
 };
 
-const FormRender = ({ items, hook }: FormRenderProps): React.ReactElement => (
+const FormRender = ({ items, hook, spacing }: FormRenderProps): React.ReactElement => (
     <>
-        {/*{items.map((item: any, i: number) => {*/}
-        {/*    return <div*/}
-        {/*        className="row"*/}
-        {/*        key={i}>*/}
-        {/*        {item.children.map((input: FormRenderItemProps, idx: number) => {*/}
+        {items.map((item: any, i: number) => {
+            const classArr: string[] = [ 'row' ];
 
-        {/*            return <div*/}
-        {/*                className={'columnClass'}*/}
-        {/*                key={idx}>*/}
-        {/*                /!*<Input*!/*/}
-        {/*                /!*    // variant="floating"*!/*/}
-        {/*                /!*    // {...hook.register(input.input.id)}*!/*/}
-        {/*                /!*    hook={{ register: hook.register }}*!/*/}
-        {/*                /!*    {...input}*!/*/}
-        {/*                /!*    // {...inputProps}*!/*/}
-        {/*                /!*    // input={{ type: f.type, id: f.handle, label: 'label' }}*!/*/}
-        {/*                /!*    // hook={{ register, name: f.handle }}*!/*/}
-        {/*                /!*/>*!/*/}
-        {/*            </div>;*/}
-        {/*        })}*/}
-        {/*    </div>;*/}
-        {/*})}*/}
+            if (i !== items.length - 1 && spacing) classArr.push(`mb-${spacing}`);
+            if (spacing) classArr.push(`gy-${spacing}`);
+
+            return <div
+                key={i}
+                className={joinClassnameString(classArr)}>
+                {item.children.map((input: FormRenderItemProps, idx: number) => {
+                    const columnClass = getResponsiveClass({ obj: input.size, className: 'col' });
+                    const { validation, ...inputProps } = input;
+
+                    return <div
+                        className={columnClass}
+                        key={idx}>
+                        <Input
+                            hook={{ register: hook.register }}
+                            validation={{
+                                isError: hook.errors[input.input.id] as unknown as boolean,
+                                message: hook.errors[input.input.id]?.type === 'pattern' ? 'PATTERN ERR' : input.validation?.message
+                            }}
+                            {...inputProps} />
+                    </div>;
+                })}
+            </div>;
+        })}
     </>
 );
 

@@ -1,0 +1,6 @@
+@mixin input-floating-focus($child) {
+    &:focus #{$child},
+    &:not(:placeholder-shown) #{$child} {
+        @content
+    }
+}

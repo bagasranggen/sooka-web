@@ -65,7 +65,7 @@ $form-floating-padding-x: 0;
 $form-floating-padding-y: .5rem;
 $form-floating-input-padding-t: 2rem;
 $form-floating-input-padding-b: .5rem;
-$form-floating-label-transform: scale(.5) translateY(-.85rem) translateX(.15rem);
+$form-floating-label-transform: scale(.35) translateY(0) translateX(.15rem);
 $form-floating-transition-timing: .15s;
 $form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
 
@@ -90,4 +90,4 @@ $font-sizes-set: (
 );
 
 // Font Weight
-$font-weights-set: 100, 200, 400, 600, 700;
+$font-weights-set: 100, 200, 300, 400, 600, 700;

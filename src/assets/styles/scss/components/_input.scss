@@ -1,2 +1,29 @@
 .input {
+    &-group {
+        &--floating {
+
+            .form-control {
+                border-top-width: 0;
+                border-left-width: 0;
+                border-right-width: 0;
+                border-color: transparentize($sooka-dark, .85);
+                font-size: 2.8rem;
+                font-weight: 300;
+
+                ~ label {
+                    font-weight: 200;
+                }
+
+                @include input-floating-focus('~ label') {
+                    font-weight: 400;
+                }
+            }
+
+            label {
+                font-size: 3.5rem;
+                line-height: 1;
+            }
+            
+        }
+    }
 }

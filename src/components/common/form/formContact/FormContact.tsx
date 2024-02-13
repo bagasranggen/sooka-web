@@ -2,29 +2,22 @@
 
 import React from 'react';
 
-import { FORM_CONTACT, FORM_CONTACT_INPUT, FORM_VARIANTS } from '@/libs/form';
+import { FORM_CONTACT_INPUT, FORM_VARIANTS } from '@/libs/form';
+import { FORM_CONTACT } from '@/libs/form/formContact';
+
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Input from '@/components/common/input/Input';
-import { Col, Row } from 'react-bootstrap';
 import FormRender from '@/components/common/form/FormRender';
 
 export type FormContactProps = {
     variant: typeof FORM_VARIANTS.CONTACT;
 };
 
-// type FormProps = Record<typeof FORM_CONTACT_INPUT[keyof typeof FORM_CONTACT_INPUT], string>
 type FormProps = {
     [FORM_CONTACT_INPUT.FIRST_NAME]: string,
-    [FORM_CONTACT_INPUT.LAST_NAME]: number,
+    [FORM_CONTACT_INPUT.EMAIL]: number,
 }
 
 const FormContact = ({}: FormContactProps): React.ReactElement => {
-    const t: FormProps = {
-        firstName: '',
-        lastName: 55,
-    };
-
-
     const {
         register,
         handleSubmit,
@@ -32,17 +25,20 @@ const FormContact = ({}: FormContactProps): React.ReactElement => {
         formState: { errors },
     } = useForm<FormProps>({ mode: 'onChange' });
 
-    const onSubmitHandler: SubmitHandler<FormProps> = (data) => {
+    const onSubmitHandler: SubmitHandler<FormProps> = (data: FormProps) => {
         console.log(data);
     };
 
     return (
         <form onSubmit={handleSubmit(onSubmitHandler)}>
             <FormRender
+                spacing={3}
                 items={FORM_CONTACT}
-                hook={{ register: register }} />
-
-            {/*<button type="submit">submit</button>*/}
+                hook={{ register: register, errors: errors }} />
+            <button
+                className=""
+                type="submit">SUBMIT
+            </button>
         </form>
     );
 };
