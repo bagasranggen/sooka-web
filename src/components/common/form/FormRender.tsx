@@ -47,7 +47,7 @@ const FormRender = ({ items, hook, spacing }: FormRenderProps): React.ReactEleme
                             hook={{ register: hook.register }}
                             validation={{
                                 isError: hook.errors[input.input.id] as unknown as boolean,
-                                message: hook.errors[input.input.id]?.type === 'pattern' ? 'PATTERN ERR' : input.validation?.message
+                                message: hook.errors[input.input.id]?.type === 'pattern' ? input.validation?.additionalMessage : input.validation?.message
                             }}
                             {...inputProps} />
                     </div>;

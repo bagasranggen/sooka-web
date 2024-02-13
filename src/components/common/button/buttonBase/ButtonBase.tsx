@@ -18,7 +18,7 @@ export type ButtonAnchorProps = {
 } & LinkProps & ButtonCommonProps;
 
 export type ButtonRegularProps = {
-    type: typeof BUTTON_TYPES.BUTTON;
+    type: typeof BUTTON_TYPES.BUTTON | typeof BUTTON_TYPES.SUBMIT | typeof BUTTON_TYPES.RESET;
     event?: Partial<ButtonEventProps>;
 } & ButtonCommonProps;
 
@@ -26,12 +26,14 @@ export type ButtonBaseProps = ButtonAnchorProps | ButtonRegularProps;
 
 const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
     switch (props.type) {
-        case 'button':
+        case BUTTON_TYPES.BUTTON:
+        case BUTTON_TYPES.SUBMIT:
+        case BUTTON_TYPES.RESET:
             const { event, ...restButton } = props;
 
             return <button {...restButton} onClick={event?.onClick}>{props.children}</button>;
 
-        case 'anchor':
+        case BUTTON_TYPES.ANCHOR:
             const { openNewTab, ...restAnchor } = props;
 
             return <Link {...restAnchor} {...openNewTab ? { target: '_blank' } : {}}>{props.children}</Link>;

@@ -3,11 +3,12 @@ import ButtonRipple from '@/components/common/button/buttonRipple/ButtonRipple';
 
 export const BUTTON_TYPES = {
     BUTTON: 'button',
+    SUBMIT: 'submit',
+    RESET: 'reset',
     ANCHOR: 'anchor',
 } as const;
 
 export const BUTTON_VARIANTS = {
-    // BLOCK: 'block',
     RIPPLE: 'ripple',
     NAV_TOGGLE: 'nav-toggle',
 } as const;

@@ -7,6 +7,7 @@ import { FORM_CONTACT } from '@/libs/form/formContact';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import FormRender from '@/components/common/form/FormRender';
+import Button, { ButtonWrapper } from '@/components/common/button/Button';
 
 export type FormContactProps = {
     variant: typeof FORM_VARIANTS.CONTACT;
@@ -35,10 +36,15 @@ const FormContact = ({}: FormContactProps): React.ReactElement => {
                 spacing={3}
                 items={FORM_CONTACT}
                 hook={{ register: register, errors: errors }} />
-            <button
-                className=""
-                type="submit">SUBMIT
-            </button>
+
+            <ButtonWrapper className="mt-3">
+                <Button
+                    variant="ripple"
+                    color="primary"
+                    type="submit"
+                >SUBMIT</Button>
+            </ButtonWrapper>
+
         </form>
     );
 };
