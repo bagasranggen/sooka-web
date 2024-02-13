@@ -25,6 +25,7 @@
         @each $breakpoint in map-keys($breakpoints) {
             $infix: breakpoint-infix($breakpoint, $breakpoints);
 
+            .fs#{$infix}-#{$key},
             %fs#{$infix}-#{$key} {
                 @include media-breakpoint-up($breakpoint) {
                     font-size: $value !important;
@@ -39,6 +40,7 @@
         @each $breakpoint in map-keys($breakpoints) {
             $infix: breakpoint-infix($breakpoint, $breakpoints);
 
+            .fw#{$infix}-#{$value},
             %fw#{$infix}-#{$value} {
                 @include media-breakpoint-up($breakpoint) {
                     font-weight: $value !important;
