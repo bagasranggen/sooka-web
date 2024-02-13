@@ -10,9 +10,9 @@ const Page = ({}: PageProps): React.ReactElement => {
         <>
             <section className="ts--padding mt-10">
                 <Container>
-                    <Row>
+                    <Row className="gx-lg-6">
                         <Col lg={5}>
-                            <h1>Lorem ipsum dolor sit amet, consectetur.</h1>
+                            <h1 className="fs-80 fw-300">Can We Help?</h1>
                         </Col>
                         <Col lg={7}>
                             <Form variant="contact" />
