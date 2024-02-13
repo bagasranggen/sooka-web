@@ -7,6 +7,15 @@ import type { ButtonRippleProps } from '@/components/common/button/buttonRipple/
 
 export type ButtonProps = ButtonNavToggleProps | ButtonRippleProps;
 
+export type ButtonWrapperProps = {
+    className?: string;
+    children: React.ReactNode;
+}
+
+export const ButtonWrapper = ({ className, children }: ButtonWrapperProps): React.ReactElement => (
+    <div className={`btn-group${className ? ` ${className}` : ''}`}>{children}</div>
+);
+
 const Button = (props: ButtonProps): React.ReactElement => createDynamicElement({
     handles: BUTTON_HANDLES,
     selector: props.variant,
