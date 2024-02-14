@@ -5,6 +5,8 @@ import type { NumericRange, CreateArrayWithLengthX } from '@/libs/@types';
 
 export type NavigationItemProps = NextLinkProps & { label: string; target?: '_blank' | '_self' };
 export type NavigationProps = NavigationItemProps[];
+export type PageProps = { entries: { [key: string]: string | number } };
+export type DynamicPageProps = { params: Partial<{ slug: string; [key: string]: string }>; searchParams?: { [key: string]: string | string[] | undefined } };
 export type LinkProps = NextLinkProps & { openNewTab?: boolean };
 export type ButtonColorsProps = 'dark' | 'light' | 'primary';
 export type ButtonSizesProps = 'sm' | 'md' | 'lg';
