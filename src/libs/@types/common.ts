@@ -3,7 +3,7 @@ import React from 'react';
 import { LinkProps as NextLinkProps } from 'next/link';
 import type { NumericRange, CreateArrayWithLengthX } from '@/libs/@types';
 
-export type NavigationItemProps = NextLinkProps & { label: string };
+export type NavigationItemProps = NextLinkProps & { label: string; target?: '_blank' | '_self' };
 export type NavigationProps = NavigationItemProps[];
 export type LinkProps = NextLinkProps & { openNewTab?: boolean };
 export type ButtonColorsProps = 'dark' | 'light' | 'primary';

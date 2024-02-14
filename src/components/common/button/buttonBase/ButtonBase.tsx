@@ -7,6 +7,7 @@ import { BUTTON_TYPES } from '@/libs/handles';
 export type ButtonCommonProps = {
     children: React.ReactNode;
     className?: string;
+    title?: string;
 }
 
 export type ButtonEventProps = {

@@ -5,19 +5,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import type { NavigationItemProps } from '@/libs/@types';
-import { NAVIGATION, NAVIGATION_TRANSPARENT } from '@/libs/mock';
+import { NAVIGATION_TRANSPARENT } from '@/libs/mock';
 import { getActivePath, joinClassnameString, NavigationEvents } from '@/libs/utils';
 
 import { useMeasure, useMouseWheel, useWindowScroll } from 'react-use';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 import Button from '@/components/common/button/Button';
 import Offcanvas from '@/components/layout/offcanvas/Offcanvas';
 import Icon from '@/components/common/icon/Icon';
 
-export type NavigationProps = {};
+export type NavigationProps = {
+    items: NavigationItemProps[]
+};
 
-const Navigation = ({}: NavigationProps): React.ReactElement => {
+const Navigation = ({ items }: NavigationProps): React.ReactElement => {
     const pathname = usePathname();
     const active = getActivePath(pathname);
     const isTransparent = NAVIGATION_TRANSPARENT.includes(active);
@@ -71,7 +73,6 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
             className={navbarClass}
             ref={navRef as unknown as React.RefObject<HTMLElement>}
             expand="lg"
-            // {...{ [isTransparent ? 'fixed' : 'sticky']: 'top' }}
             fixed="top"
             data-bs-theme="light"
             bg={bgIsTransparent ? 'transparent' : 'primary'}
@@ -89,14 +90,16 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
                     color="light"
                     className="d-lg-none"
                     isOpen={show}
-                    event={{ onClick: () => setShow(!show) }} />
+                    event={{ onClick: () => setShow(!show) }}
+                    title="Mobile Toggle Button" />
                 <Navbar.Collapse>
                     <Nav className="ms-auto">
-                        {NAVIGATION.map((nav: NavigationItemProps, i: number) => {
+                        {items.map((nav: NavigationItemProps, i: number) => {
                             return <Nav.Link
                                 key={i}
                                 as={Link}
                                 href={nav.href as string}
+                                {...nav.target ? { target: nav.target } : {}}
                                 active={nav.href === active}>{nav.label}</Nav.Link>;
                         })}
                     </Nav>
@@ -106,7 +109,7 @@ const Navigation = ({}: NavigationProps): React.ReactElement => {
 
         <Offcanvas
             variant="navigation"
-            items={NAVIGATION}
+            items={items}
             state={{ show, setShow }} />
     </>;
 };
