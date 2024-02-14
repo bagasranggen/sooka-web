@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { PRODUCT_LISTING } from '@/libs/mock';
-
 import { Container } from 'react-bootstrap';
 import ProductListing, { type ProductListingProps } from '@/components/page/productListing/components/ProductListing';
 import Banner from '@/components/common/banner/Banner';
@@ -29,7 +27,7 @@ const ProductListingIndex = ({ page, entries }: ProductListingIndexProps): React
                 <ProductListing
                     option={{ filterKey: 'category' }}
                     filterItems={entries.categories}
-                    productItems={PRODUCT_LISTING} />
+                    productItems={entries.products} />
             </Container>
         </section>
     </>

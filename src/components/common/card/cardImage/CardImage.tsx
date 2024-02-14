@@ -10,7 +10,9 @@ import Button from '@/components/common/button/Button';
 export type CardImageItemProps = {
     name: string;
     category: string;
-    ingredients: string;
+    isPackage?: boolean;
+    ingredients?: string;
+    package?: string;
     images: PictureItemProps[];
 }
 
@@ -27,7 +29,7 @@ const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.Reac
     </Col>
 );
 
-const CardImageItem = ({ name, category, ingredients, images }: CardImageItemProps): React.ReactElement => {
+const CardImageItem = ({ name, category, isPackage, ingredients, images }: CardImageItemProps): React.ReactElement => {
     return <Col>
         <figure className="card card--image">
             <Picture
@@ -36,10 +38,10 @@ const CardImageItem = ({ name, category, ingredients, images }: CardImageItemPro
             <figcaption className="card__caption">
                 {/*<h3>{category}</h3>*/}
                 <h2>{name}</h2>
-                <p>
-                    <b>Ingredients: </b>
+                {ingredients && <p>
+                    <b>{isPackage ? 'Contents' : 'Ingredients'}: </b>
                     {ingredients}
-                </p>
+                </p>}
                 <Button
                     type="anchor"
                     href={`getWhatsappEncoded(name)`}

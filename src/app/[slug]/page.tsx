@@ -28,10 +28,14 @@ export const generateMetadata = async ({ params }: PageProps) => {
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
     const { data: { data: categories } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
+    const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING);
+
+    // console.log(params.slug, products);
 
     return <ProductListingIndex
         page={page}
         entries={{
+            products,
             categories,
         }} />;
 };

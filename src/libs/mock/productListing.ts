@@ -2,7 +2,7 @@ import { createMockData } from '@/libs/factory';
 import { faker } from '@faker-js/faker';
 import { resizeFakerImage } from '@/libs/utils/resizeFakerImage';
 
-const PRODUCT_LISTING_IMAGE_SIZE = [
+export const PRODUCT_LISTING_IMAGE_SIZE = [
     {
         media: 992,
         width: 800,
@@ -26,6 +26,7 @@ export const PRODUCT_LISTING = createMockData(10).map((_: any, i: number) => {
     return {
         name,
         category: faker.commerce.productMaterial().toLowerCase(),
+        isPackage: i % 2 === 0,
         ingredients: faker.commerce.productDescription(),
         images: PRODUCT_LISTING_IMAGE_SIZE.map((image: any) => ({
             src: resizeFakerImage(productImage, image.width, image.height),
