@@ -1,11 +1,11 @@
 import React from 'react';
 
-import type { DynamicPageProps } from "@/libs/@types";
-import { axiosClient } from "@/libs/fetcher";
-import { GOOGLE_SPREADSHEET_VARIANT } from "@/libs/handles";
-import type { FilterProductItemProps } from "@/components/common/filter/filterProduct/FilterProduct";
-import ProductListingIndex from "@/components/page/productListing/ProductListingIndex";
-import { notFound } from "next/navigation";
+import type { DynamicPageProps } from '@/libs/@types';
+import { axiosClient } from '@/libs/fetcher';
+import { GOOGLE_SPREADSHEET_VARIANT } from '@/libs/handles';
+import type { FilterProductItemProps } from '@/components/common/filter/filterProduct/FilterProduct';
+import ProductListingIndex from '@/components/page/productListing/ProductListingIndex';
+import { notFound } from 'next/navigation';
 
 export type PageProps = DynamicPageProps;
 
@@ -28,9 +28,9 @@ export const generateMetadata = async ({ params }: PageProps) => {
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
     const { data: { data: categories } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
-    const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING);
+    const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING + `/${params.slug}`);
 
-    // console.log(params.slug, products);
+    console.log(params.slug, products);
 
     return <ProductListingIndex
         page={page}
