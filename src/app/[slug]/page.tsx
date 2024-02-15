@@ -1,11 +1,12 @@
 import React from 'react';
+import { notFound } from 'next/navigation';
 
 import type { DynamicPageProps } from '@/libs/@types';
 import { axiosClient } from '@/libs/fetcher';
 import { GOOGLE_SPREADSHEET_VARIANT } from '@/libs/handles';
+
 import type { FilterProductItemProps } from '@/components/common/filter/filterProduct/FilterProduct';
 import ProductListingIndex from '@/components/page/productListing/ProductListingIndex';
-import { notFound } from 'next/navigation';
 
 export type PageProps = DynamicPageProps;
 
