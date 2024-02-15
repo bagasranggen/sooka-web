@@ -30,8 +30,6 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const { data: { data: categories } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
     const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING + `/${params.slug}`);
 
-    console.log(params.slug, products);
-
     return <ProductListingIndex
         page={page}
         entries={{

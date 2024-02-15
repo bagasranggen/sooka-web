@@ -1,5 +1,5 @@
-import { createMockData } from '@/libs/factory';
 import { faker } from '@faker-js/faker';
+import { createMockData } from '@/libs/factory/createMockData';
 import { resizeFakerImage } from '@/libs/utils/resizeFakerImage';
 
 export const PRODUCT_LISTING_IMAGE_SIZE = [

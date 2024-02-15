@@ -8,10 +8,6 @@ export type ProductListingDataProps = {} & CardImageItemProps;
 export const createProductListingData = (datum: ProductListingDataProps) => {
     const productImage = faker.image.urlPicsumPhotos();
 
-    console.log(datum.name, datum.ingredients, datum.package);
-
-    // console.log(datum.name, imagesArr.length);
-
     return {
         name: datum.name,
         category: datum.category,

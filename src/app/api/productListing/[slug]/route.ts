@@ -7,10 +7,8 @@ export const GET = async (request: Request, context: { params: DynamicPageProps[
     const slug = context.params.slug;
 
     const data = await clientSpreadsheet({ type: 'productListing' });
-    let products = data.map((datum: any) => createProductListingData(datum));
-    if (slug) {
-        products = [ ...products ].filter((datum: any) => datum.category === slug);
-    }
+    const allProducts = data.map((datum: any) => createProductListingData(datum));
+    const products = allProducts.filter((datum: any) => datum.category === slug);
 
     return NextResponse.json({ data: products });
 };
