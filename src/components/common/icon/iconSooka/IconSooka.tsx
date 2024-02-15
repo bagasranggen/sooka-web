@@ -10,6 +10,7 @@ export type IconSookaProps = {
 const IconSooka = ({ color }: IconSookaProps): React.ReactElement => (
 
     <svg
+        suppressHydrationWarning={true}
         version="1.1"
         id="sooka_logo"
         xmlns="http://www.w3.org/2000/svg"

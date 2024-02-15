@@ -70,6 +70,7 @@ const Navigation = ({ items }: NavigationProps): React.ReactElement => {
         </Suspense>
 
         <Navbar
+            suppressHydrationWarning={true}
             className={navbarClass}
             ref={navRef as unknown as React.RefObject<HTMLElement>}
             expand="lg"
