@@ -46,7 +46,7 @@ const CardImageItem = ({ name, category, isPackage, ingredients, images }: CardI
                 </p>}
                 <Button
                     type="anchor"
-                    href={`getWhatsappEncoded(name)`}
+                    href={getWhatsappEncoded(name)}
                     size="sm"
                     variant="ripple"
                     color="primary"
