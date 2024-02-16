@@ -2,6 +2,7 @@ import React from 'react';
 
 import { CARD_VARIANTS } from '@/libs/handles';
 import { getWhatsappEncoded } from '@/libs/utils';
+import { createAnimation } from '@/libs/factory';
 
 import { Col, Row } from 'react-bootstrap';
 import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
@@ -31,10 +32,11 @@ const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.Reac
 
 const CardImageItem = ({ name, category, isPackage, ingredients, images }: CardImageItemProps): React.ReactElement => {
     return <Col>
-        <figure className="card card--image">
+        <figure
+            className="card card--image"
+            {...createAnimation({ type: 'image-zoom' })}>
             <Picture
-                items={images}
-                animation={{ type: 'image-zoom' }} />
+                items={images} />
             <figcaption className="card__caption">
                 {/*<h3>{category}</h3>*/}
                 <h2>{name}</h2>
