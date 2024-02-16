@@ -8,19 +8,38 @@
     @extend %pre-fade-in-animation;
 }
 
+@mixin image-zoom {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        @include make-transition(transform, .2s);
+    }
+}
+
+@mixin image-zoom-animation {
+    @include hover() {
+        img {
+            transform: scale(1.2);
+        }
+    }
+}
+
 picture[data-animation='image-zoom'] {
     @include media-breakpoint-up(lg) {
-        position: relative;
-        overflow: hidden;
+        @include image-zoom;
+        @include image-zoom-animation;
+    }
+}
 
-        img {
-            @include make-transition(transform, .2s);
+[data-animation='image-zoom'] {
+    picture {
+        @include media-breakpoint-up(lg) {
+            @include image-zoom;
         }
+    }
 
-        @include hover() {
-            img {
-                transform: scale(1.2);
-            }
-        }
+    @include media-breakpoint-up(lg) {
+        @include image-zoom-animation;
     }
 }
