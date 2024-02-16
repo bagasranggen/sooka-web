@@ -1,17 +1,21 @@
 import React from 'react';
 
-import { BANNER_CAROUSELS } from '@/libs/mock';
-
 import { Container } from 'react-bootstrap';
 import Slider from '@/components/common/slider/Slider';
+import type { SliderImageProps } from '@/components/common/slider/sliderImage/SliderImage';
 
-export type HomepageIndexProps = {};
+export type HomepageIndexProps = {
 
-const HomepageIndex = ({}: HomepageIndexProps): React.ReactElement => {
+    entries: {
+        carousel: SliderImageProps['items']
+    }
+};
+
+const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
     return <>
         <Slider
             variant="image"
-            items={BANNER_CAROUSELS} />
+            items={entries.carousel} />
 
         <section className="mt-10">
             <Container>
