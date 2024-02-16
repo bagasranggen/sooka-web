@@ -15,7 +15,7 @@ import 'swiper/css/navigation';
 
 export type SliderImageItemProps = {
     link: LinkProps;
-    image: ImageProps[];
+    images: ImageProps[];
 }
 
 export type SliderImageProps = {
@@ -41,8 +41,8 @@ const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
                 className: 'slider-image__item',
             } : {};
 
-            const { props: { srcSet: srcMobile } } = getImageProps(item.image[0]);
-            const { props: { srcSet: srcDesktop } } = getImageProps(item.image[1]);
+            const { props: { srcSet: srcMobile } } = getImageProps(item.images[1]);
+            const { props: { srcSet: srcDesktop } } = getImageProps(item.images[0]);
             const backgroundImageMobile = getBackgroundImage(srcMobile);
             const backgroundImageDesktop = getBackgroundImage(srcDesktop);
             const style = {
