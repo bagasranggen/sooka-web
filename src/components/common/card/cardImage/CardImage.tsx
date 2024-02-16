@@ -60,7 +60,7 @@ const CardImage = ({ items }: CardImageProps): React.ReactElement => {
     const isEmpty = items.length === 0;
 
     return (
-        <Row className={`${isEmpty ? '' : 'row-cols-1 row-cols-md-2 '}gy-4 gx-lg-8`}>
+        <Row className={`${isEmpty ? '' : 'row-cols-1 row-cols-sm-2 '}gy-4 gx-lg-8`}>
             {!isEmpty ? items.map((item: CardImageItemProps, i: number) => <CardImageItem key={i} {...item} />) : <CardImageEmpty>No Product Found</CardImageEmpty>}
         </Row>
     );
