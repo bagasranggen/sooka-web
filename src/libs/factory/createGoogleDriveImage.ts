@@ -13,6 +13,6 @@ export const createGoogleDriveImage = ({ alt, imageSizes, imageSources }: Google
     return imageSources.map((image: string, i: number) => ({
         src: getGoogleDriveImage(image),
         alt,
-        ...(imageSizes[i] as any)[0],
+        ...imageSizes[i],
     }));
 };
