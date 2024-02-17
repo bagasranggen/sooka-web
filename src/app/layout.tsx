@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
     const { layout } = reduxStore.getState();
-    // const { data: { data } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.NAVIGATION);
+    const { data: { data: navigation } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.NAVIGATION);
 
     return (
         <html lang="en">
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             suppressHydrationWarning={true}
             {...layout.height && { style: layout.height } as React.HTMLAttributes<HTMLElement>}>
         <Providers>
-            <Navigation items={[]} />
+            <Navigation items={navigation} />
             <Suspense fallback={null}>
                 <MainLayout>{children}</MainLayout>
             </Suspense>
