@@ -4,6 +4,7 @@ import { ButtonColorsProps } from '@/libs/@types';
 
 export type IconSookaProps = {
     variant: typeof ICON_VARIANTS.SOOKA;
+    id?: string;
     color: 'primary' | 'light';
 };
 
