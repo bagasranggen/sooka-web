@@ -16,6 +16,8 @@
     }
 
     &__icon {
+        @extend %pre-fade-in-animation;
+
         max-width: 10vw;
     }
 }

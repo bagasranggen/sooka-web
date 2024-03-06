@@ -17,5 +17,5 @@ export const preloaderAnimation = ({ element }: BaseAnimationProps) => {
     .add(gsap.effects.fade(icon))
     .add(gsap.effects.wiggle(icon, {
         events: { onFinish: animationEndHandler }
-    }));
+    }, '-.015'));
 };

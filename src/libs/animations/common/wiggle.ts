@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import type { BaseAnimationProps } from '@/libs/@types';
 
 export const baseWiggleAnimation = ({ element, config }: BaseAnimationProps) => {
-    const tl = gsap.timeline({ repeat: 1, repeatDelay: .25, onComplete: () => gsap.set(element, { clearProps: true }) as unknown as void });
+    const tl = gsap.timeline({ onComplete: () => gsap.set(element, { clearProps: true }) as unknown as void });
 
     tl
     .to(element, { rotate: '10deg' })
