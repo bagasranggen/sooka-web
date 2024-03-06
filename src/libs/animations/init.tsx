@@ -1,6 +1,6 @@
 'use client';
 
-import { InitAnimations } from '@/libs/animations/InitAnimations';
+import { Init as InitAnimations } from '@/libs/animations/InitAnimations';
 
 export const Init = () => {
     // Run data-attribute-animation
