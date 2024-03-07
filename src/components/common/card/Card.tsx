@@ -6,10 +6,11 @@ import type { CardImageProps } from '@/components/common/card/cardImage/CardImag
 
 export type CardProps = CardImageProps;
 
-const Card = (props: CardProps): React.ReactElement => createDynamicElement({
-    handles: CARD_HANDLES,
-    selector: props.variant,
-    props,
-});
+const Card = (props: CardProps): React.ReactElement =>
+    createDynamicElement({
+        handles: CARD_HANDLES,
+        selector: props.variant,
+        props,
+    });
 
 export default Card;

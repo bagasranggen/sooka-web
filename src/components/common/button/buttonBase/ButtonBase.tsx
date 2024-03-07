@@ -8,15 +8,16 @@ export type ButtonCommonProps = {
     children: React.ReactNode;
     className?: string;
     title?: string;
-}
+};
 
 export type ButtonEventProps = {
     onClick: () => void;
-}
+};
 
 export type ButtonAnchorProps = {
     type: typeof BUTTON_TYPES.ANCHOR;
-} & LinkProps & ButtonCommonProps;
+} & LinkProps &
+    ButtonCommonProps;
 
 export type ButtonRegularProps = {
     type: typeof BUTTON_TYPES.BUTTON | typeof BUTTON_TYPES.SUBMIT | typeof BUTTON_TYPES.RESET;
@@ -32,12 +33,24 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
         case 'reset':
             const { event, ...restButton } = props;
 
-            return <button {...restButton} onClick={event?.onClick}>{props.children}</button>;
+            return (
+                <button
+                    {...restButton}
+                    onClick={event?.onClick}>
+                    {props.children}
+                </button>
+            );
 
         case 'anchor':
             const { openNewTab, ...restAnchor } = props;
 
-            return <Link {...restAnchor} {...openNewTab ? { target: '_blank' } : {}}>{props.children}</Link>;
+            return (
+                <Link
+                    {...restAnchor}
+                    {...(openNewTab ? { target: '_blank' } : {})}>
+                    {props.children}
+                </Link>
+            );
     }
 };
 

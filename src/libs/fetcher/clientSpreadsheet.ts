@@ -9,14 +9,12 @@ const serviceAccountAuth = new JWT({
     // see "Authentication" section in docs for more info
     email: CREDENTIALS.client_email,
     key: CREDENTIALS.private_key,
-    scopes: [
-        'https://www.googleapis.com/auth/spreadsheets',
-    ],
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
 export type ClientSpreadsheetProps = {
-    type: typeof GOOGLE_SPREADSHEET_VARIANT[keyof typeof GOOGLE_SPREADSHEET_VARIANT]
-}
+    type: (typeof GOOGLE_SPREADSHEET_VARIANT)[keyof typeof GOOGLE_SPREADSHEET_VARIANT];
+};
 
 export const clientSpreadsheet = async ({ type }: ClientSpreadsheetProps) => {
     const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID as string, serviceAccountAuth);

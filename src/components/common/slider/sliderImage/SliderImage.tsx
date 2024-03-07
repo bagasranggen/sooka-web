@@ -16,17 +16,17 @@ import 'swiper/css/navigation';
 export type SliderImageItemProps = {
     link: LinkProps;
     images: ImageProps[];
-}
+};
 
 export type SliderImageProps = {
     variant: typeof SLIDER_VARIANTS.IMAGE;
-    items: SliderImageItemProps[]
+    items: SliderImageItemProps[];
 };
 
 const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
     <Swiper
         navigation={true}
-        modules={[ Navigation ]}
+        modules={[Navigation]}
         autoplay={{
             delay: 2500,
             disableOnInteraction: false,
@@ -36,13 +36,19 @@ const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
         className="slider-image">
         {items.map((item: SliderImageItemProps, i: number) => {
             const ConditionalLink: any = item?.link?.href ? Link : React.Fragment;
-            const conditionProps = item?.link?.href ? {
-                ...item?.link,
-                className: 'slider-image__item',
-            } : {};
+            const conditionProps = item?.link?.href
+                ? {
+                      ...item?.link,
+                      className: 'slider-image__item',
+                  }
+                : {};
 
-            const { props: { srcSet: srcMobile } } = getImageProps(item.images[1]);
-            const { props: { srcSet: srcDesktop } } = getImageProps(item.images[0]);
+            const {
+                props: { srcSet: srcMobile },
+            } = getImageProps(item.images[1]);
+            const {
+                props: { srcSet: srcDesktop },
+            } = getImageProps(item.images[0]);
             const backgroundImageMobile = getBackgroundImage(srcMobile);
             const backgroundImageDesktop = getBackgroundImage(srcDesktop);
             const style = {
@@ -50,12 +56,14 @@ const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
                 '--background-lg': backgroundImageDesktop,
             } as React.CSSProperties;
 
-            return <SwiperSlide
-                key={i}
-                className="oly--20"
-                style={style}>
-                <ConditionalLink {...conditionProps} />
-            </SwiperSlide>;
+            return (
+                <SwiperSlide
+                    key={i}
+                    className="oly--20"
+                    style={style}>
+                    <ConditionalLink {...conditionProps} />
+                </SwiperSlide>
+            );
         })}
     </Swiper>
 );

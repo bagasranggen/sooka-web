@@ -1,5 +1,5 @@
-import { ANIMATION_HANDLES } from "@/libs/handles";
-import { gsap } from "gsap";
+import { ANIMATION_HANDLES } from '@/libs/handles';
+import { gsap } from 'gsap';
 
 export const registerAnimation = () => {
     Object.keys(ANIMATION_HANDLES).map((key) => {

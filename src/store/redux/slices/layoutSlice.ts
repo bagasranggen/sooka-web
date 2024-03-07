@@ -14,7 +14,6 @@ export const layoutSlice = createSlice({
     // The `reducers` field lets us define reducers and generate associated actions
     reducers: {
         layoutHeight: (state, action: PayloadAction<LayoutSliceState['height']>) => {
-
             const updatedStyle: any = { ...state.height, ...action.payload };
 
             if (typeof document !== 'undefined') {

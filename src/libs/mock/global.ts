@@ -11,7 +11,7 @@ Saya ingin pesan *${product}*, apakah masih tersedia?`;
 
 export const FOOTER_ADDRESS = {
     ADDRESS: '8655 S BLACKSTONE AVENUE, CHICAGO, IL',
-    OPEN_HOUR: 'FRIDAY - SUNDAY, 9 AM-5 PM'
+    OPEN_HOUR: 'FRIDAY - SUNDAY, 9 AM-5 PM',
 };
 
 export const FOOTER_SOCIAL_MEDIA = [
@@ -23,6 +23,6 @@ export const FOOTER_SOCIAL_MEDIA = [
     {
         icon: 'CiMail',
         label: 'mail',
-        href: `mailto:${process.env.NEXT_PUBLIC_SC_MAIL}`
+        href: `mailto:${process.env.NEXT_PUBLIC_SC_MAIL}`,
     },
 ];

@@ -14,9 +14,9 @@ export type FormContactProps = {
 };
 
 type FormProps = {
-    [FORM_CONTACT_INPUT.FIRST_NAME]: string,
-    [FORM_CONTACT_INPUT.EMAIL]: number,
-}
+    [FORM_CONTACT_INPUT.FIRST_NAME]: string;
+    [FORM_CONTACT_INPUT.EMAIL]: number;
+};
 
 const FormContact = ({}: FormContactProps): React.ReactElement => {
     const {
@@ -35,16 +35,17 @@ const FormContact = ({}: FormContactProps): React.ReactElement => {
             <FormRender
                 spacing={3}
                 items={FORM_CONTACT}
-                hook={{ register: register, errors: errors }} />
+                hook={{ register: register, errors: errors }}
+            />
 
             <ButtonWrapper className="mt-3">
                 <Button
                     variant="ripple"
                     color="primary"
-                    type="submit"
-                >SUBMIT</Button>
+                    type="submit">
+                    SUBMIT
+                </Button>
             </ButtonWrapper>
-
         </form>
     );
 };

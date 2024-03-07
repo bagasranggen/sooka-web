@@ -17,18 +17,18 @@ export const Init = (selector?: string) => {
 
         const context = gsap.context(() => {
             // Common Animation
-            gsap.utils.toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`).forEach((element: any, i: number) => {
+            gsap.utils
+                .toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`)
+                .forEach((element: any, i: number) => {
+                    const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
+                    const config = getAnimationProps(element);
 
-                const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
-                const config = getAnimationProps(element);
-
-                gsap.effects?.[type] && gsap.effects?.[type](element, config, i);
-            });
+                    gsap.effects?.[type] && gsap.effects?.[type](element, config, i);
+                });
         });
 
         return () => context.revert();
-    }, [ selector, pathname ]);
-
+    }, [selector, pathname]);
 };
 
 export const InitAnimations = () => {

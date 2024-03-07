@@ -1,5 +1,5 @@
-import IconSooka from "@/components/common/icon/iconSooka/IconSooka";
-import IconCake from "@/components/common/icon/iconCake/IconCake";
+import IconSooka from '@/components/common/icon/iconSooka/IconSooka';
+import IconCake from '@/components/common/icon/iconCake/IconCake';
 
 export const ICON_VARIANTS = {
     SOOKA: 'sooka',

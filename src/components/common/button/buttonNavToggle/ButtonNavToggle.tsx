@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { BUTTON_VARIANTS } from '@/libs/handles';
-import type { ButtonColorsProps } from "@/libs/@types";
+import type { ButtonColorsProps } from '@/libs/@types';
 
 import ButtonBase, { type ButtonRegularProps } from '@/components/common/button/buttonBase/ButtonBase';
 
@@ -17,14 +17,16 @@ const ButtonNavToggle = ({ className, color, isOpen, event, ...rest }: ButtonNav
     const btnBaseClass = 'btn btn--unstyled btn--nav-toggle';
     const btnClass = `${btnBaseClass}${btnIsOpen}${btnColor}${className ? ` ${className}` : ''}`;
 
-    return <ButtonBase
-        type="button"
-        className={btnClass}
-        event={event}
-        {...rest}>
-        <span className="btn__icon btn__icon--left" />
-        <span className="btn__icon btn__icon--right" />
-    </ButtonBase>;
+    return (
+        <ButtonBase
+            type="button"
+            className={btnClass}
+            event={event}
+            {...rest}>
+            <span className="btn__icon btn__icon--left" />
+            <span className="btn__icon btn__icon--right" />
+        </ButtonBase>
+    );
 };
 
 export default ButtonNavToggle;

@@ -6,10 +6,11 @@ import type { FormContactProps } from '@/components/common/form/formContact/Form
 
 export type FormProps = FormContactProps;
 
-const Form = (props: FormProps): React.ReactElement => createDynamicElement({
-    handles: FORM_HANDLES,
-    selector: props.variant,
-    props
-});
+const Form = (props: FormProps): React.ReactElement =>
+    createDynamicElement({
+        handles: FORM_HANDLES,
+        selector: props.variant,
+        props,
+    });
 
 export default Form;

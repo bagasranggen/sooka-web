@@ -19,29 +19,33 @@ const ProductListing = ({ option, filterItems, productItems }: ProductListingPro
     const searchParams = useSearchParams();
     const activeCategory = searchParams?.get(option.filterKey) ?? '';
 
-    const [ items, setItems ] = useState<ProductListingProps['productItems']>(productItems);
+    const [items, setItems] = useState<ProductListingProps['productItems']>(productItems);
 
     useEffect(() => {
         if (!activeCategory) {
             setItems(productItems);
             return;
         }
-        const filtered = [ ...productItems ].filter((item: CardImageItemProps) => item.category === activeCategory);
+        const filtered = [...productItems].filter((item: CardImageItemProps) => item.category === activeCategory);
         setItems(filtered);
-    }, [ activeCategory, productItems ]);
+    }, [activeCategory, productItems]);
 
-    return <>
-        {filterItems.length > 0 && (
-            <Filter
-                className="text-end"
-                variant="product"
-                options={{ filterKey: option.filterKey }}
-                items={filterItems} />
-        )}
-        <Card
-            variant="image"
-            items={items} />
-    </>;
+    return (
+        <>
+            {filterItems.length > 0 && (
+                <Filter
+                    className="text-end"
+                    variant="product"
+                    options={{ filterKey: option.filterKey }}
+                    items={filterItems}
+                />
+            )}
+            <Card
+                variant="image"
+                items={items}
+            />
+        </>
+    );
 };
 
 export default ProductListing;

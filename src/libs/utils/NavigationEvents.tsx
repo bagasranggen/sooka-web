@@ -3,9 +3,12 @@
 import { useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 
-export const NavigationEvents = ({ startHandler, endHandler }: {
+export const NavigationEvents = ({
+    startHandler,
+    endHandler,
+}: {
     startHandler?: () => void;
-    endHandler?: () => void
+    endHandler?: () => void;
 }) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -27,7 +30,7 @@ export const NavigationEvents = ({ startHandler, endHandler }: {
         };
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ pathname, searchParams ]);
+    }, [pathname, searchParams]);
 
     return null;
 };

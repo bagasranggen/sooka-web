@@ -3,7 +3,7 @@ import React from 'react';
 import type { AnimationProps, ImageZoomAnimationProps, Prettify } from '@/libs/@types';
 import { COMMON_ANIMATIONS } from '@/libs/handles';
 
-type CreateAnimationProps = Prettify<(AnimationProps | ImageZoomAnimationProps)>;
+type CreateAnimationProps = Prettify<AnimationProps | ImageZoomAnimationProps>;
 
 export const createAnimation = (props: CreateAnimationProps) => {
     switch (props.type) {
@@ -28,7 +28,7 @@ export const createAnimation = (props: CreateAnimationProps) => {
         default:
             return {
                 [COMMON_ANIMATIONS.ATTRIBUTES.TYPE]: props.type,
-                ...props.delay ? { [COMMON_ANIMATIONS.ATTRIBUTES.DELAY]: props.delay } : {},
+                ...(props.delay ? { [COMMON_ANIMATIONS.ATTRIBUTES.DELAY]: props.delay } : {}),
             };
     }
 };

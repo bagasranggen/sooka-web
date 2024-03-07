@@ -33,7 +33,7 @@ export const PRODUCT_LISTING = createMockData(10).map((_: any, i: number) => {
             width: image.width,
             height: image.height,
             alt: name,
-            ...image?.media ? { media: image.media } : {},
-        }))
+            ...(image?.media ? { media: image.media } : {}),
+        })),
     };
 });

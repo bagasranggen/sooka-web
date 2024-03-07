@@ -15,7 +15,7 @@ export const buttonRipple = ({ element }: BaseAnimationProps) => {
 
         gsap.to(ripple, {
             scale: type === 'enter' ? 30 : 0,
-            duration: .45
+            duration: 0.45,
         });
     };
 

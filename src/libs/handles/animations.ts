@@ -22,11 +22,15 @@ export const COMMON_ANIMATIONS = {
     ATTRIBUTES: {
         TYPE: 'data-animation',
         DELAY: 'data-animation-delay',
-    }
+    },
 };
 
 export const ANIMATION_HANDLES = {
-    ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.FADE, animation: baseFadeInAnimation, extendTimeline: true }),
+    ...createAnimationHandles({
+        handles: COMMON_ANIMATIONS.TYPE.FADE,
+        animation: baseFadeInAnimation,
+        extendTimeline: true,
+    }),
     ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.FADE_IN, animation: fadeIn }),
 
     ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.WIGGLE, animation: baseWiggleAnimation }),

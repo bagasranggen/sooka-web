@@ -24,7 +24,7 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                     required: true,
                 },
                 validation: {
-                    message: ERROR_MESSAGE.REQUIRED
+                    message: ERROR_MESSAGE.REQUIRED,
                 },
             },
             {
@@ -43,14 +43,13 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                 },
                 validation: {
                     message: ERROR_MESSAGE.REQUIRED,
-                    additionalMessage: 'Email is not valid'
+                    additionalMessage: 'Email is not valid',
                 },
             },
-        ]
+        ],
     },
     {
         children: [
-
             {
                 size: {},
                 variant: 'floating',
@@ -64,10 +63,9 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                     required: true,
                 },
                 validation: {
-                    message: ERROR_MESSAGE.REQUIRED
+                    message: ERROR_MESSAGE.REQUIRED,
                 },
             },
-        ]
+        ],
     },
-
 ];

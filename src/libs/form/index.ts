@@ -1,7 +1,7 @@
 import FormContact from '@/components/common/form/formContact/FormContact';
 
 export const FORM_VARIANTS = {
-    CONTACT: 'contact'
+    CONTACT: 'contact',
 } as const;
 
 export const FORM_HANDLES = {
