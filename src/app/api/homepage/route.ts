@@ -13,3 +13,5 @@ export const GET = async (request: Request, context: { params: any }): Promise<N
 
     return NextResponse.json({ data });
 };
+
+export const revalidate = 60;

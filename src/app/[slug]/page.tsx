@@ -48,3 +48,5 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
 };
 
 export default Page;
+
+export const revalidate = 60;
