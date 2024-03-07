@@ -9,3 +9,5 @@ export const GET = async (): Promise<NextResponse> => {
 
     return NextResponse.json({ data: products });
 };
+
+export const revalidate = 60;
