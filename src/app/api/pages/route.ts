@@ -5,5 +5,4 @@ export const GET = async (request: Request, context: { params: any }): Promise<N
     const data = await clientSpreadsheet({ type: 'pages' });
 
     return NextResponse.json({ data });
-
 };

@@ -2,7 +2,7 @@ export const getBackgroundImage = (srcSet = '') => {
     const imageSet = srcSet
         .split(', ')
         .map((str) => {
-            const [ url, dpi ] = str.split(' ');
+            const [url, dpi] = str.split(' ');
             return `url("${url}") ${dpi}`;
         })
         .join(', ');

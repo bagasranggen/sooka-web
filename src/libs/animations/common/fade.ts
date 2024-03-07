@@ -7,10 +7,10 @@ export const baseFadeInAnimation = ({ element, config }: BaseAnimationProps) => 
     const options = {
         ease: 'Power1.easeInOut',
         // duration: FADE_IN_ANIMATION.DURATION,
-        ...config?.delay ? { delay: config.delay } : {},
+        ...(config?.delay ? { delay: config.delay } : {}),
         onComplete: () => {
             gsap.set(element, { clearProps: 'y,opacity' });
-        }
+        },
     };
 
     return gsap.from(element, {
@@ -23,7 +23,7 @@ export const baseFadeInAnimation = ({ element, config }: BaseAnimationProps) => 
 export const fadeIn = ({ element, config, id }: BaseAnimationProps) => {
     const fadeTl = gsap.timeline({
         scrollTrigger: {
-            ...id ? { id: `fade-in-${id}` } : {},
+            ...(id ? { id: `fade-in-${id}` } : {}),
             trigger: element,
             start: () => `top-=${getFadeOffset({ element }) + getSpacingValue({ element }).top} 80%`,
             toggleActions: 'play pause play pause',

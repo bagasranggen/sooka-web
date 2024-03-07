@@ -12,7 +12,7 @@ export type ProductListingIndexProps = {
     entries: {
         products: ProductListingProps['productItems'];
         categories: ProductListingProps['filterItems'];
-    }
+    };
 };
 
 const ProductListingIndex = ({ page, entries }: ProductListingIndexProps): React.ReactElement => (
@@ -20,14 +20,16 @@ const ProductListingIndex = ({ page, entries }: ProductListingIndexProps): React
         <Banner
             variant="section"
             title={page.title}
-            description={page.shortDescription} />
+            description={page.shortDescription}
+        />
 
         <section className="mt-5">
             <Container>
                 <ProductListing
                     option={{ filterKey: 'category' }}
                     filterItems={entries.categories}
-                    productItems={entries.products} />
+                    productItems={entries.products}
+                />
             </Container>
         </section>
     </>

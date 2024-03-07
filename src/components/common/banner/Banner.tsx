@@ -6,10 +6,11 @@ import type { BannerSectionProps } from '@/components/common/banner/bannerSectio
 
 export type BannerProps = BannerSectionProps;
 
-const Banner = (props: BannerProps): React.ReactElement => createDynamicElement({
-    handles: BANNER_HANDLES,
-    selector: props.variant,
-    props,
-});
+const Banner = (props: BannerProps): React.ReactElement =>
+    createDynamicElement({
+        handles: BANNER_HANDLES,
+        selector: props.variant,
+        props,
+    });
 
 export default Banner;

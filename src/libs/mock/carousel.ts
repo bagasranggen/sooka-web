@@ -27,6 +27,6 @@ export const BANNER_CAROUSELS: SliderImageItemProps[] = createMockData(5).map((_
         })),
         link: {
             href: '/',
-        }
+        },
     };
 });

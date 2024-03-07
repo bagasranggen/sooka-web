@@ -13,9 +13,13 @@ export const preloaderAnimation = ({ element }: BaseAnimationProps) => {
         el.classList.remove('preloader--is-open');
     };
 
-    tl
-    .add(gsap.effects.fade(icon))
-    .add(gsap.effects.wiggle(icon, {
-        events: { onFinish: animationEndHandler }
-    }, '-.015'));
+    tl.add(gsap.effects.fade(icon)).add(
+        gsap.effects.wiggle(
+            icon,
+            {
+                events: { onFinish: animationEndHandler },
+            },
+            '-.015'
+        )
+    );
 };

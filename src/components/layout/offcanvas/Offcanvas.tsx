@@ -6,10 +6,11 @@ import type { OffcanvasNavigationProps } from '@/components/layout/offcanvas/off
 
 export type OffcanvasProps = OffcanvasNavigationProps;
 
-const Offcanvas = (props: OffcanvasProps): React.ReactElement => createDynamicElement({
-    handles: OFFCANVAS_HANDLES,
-    selector: props.variant,
-    props
-});
+const Offcanvas = (props: OffcanvasProps): React.ReactElement =>
+    createDynamicElement({
+        handles: OFFCANVAS_HANDLES,
+        selector: props.variant,
+        props,
+    });
 
 export default Offcanvas;

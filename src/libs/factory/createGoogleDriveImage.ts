@@ -1,13 +1,13 @@
 import { getGoogleDriveImage } from '@/libs/utils';
 import type { PictureItemProps } from '@/components/common/picture/Picture';
 
-export type GoogleDriveImageItem = Omit<PictureItemProps, 'src' | 'alt'>
+export type GoogleDriveImageItem = Omit<PictureItemProps, 'src' | 'alt'>;
 
 export type GoogleDriveImage = {
-    imageSources: string[]
+    imageSources: string[];
     imageSizes: GoogleDriveImageItem[];
     alt: string;
-}
+};
 
 export const createGoogleDriveImage = ({ alt, imageSizes, imageSources }: GoogleDriveImage) => {
     return imageSources.map((image: string, i: number) => ({

@@ -18,7 +18,7 @@ export interface GlobalInfoSliceState {
 const initialState: GlobalInfoSliceState = {
     storeInfo: {
         address: FOOTER_ADDRESS.ADDRESS,
-        openHour: FOOTER_ADDRESS.OPEN_HOUR
+        openHour: FOOTER_ADDRESS.OPEN_HOUR,
     },
     socialMedia: FOOTER_SOCIAL_MEDIA,
     contactNumber: CONTACT.NUMBER,

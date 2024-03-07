@@ -6,10 +6,11 @@ import type { InputFloatingProps } from '@/components/common/input/inputFloating
 
 export type InputProps = InputFloatingProps;
 
-const Input = (props: InputProps): React.ReactElement => createDynamicElement({
-    handles: INPUT_HANDLES,
-    selector: props.variant,
-    props
-});
+const Input = (props: InputProps): React.ReactElement =>
+    createDynamicElement({
+        handles: INPUT_HANDLES,
+        selector: props.variant,
+        props,
+    });
 
 export default Input;

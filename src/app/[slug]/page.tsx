@@ -11,13 +11,17 @@ import ProductListingIndex from '@/components/page/productListing/ProductListing
 export type PageProps = DynamicPageProps;
 
 export const generateStaticParams = async () => {
-    const { data: { data } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
+    const {
+        data: { data },
+    } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
 
     return data.map((datum: FilterProductItemProps) => datum.slug);
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-    const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
+    const {
+        data: { data: page },
+    } = await axiosClient().get(`${GOOGLE_SPREADSHEET_VARIANT.PAGES}/${params.slug}`);
 
     if (!page) return notFound();
 
@@ -27,16 +31,20 @@ export const generateMetadata = async ({ params }: PageProps) => {
 };
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
-    const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
+    const {
+        data: { data: page },
+    } = await axiosClient().get(`${GOOGLE_SPREADSHEET_VARIANT.PAGES}/${params.slug}`);
     // const { data: { data: categories } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
-    const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING + `/${params.slug}`);
+    const {
+        data: { data: products },
+    } = await axiosClient().get(`${GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING}/${params.slug}`);
 
-    return <ProductListingIndex
-        page={page}
-        entries={{
-            products: products,
-            categories: [],
-        }} />;
+    return (
+        <ProductListingIndex
+            page={page}
+            entries={{ products: products, categories: [] }}
+        />
+    );
 };
 
 export default Page;
