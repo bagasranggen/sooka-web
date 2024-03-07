@@ -6,3 +6,5 @@ export const GET = async (): Promise<NextResponse> => {
 
     return NextResponse.json({ data });
 };
+
+export const revalidate = 60;
