@@ -12,6 +12,8 @@
         "@fontsource/mulish": "^5.0.16",
         "@popperjs/core": "^2.11.8",
         "@reduxjs/toolkit": "^2.1.0",
+        "@supabase/ssr": "^0.1.0",
+        "@supabase/supabase-js": "^2.39.7",
         "axios": "^1.6.7",
         "bootstrap": "^5.3.2",
         "google-auth-library": "^9.6.3",
