@@ -1,0 +1,7 @@
+.error {
+	&-section {
+		@extend %d-flex, %flex-column, %justify-content-center;
+
+		min-height: 50vh;
+	}
+}

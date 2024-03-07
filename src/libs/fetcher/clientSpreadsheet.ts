@@ -17,24 +17,28 @@ export type ClientSpreadsheetProps = {
 };
 
 export const clientSpreadsheet = async ({ type }: ClientSpreadsheetProps) => {
-    const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID as string, serviceAccountAuth);
-    await doc.loadInfo();
-
-    const sheet = doc.sheetsByTitle[type];
-    const rows = await sheet.getRows();
-    const headers = sheet.headerValues;
-
     const data: any[] = [];
 
-    rows.map((row: any) => {
-        const tempItem: Object = {};
+    try {
+        const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID as string, serviceAccountAuth);
+        await doc.loadInfo();
 
-        headers.map((key: string) => {
-            tempItem[key as keyof Object] = row?.get(key) ?? '';
+        const sheet = doc.sheetsByTitle[type];
+        const rows = await sheet.getRows();
+        const headers = sheet.headerValues;
+
+        rows.map((row: any) => {
+            const tempItem: Object = {};
+
+            headers.map((key: string) => {
+                tempItem[key as keyof Object] = row?.get(key) ?? '';
+            });
+
+            data.push(tempItem);
         });
-
-        data.push(tempItem);
-    });
+    } catch (err) {
+        console.log(err);
+    }
 
     return data;
 };
