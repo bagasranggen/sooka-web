@@ -7,9 +7,9 @@ const Home = async () => {
         data: { data },
     } = await axiosClient().get('homepage');
     const supabase = supabaseClient();
-    const { data: notes } = await supabase.from('navigation').select();
+    const { data: navigation } = await supabase.from('navigation').select();
 
-    console.log('homepage', notes);
+    console.log('homepage', navigation);
 
     // console.log(data.carousel);
     return <HomepageIndex entries={{ carousel: data.carousel }} />;
