@@ -7,7 +7,7 @@ export const GET = async (): Promise<NextResponse> => {
 
     const products = data.map((datum: any) => createProductListingData(datum));
 
-    return NextResponse.json({ data: products });
+    return NextResponse.json(products);
 };
 
 export const revalidate = 60;

@@ -10,7 +10,7 @@ export const GET = async (request: Request, context: { params: DynamicPageProps[
     const allProducts = data.map((datum: any) => createProductListingData(datum));
     const products = allProducts.filter((datum: any) => datum.category === slug);
 
-    return NextResponse.json({ data: products });
+    return NextResponse.json(products);
 };
 
 export const revalidate = 60;

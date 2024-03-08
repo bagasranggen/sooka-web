@@ -11,7 +11,7 @@ export const GET = async (request: Request, context: { params: any }): Promise<N
         carousel,
     };
 
-    return NextResponse.json({ data });
+    return NextResponse.json(data);
 };
 
 export const revalidate = 60;

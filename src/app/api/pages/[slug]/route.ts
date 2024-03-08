@@ -10,7 +10,7 @@ export const GET = async (request: Request, context: { params: DynamicPageProps[
         data = data.find((datum: any) => datum.slug === slug);
     }
 
-    return NextResponse.json({ data });
+    return NextResponse.json(data);
 };
 
 export const revalidate = 60;

@@ -27,9 +27,7 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { layout } = reduxStore.getState();
-    const {
-        data: { data: navigation },
-    } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.NAVIGATION);
+    const { data: navigation } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.NAVIGATION);
 
     return (
         <html lang="en">
