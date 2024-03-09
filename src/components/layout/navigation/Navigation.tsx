@@ -93,7 +93,7 @@ const Navigation = ({ items }: NavigationProps): React.ReactElement => {
                         color="light"
                         className="d-lg-none"
                         isOpen={show}
-                        event={{ onClick: () => setShow(!show) }}
+                        events={{ onClick: () => setShow(!show) }}
                         title="Mobile Toggle Button"
                     />
                     <Navbar.Collapse>

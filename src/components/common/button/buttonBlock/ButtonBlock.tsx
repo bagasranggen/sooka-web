@@ -14,10 +14,11 @@ const ButtonBlock = (props: ButtonBlockProps): React.ReactElement => {
     const btnColor = ` btn--${props?.color ?? 'primary'}`;
     const btnClass = `btn${btnVariant}${btnColor}${props.className ? ` ${props.className}` : ''}`;
 
-    const { className, ...rest } = props;
+    const { className, variant, ...rest } = props;
 
     return (
         <ButtonBase
+            variant="base"
             className={btnClass}
             {...rest}>
             {props.children}
