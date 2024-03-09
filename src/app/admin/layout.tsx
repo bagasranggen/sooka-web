@@ -1,34 +1,41 @@
 import React from 'react';
-import Link from 'next/link';
 
 import { SUPABASE_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
+import List from '@/components/common/list/List';
 
 export type LayoutProps = {
     children: React.ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps): React.ReactElement => (
-    <div className="ts--padding">
-        <div className="container">
-            <div className="row">
-                <div className="col-md-3">
-                    <ul>
-                        {Object.keys(SUPABASE_VARIANTS).map((keys: string, i: number) => {
-                            const slug = SUPABASE_VARIANTS[keys as keyof typeof SUPABASE_VARIANTS];
-                            const label = SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES];
+const Layout = ({ children }: LayoutProps): React.ReactElement => {
+    const adminNavigation = Object.keys(SUPABASE_VARIANTS).map((keys: string) => {
+        const slug = SUPABASE_VARIANTS[keys as keyof typeof SUPABASE_VARIANTS];
+        const label = SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES];
 
-                            return (
-                                <li key={i}>
-                                    <Link href={`/admin/${slug}`}>{label}</Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
+        return {
+            label,
+            slug: slug.toLowerCase(),
+            href: `/admin/${slug}`,
+        };
+    });
+
+    return (
+        <section className="ts--padding simple-cms">
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-3">
+                        <div className="simple-cms__navigation">
+                            <List
+                                variant="admin-navigation"
+                                items={adminNavigation}
+                            />
+                        </div>
+                    </div>
+                    <div className="col">{children}</div>
                 </div>
-                <div className="col">{children}</div>
             </div>
-        </div>
-    </div>
-);
+        </section>
+    );
+};
 
 export default Layout;
