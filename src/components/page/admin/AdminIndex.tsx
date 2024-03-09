@@ -7,6 +7,7 @@ import { supabaseAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseAct
 import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Table from '@/components/common/table/Table';
 import Test from '@/components/common/test';
+import Button from '@/components/common/button/Button';
 
 export type AdminIndexProps = {
     entries: {
@@ -70,8 +71,13 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                 }}
             />
 
-            <Test onClick={() => setIsAddingRow(true)} />
-            {isAddingRow && <Test onClick={() => setIsAddingRow(false)} />}
+            <Button
+                variant="block"
+                type="button"
+                className="w-100"
+                events={{ onClick: () => setIsAddingRow(!isAddingRow) }}>
+                {isAddingRow ? 'Cancel' : 'Add'}
+            </Button>
 
             {isAddingRow && (
                 <Table

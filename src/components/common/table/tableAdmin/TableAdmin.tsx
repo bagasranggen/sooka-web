@@ -1,6 +1,8 @@
 import React from 'react';
 
-import { TABLE_VARIANTS } from '@/libs/handles';
+import { SUPABASE_COLUMN_NAME_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
+import { CiCircleCheck, CiCircleRemove, CiEdit, CiTrash } from 'react-icons/ci';
+import Button, { ButtonGroup } from '@/components/common/button/Button';
 
 export type TableAdminBodyProps = {
     [key: string]: string | any | null;
@@ -16,15 +18,25 @@ export type TableAdminProps = {
 };
 
 const TableAdmin = ({ header, body, events }: TableAdminProps): React.ReactElement => (
-    <table className="table table-responsive">
+    <table className="table table-responsive table--admin">
         <thead>
             <tr>
                 {header.map((header: string, i: number) => {
-                    if (header !== 'id') return <th key={i}>{header}</th>;
+                    const handle: { label: string; size?: string } =
+                        SUPABASE_COLUMN_NAME_HANDLES?.[header as keyof typeof SUPABASE_COLUMN_NAME_HANDLES];
+
+                    if (header !== 'id')
+                        return (
+                            <th
+                                key={i}
+                                {...(handle?.size ? { style: { width: handle.size }, className: 'text-center' } : {})}>
+                                {handle?.label ?? header}
+                            </th>
+                        );
                 })}
                 <th
                     className="text-center"
-                    style={{ width: '100px' }}>
+                    style={{ width: '80px' }}>
                     Action
                 </th>
             </tr>
@@ -41,22 +53,37 @@ const TableAdmin = ({ header, body, events }: TableAdminProps): React.ReactEleme
                     {body?.map((datum: any, i: number) => (
                         <tr key={i}>
                             {Object.keys(datum).map((keys: string) => {
-                                if (keys !== 'id') return <td key={`${keys}${i}`}>{datum[keys]}</td>;
+                                let value = datum[keys];
+                                if (value === true) value = <CiCircleCheck size={30} />;
+                                if (value === false) value = <CiCircleRemove size={30} />;
+
+                                const tdClass = typeof datum[keys] === 'boolean' ? 'text-center' : '';
+
+                                if (keys !== 'id')
+                                    return (
+                                        <td
+                                            key={`${keys}${i}`}
+                                            {...(tdClass ? { className: tdClass } : {})}>
+                                            {value}
+                                        </td>
+                                    );
                             })}
-                            <td>
-                                <div className="d-flex justify-content-center">
-                                    <button
-                                        className="btn btn-outline-warning"
-                                        // onClick={() => events?.onDelete && events.onDelete(datum.id)}
-                                    >
-                                        edit
-                                    </button>
-                                    <button
+                            <td className="text-center">
+                                <ButtonGroup>
+                                    <Button
+                                        variant="base"
+                                        type="button"
+                                        className="btn btn-outline-warning">
+                                        <CiEdit size={24} />
+                                    </Button>
+                                    <Button
+                                        variant="base"
+                                        type="button"
                                         className="btn btn-outline-danger"
-                                        onClick={() => events?.onDelete && events.onDelete(datum.id)}>
-                                        delete
-                                    </button>
-                                </div>
+                                        events={{ onClick: () => events?.onDelete && events.onDelete(datum.id) }}>
+                                        <CiTrash size={20} />
+                                    </Button>
+                                </ButtonGroup>
                             </td>
                         </tr>
                     ))}

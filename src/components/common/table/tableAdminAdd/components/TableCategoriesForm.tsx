@@ -30,26 +30,6 @@ const TableNavigationForm = ({}: TableNavigationFormProps): React.ReactElement =
                     name="slug"
                     type="text"
                     className="form-control"
-                    value={`/${slugify(navigationForm.label)}`}
-                    disabled
-                />
-            </td>
-            <td>
-                <input
-                    id="slug"
-                    name="slug"
-                    type="text"
-                    className="form-control"
-                    value={slugify(navigationForm.label)}
-                    disabled
-                />
-            </td>
-            <td>
-                <input
-                    id="slug"
-                    name="slug"
-                    type="text"
-                    className="form-control"
                     value={slugify(navigationForm.label)}
                     disabled
                 />

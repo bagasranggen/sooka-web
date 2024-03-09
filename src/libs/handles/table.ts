@@ -3,6 +3,7 @@ import { SUPABASE_VARIANTS } from '@/libs/handles/supabase';
 import TableAdmin from '@/components/common/table/tableAdmin/TableAdmin';
 import TableAdminAdd from '@/components/common/table/tableAdminAdd/TableAdminAdd';
 import TableNavigationForm from '@/components/common/table/tableAdminAdd/components/TableNavigationForm';
+import TableCategoriesForm from '@/components/common/table/tableAdminAdd/components/TableCategoriesForm';
 
 export const TABLE_VARIANTS = {
     ADMIN: 'admin',
@@ -16,5 +17,5 @@ export const TABLE_HANDLES = {
 
 export const TABLE_FORM_HANDLES = {
     [SUPABASE_VARIANTS.NAVIGATION]: TableNavigationForm,
-    [SUPABASE_VARIANTS.CATEGORIES]: TableNavigationForm,
+    [SUPABASE_VARIANTS.CATEGORIES]: TableCategoriesForm,
 };
