@@ -33,6 +33,8 @@ export const supabaseAction = async (props: SupabaseActionProps): Promise<Supaba
                 .insert(props.data)
                 .select();
 
+            console.log(insertData, insertError);
+
             return { data: insertData, error: insertError };
 
         case 'delete':

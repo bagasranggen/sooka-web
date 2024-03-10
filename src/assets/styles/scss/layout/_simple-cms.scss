@@ -2,17 +2,25 @@
     &__navigation {
         @extend %py-3, %position-relative;
 
+        height: 100%;
+
         &:before {
             @extend %position-absolute;
 
             content: '';
             background-color: $sooka-primary;
-            height: calc(100vh + 5rem - var(--bs-navbar-height) - var(--bs-footer-height));
+            height: calc(100vh + 15rem);
             width: 50vw;
             right: 0;
             top: -5rem;
             z-index: -1;
             pointer-events: none;
+        }
+
+        .list--admin-navigation {
+            @extend %position-sticky;
+
+            top: 3rem;
         }
     }
 }
