@@ -2,8 +2,9 @@ import { SUPABASE_VARIANTS } from '@/libs/handles/supabase';
 
 import TableAdmin from '@/components/common/table/tableAdmin/TableAdmin';
 import TableAdminAdd from '@/components/common/table/tableAdminAdd/TableAdminAdd';
-import TableNavigationForm from '@/components/common/table/tableAdminAdd/components/TableNavigationForm';
-import TableCategoriesForm from '@/components/common/table/tableAdminAdd/components/TableCategoriesForm';
+
+import TableNavigationForm from '@/components/common/table/sharedTable/TableNavigationForm';
+import TableCategoriesForm from '@/components/common/table/sharedTable/TableCategoriesForm';
 
 export const TABLE_VARIANTS = {
     ADMIN: 'admin',

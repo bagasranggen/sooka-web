@@ -54,10 +54,15 @@
                 }
             }
 
-            &.active,
-            &:hover {
+            &.active {
                 a {
                     padding-left: 2.5rem;
+                }
+            }
+
+            &:not(.active):hover {
+                a {
+                    padding-left: 1.5rem;
                 }
             }
         }

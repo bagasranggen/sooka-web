@@ -5,23 +5,53 @@ import { InputCommonProps } from '@/libs/@types';
 export type InputSwitchProps = {
     type: typeof INPUT_TYPE.SWITCH;
     color: 'primary';
+    align?: 'left' | 'center' | 'right';
+    isChecked?: boolean;
+    setIsChecked?: React.Dispatch<React.SetStateAction<string | number | boolean>>;
+    prevValue?: any;
 } & InputCommonProps;
 
-const InputSwitch = ({ id, color }: InputSwitchProps): React.ReactElement => (
-    <div className={`input-switch input-switch--${color}`}>
-        <input
-            className="check"
-            type="checkbox"
-            id={id}
-            name={id}
-            value={id}
-            hidden
-        />
-        <label
-            className="input-switch__toggle"
-            htmlFor={id}
-        />
-    </div>
-);
+const InputSwitch = ({
+    type,
+    id,
+    color,
+    align,
+    isChecked,
+    setIsChecked,
+    prevValue,
+}: InputSwitchProps): React.ReactElement => {
+    const inputAlign = ` input-${type}--${align ?? 'center'}`;
+    const inputColor = ` input-${type}--${color}`;
+    const inputClass = `input-${type}${inputColor}${inputAlign}`;
+
+    const checkedProps = { [setIsChecked ? 'checked' : 'defaultChecked']: isChecked };
+
+    return (
+        <div className={inputClass}>
+            <input
+                className="check"
+                type="checkbox"
+                id={id}
+                name={id}
+                value={id}
+                {...checkedProps}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (!prevValue) {
+                        setIsChecked && setIsChecked(e.target.checked);
+                    }
+
+                    if (prevValue) {
+                        setIsChecked && setIsChecked({ ...prevValue, ...{ [id]: e.target.checked } });
+                    }
+                }}
+                hidden
+            />
+            <label
+                className="input-switch__toggle"
+                htmlFor={id}
+            />
+        </div>
+    );
+};
 
 export default InputSwitch;

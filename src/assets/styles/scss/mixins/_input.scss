@@ -16,9 +16,10 @@
     --toggle-icon-position-x: 0;
 
     height: var(--toggle-height);
+    width: var(--toggle-width);
 
     &__toggle {
-        @extend %position-relative;
+        //@extend %position-relative;
 
         cursor: pointer;
         content: '';
@@ -29,6 +30,7 @@
             @extend %position-absolute;
 
             content: '';
+            left: 0;
             width: 100%;
             height: 100%;
             box-shadow: var(--toggle-bg-box-shadow);

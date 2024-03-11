@@ -3,6 +3,7 @@ export * from './getAnimationElement';
 export * from './getAnimationProps';
 export * from './getBackgroundImage';
 export * from './getFadeOffset';
+export * from './getFormSubmitData';
 export * from './getGoogleDriveImage';
 export * from './getObjectByValue';
 export * from './getResponsiveClass';

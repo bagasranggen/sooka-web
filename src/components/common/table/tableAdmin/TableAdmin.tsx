@@ -1,96 +1,191 @@
 import React from 'react';
 
-import { SUPABASE_COLUMN_NAME_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
-import { CiCircleCheck, CiCircleRemove, CiEdit, CiTrash } from 'react-icons/ci';
-import Button, { ButtonGroup } from '@/components/common/button/Button';
+import type { SupabaseHeaderProps } from '@/libs/data';
+import type { SupabaseVariantProps } from '@/libs/fetcher';
+import { TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
+import { createDynamicElement } from '@/libs/factory';
 
-export type TableAdminBodyProps = {
-    [key: string]: string | any | null;
+import { CiCircleCheck, CiCircleRemove, CiEdit, CiTrash } from 'react-icons/ci';
+
+import Button, { ButtonGroup } from '@/components/common/button/Button';
+import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+
+export type TableAdminCommonProps = {
+    type: 'edit' | 'add';
+};
+
+export type TableAdminItemProps = {
+    datum: any;
+    index: number;
+    slug: SupabaseVariantProps;
+    isEdit?: boolean;
+    isEditState?: {
+        setValue?: InputTextProps['setValue'];
+        prevValue?: InputTextProps['prevValue'];
+    };
+    events?: {
+        onDelete?: (id: number) => void;
+        onEdit?: (index: number | undefined) => void;
+        onEditCancel?: (index: undefined) => void;
+    };
 };
 
 export type TableAdminProps = {
     variant: typeof TABLE_VARIANTS.ADMIN;
-    header: string[];
+    id: string;
+    header: SupabaseHeaderProps[];
     body: any;
+    isEdit?: number;
     events?: {
-        onDelete?: (id: number) => void;
-    };
+        onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+    } & TableAdminItemProps['events'];
+} & Pick<TableAdminItemProps, 'isEditState' | 'slug'>;
+
+const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState }: TableAdminItemProps) => {
+    return (
+        <tr>
+            {isEdit
+                ? createDynamicElement({
+                      handles: TABLE_FORM_HANDLES,
+                      selector: slug,
+                      props: {
+                          type: 'edit',
+                          prevValue: isEditState?.prevValue,
+                          setValue: isEditState?.setValue,
+                      },
+                  })
+                : null}
+
+            <>
+                {Object.keys(datum).map((keys: string) => {
+                    let value = datum[keys];
+                    if (value === true) value = <CiCircleCheck size={30} />;
+                    if (value === false) value = <CiCircleRemove size={30} />;
+
+                    const tdShow = isEdit || keys === 'id' ? 'd-none' : '';
+                    const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';
+                    const tdClass = `${tdShow}${tdAlign}`;
+
+                    const dataProps = { [`data-${keys === 'id' ? 'id' : 'value'}`]: datum[keys] };
+
+                    return (
+                        <td
+                            key={`${keys}${index}`}
+                            {...dataProps}
+                            {...(tdClass ? { className: tdClass } : {})}>
+                            {value}
+                        </td>
+                    );
+                })}
+            </>
+
+            <td className="text-center">
+                <ButtonGroup>
+                    {!isEdit && (
+                        <Button
+                            variant="base"
+                            type="button"
+                            className="btn btn-outline-warning"
+                            events={{
+                                onClick: () => events?.onEdit && events.onEdit(index),
+                            }}>
+                            <CiEdit size={24} />
+                        </Button>
+                    )}
+                    {isEdit && (
+                        <Button
+                            variant="base"
+                            type="submit"
+                            className="btn btn-outline-success">
+                            <CiCircleCheck size={24} />
+                        </Button>
+                    )}
+                    <Button
+                        variant="base"
+                        type="button"
+                        className="btn btn-outline-danger"
+                        events={{
+                            onClick: () => {
+                                // Event Delete Data
+                                if (!isEdit) {
+                                    events?.onDelete && events.onDelete(datum.id);
+                                }
+
+                                // Event Cancel Editing
+                                if (isEdit) {
+                                    events?.onEditCancel && events.onEditCancel(undefined);
+                                }
+                            },
+                        }}>
+                        {isEdit ? <CiCircleRemove size={24} /> : <CiTrash size={20} />}
+                    </Button>
+                </ButtonGroup>
+            </td>
+        </tr>
+    );
 };
 
-const TableAdmin = ({ header, body, events }: TableAdminProps): React.ReactElement => (
-    <table className="table table-responsive table--admin">
-        <thead>
-            <tr>
-                {header.map((header: string, i: number) => {
-                    const handle: { label: string; size?: string } =
-                        SUPABASE_COLUMN_NAME_HANDLES?.[header as keyof typeof SUPABASE_COLUMN_NAME_HANDLES];
-
-                    if (header !== 'id')
-                        return (
-                            <th
-                                key={i}
-                                {...(handle?.size ? { style: { width: handle.size }, className: 'text-center' } : {})}>
-                                {handle?.label ?? header}
-                            </th>
-                        );
-                })}
-                <th
-                    className="text-center"
-                    style={{ width: '80px' }}>
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {body.length === 0 ? (
-                <td
-                    className="text-center"
-                    colSpan={header.length}>
-                    <h5 className="mb-0">No data found</h5>
-                </td>
-            ) : (
-                <>
-                    {body?.map((datum: any, i: number) => (
-                        <tr key={i}>
-                            {Object.keys(datum).map((keys: string) => {
-                                let value = datum[keys];
-                                if (value === true) value = <CiCircleCheck size={30} />;
-                                if (value === false) value = <CiCircleRemove size={30} />;
-
-                                const tdClass = typeof datum[keys] === 'boolean' ? 'text-center' : '';
-
-                                if (keys !== 'id')
-                                    return (
-                                        <td
-                                            key={`${keys}${i}`}
-                                            {...(tdClass ? { className: tdClass } : {})}>
-                                            {value}
-                                        </td>
-                                    );
-                            })}
-                            <td className="text-center">
-                                <ButtonGroup>
-                                    <Button
-                                        variant="base"
-                                        type="button"
-                                        className="btn btn-outline-warning">
-                                        <CiEdit size={24} />
-                                    </Button>
-                                    <Button
-                                        variant="base"
-                                        type="button"
-                                        className="btn btn-outline-danger"
-                                        events={{ onClick: () => events?.onDelete && events.onDelete(datum.id) }}>
-                                        <CiTrash size={20} />
-                                    </Button>
-                                </ButtonGroup>
+const TableAdmin = ({ id, header, body, events, slug, isEdit, isEditState }: TableAdminProps): React.ReactElement => {
+    return (
+        <form
+            id={id}
+            onSubmit={events?.onSubmit}>
+            <table className="table table-responsive table--admin">
+                <thead>
+                    <tr>
+                        {header.map((header: SupabaseHeaderProps, i: number) => {
+                            return (
+                                <th
+                                    key={i}
+                                    {...(header?.size
+                                        ? { style: { width: header.size }, className: 'text-center' }
+                                        : {})}>
+                                    {header?.label}
+                                </th>
+                            );
+                        })}
+                        <th
+                            className="text-center"
+                            style={{ width: '80px' }}>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {body.length === 0 ? (
+                        <tr>
+                            <td
+                                className="text-center"
+                                colSpan={header.length + 1}>
+                                <h5 className="mb-0">No data found</h5>
                             </td>
                         </tr>
-                    ))}
-                </>
-            )}
-        </tbody>
-    </table>
-);
+                    ) : (
+                        <>
+                            {body?.map((datum: any, i: number) => (
+                                <TableAdminItem
+                                    key={i}
+                                    datum={datum}
+                                    index={i}
+                                    slug={slug}
+                                    isEdit={isEdit === i}
+                                    isEditState={{
+                                        setValue: isEditState?.setValue,
+                                        prevValue: isEditState?.prevValue,
+                                    }}
+                                    events={{
+                                        onDelete: () => events?.onDelete && events.onDelete(datum.id),
+                                        onEdit: () => events?.onEdit && events.onEdit(isEdit === i ? undefined : i),
+                                        onEditCancel: () => events?.onEditCancel && events.onEditCancel(undefined),
+                                    }}
+                                />
+                            ))}
+                        </>
+                    )}
+                </tbody>
+            </table>
+        </form>
+    );
+};
 
 export default TableAdmin;

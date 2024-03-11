@@ -1,31 +1,38 @@
 import React from 'react';
 
 import type { SupabaseVariantProps } from '@/libs/fetcher';
-import { SUPABASE_COLUMN_NAME_HANDLES, TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
+import type { SupabaseHeaderProps } from '@/libs/data';
+
+import { TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
 
 import { CiCircleCheck } from 'react-icons/ci';
 import Button from '@/components/common/button/Button';
+import { InputTextProps } from '@/components/common/input/inputShared/inputText';
 
 export type TableAdminAddProps = {
     variant: typeof TABLE_VARIANTS.ADMIN_ADD;
     type: SupabaseVariantProps;
-    header: string[];
+    header: SupabaseHeaderProps[];
+    stateData: Pick<InputTextProps, 'prevValue' | 'setValue'>;
     events?: {
         onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     };
 };
 
-const TableAdminAdd = ({ header, type, events }: TableAdminAddProps): React.ReactElement => (
+const TableAdminAdd = ({ header, type, events, stateData }: TableAdminAddProps): React.ReactElement => (
     <form onSubmit={events?.onSubmit}>
         <table className="table table-responsive table--admin">
             <thead>
                 <tr>
-                    {header.map((header: string, i: number) => {
-                        const handle: { label: string; size?: string } =
-                            SUPABASE_COLUMN_NAME_HANDLES?.[header as keyof typeof SUPABASE_COLUMN_NAME_HANDLES];
-
-                        if (header !== 'id') return <th key={i}>{handle?.label ?? header}</th>;
+                    {header.map((header: SupabaseHeaderProps, i: number) => {
+                        return (
+                            <th
+                                key={i}
+                                {...(header?.size ? { style: { width: header.size }, className: 'text-center' } : {})}>
+                                {header?.label}
+                            </th>
+                        );
                     })}
                     <th
                         className="text-center"
@@ -39,7 +46,11 @@ const TableAdminAdd = ({ header, type, events }: TableAdminAddProps): React.Reac
                     {createDynamicElement({
                         handles: TABLE_FORM_HANDLES,
                         selector: type,
-                        props: {},
+                        props: {
+                            type: 'add',
+                            prevValue: stateData?.prevValue,
+                            setValue: stateData?.setValue,
+                        },
                     })}
                     <td className="text-center">
                         <Button

@@ -5,7 +5,7 @@ export type InputTextProps = {
     id: string;
     value?: string | number;
     prevValue?: any;
-    setValue?: React.Dispatch<React.SetStateAction<string | number>>;
+    setValue?: React.Dispatch<React.SetStateAction<string | number | boolean>>;
     isDisabled?: boolean;
 } & InputTypeProps;
 

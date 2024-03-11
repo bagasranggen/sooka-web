@@ -30,6 +30,14 @@
     &-switch {
         @include input-switch;
 
+        &--center {
+            @extend %mx-auto;
+        }
+
+        &--right {
+            @extend %ms-auto;
+        }
+
         &--primary {
             @include input-switch-color($sooka-primary);
         }

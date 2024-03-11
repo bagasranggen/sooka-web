@@ -10,6 +10,13 @@ export type SupabaseInsertActionProps = {
     data: any[];
 };
 
+export type SupabaseUpdateActionProps = {
+    variant: 'update';
+    relation: SupabaseVariantProps;
+    id: number;
+    data: any;
+};
+
 export type SupabaseDeleteActionProps = {
     variant: 'delete';
     relation: SupabaseVariantProps;
@@ -21,7 +28,7 @@ export type SupabaseReturnProps = {
     error?: PostgrestError | null;
 };
 
-export type SupabaseActionProps = SupabaseInsertActionProps | SupabaseDeleteActionProps;
+export type SupabaseActionProps = SupabaseInsertActionProps | SupabaseUpdateActionProps | SupabaseDeleteActionProps;
 
 export const supabaseAction = async (props: SupabaseActionProps): Promise<SupabaseReturnProps> => {
     const supabase = supabaseClient();
@@ -43,6 +50,19 @@ export const supabaseAction = async (props: SupabaseActionProps): Promise<Supaba
                 .delete()
                 .eq('id', props.id.toString());
 
+            console.log(deleteError);
+
             return { error: deleteError };
+
+        case 'update':
+            const { data: updateData, error: updateError }: SupabaseReturnProps = await supabase
+                .from(props.relation)
+                .update(props.data)
+                .eq('id', props.id)
+                .select();
+
+            console.log(updateData, updateError);
+
+            return { data: updateData, error: updateError };
     }
 };
