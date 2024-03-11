@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { SupabaseHeaderProps } from '@/libs/data';
-import { supabaseAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseAction';
+import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
 import { getFormSubmitData } from '@/libs/utils';
 import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
 
@@ -16,7 +16,7 @@ export type AdminIndexProps = {
     entries: {
         slug: SupabaseVariantProps;
         title: string;
-        table: Omit<TableAdminProps, 'variant'>;
+        table: Omit<TableAdminProps, 'variant' | 'slug' | 'id'>;
     };
 };
 
@@ -28,7 +28,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
     const tableId = 'cms-simple';
 
     const deleteDataHandler = (id: number) => {
-        supabaseAction({
+        supabaseClientAction({
             variant: 'delete',
             relation: entries.slug,
             id,
@@ -43,7 +43,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         const form = e.target as unknown as HTMLElement;
         const submitForm: any = getFormSubmitData(form);
 
-        supabaseAction({
+        supabaseClientAction({
             variant: 'insert',
             relation: entries.slug,
             data: [submitForm],
@@ -63,7 +63,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             form.querySelectorAll('tbody tr')[isEditing as number].querySelector('[data-id]') as Element
         ).getAttribute('data-id') as string;
 
-        supabaseAction({
+        supabaseClientAction({
             variant: 'update',
             relation: entries.slug,
             id: parseInt(id),

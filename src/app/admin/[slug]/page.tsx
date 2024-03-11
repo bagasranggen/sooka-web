@@ -1,8 +1,9 @@
 import React from 'react';
 
 import type { DynamicPageProps } from '@/libs/@types';
+import type { SupabaseVariantProps } from '@/libs/fetcher';
 import { SUPABASE_HANDLES, SUPABASE_HEADER_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
-import { supabaseServer, SupabaseVariantProps } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
 import AdminIndex from '@/components/page/admin/AdminIndex';
 
@@ -21,8 +22,10 @@ export const generateMetadata = ({ params }: PageProps) => {
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as SupabaseVariantProps;
 
-    const supabase = supabaseServer();
-    const { data } = await supabase.from(slug).select();
+    const { data } = await supabaseServerAction({
+        variant: 'fetch',
+        relation: slug,
+    });
 
     return (
         <AdminIndex

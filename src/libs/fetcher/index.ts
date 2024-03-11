@@ -1,5 +1,6 @@
 export * from './axiosClient';
 export * from './clientSpreadsheet';
-export * from './supabaseAction';
+export * from './supabaseClientAction';
+export * from './supabaseServerAction';
 export * from './supabaseClient';
 export * from './supabaseServer';

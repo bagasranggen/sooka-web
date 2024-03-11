@@ -30,7 +30,7 @@ export type SupabaseReturnProps = {
 
 export type SupabaseActionProps = SupabaseInsertActionProps | SupabaseUpdateActionProps | SupabaseDeleteActionProps;
 
-export const supabaseAction = async (props: SupabaseActionProps): Promise<SupabaseReturnProps> => {
+export const supabaseClientAction = async (props: SupabaseActionProps): Promise<SupabaseReturnProps> => {
     const supabase = supabaseClient();
 
     switch (props.variant) {
