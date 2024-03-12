@@ -10,9 +10,10 @@ import '@fontsource/mulish/700.css';
 import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
 
-import { axiosClient } from '@/libs/fetcher';
-import { GOOGLE_SPREADSHEET_VARIANT } from '@/libs/handles';
+import type { NavigationItemProps } from '@/libs/@types';
+import { supabaseServerAction } from '@/libs/fetcher';
 import { Providers, reduxStore } from '@/store/redux';
+
 import Navigation from '@/components/layout/navigation/Navigation';
 import Footer from '@/components/layout/footer/Footer';
 import MainLayout from '@/components/layout/mainLayout/MainLayout';
@@ -27,7 +28,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { layout } = reduxStore.getState();
-    const { data: navigation } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.NAVIGATION);
+    const { data: navigation } = await supabaseServerAction({
+        variant: 'fetch',
+        relation: 'navigation',
+    });
 
     return (
         <html lang="en">
@@ -35,7 +39,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 suppressHydrationWarning={true}
                 {...(layout.height && ({ style: layout.height } as React.HTMLAttributes<HTMLElement>))}>
                 <Providers>
-                    <Navigation items={navigation} />
+                    <Navigation items={navigation as NavigationItemProps[]} />
                     <Suspense fallback={null}>
                         <MainLayout>{children}</MainLayout>
                     </Suspense>
