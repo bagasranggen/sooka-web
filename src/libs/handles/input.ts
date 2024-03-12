@@ -22,4 +22,5 @@ export const INPUT_HANDLES = {
 export const INPUT_TYPE_HANDLES = {
     [INPUT_TYPE.SWITCH]: InputSwitch,
     [INPUT_TYPE.TEXT]: InputText,
+    [INPUT_TYPE.NUMBER]: InputText,
 };

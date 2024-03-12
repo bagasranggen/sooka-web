@@ -1,13 +1,14 @@
 import React from 'react';
 
-import type { SupabaseHeaderProps } from '@/libs/data';
 import type { SupabaseVariantProps } from '@/libs/fetcher';
+import { COMMON_REGEX, SupabaseHeaderProps } from '@/libs/data';
 import { TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
 
-import { CiCircleCheck, CiCircleRemove, CiEdit, CiTrash } from 'react-icons/ci';
+import { CiCircleCheck, CiCircleRemove, CiEdit, CiLineHeight, CiTrash } from 'react-icons/ci';
 
 import Button, { ButtonGroup } from '@/components/common/button/Button';
+import Input from '@/components/common/input/Input';
 import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
 
 export type TableAdminCommonProps = {
@@ -19,6 +20,7 @@ export type TableAdminItemProps = {
     index: number;
     slug: SupabaseVariantProps;
     isEdit?: boolean;
+    isReorder?: boolean;
     isEditState?: {
         setValue?: InputTextProps['setValue'];
         prevValue?: InputTextProps['prevValue'];
@@ -26,7 +28,7 @@ export type TableAdminItemProps = {
     events?: {
         onDelete?: (id: number) => void;
         onEdit?: (index: number | undefined) => void;
-        onEditCancel?: (index: undefined) => void;
+        onEditReorder?: (index: number | undefined) => void;
     };
 };
 
@@ -36,12 +38,13 @@ export type TableAdminProps = {
     header: SupabaseHeaderProps[];
     body: any;
     isEdit?: number;
+    isReorder?: number;
     events?: {
         onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
     } & TableAdminItemProps['events'];
 } & Pick<TableAdminItemProps, 'isEditState' | 'slug'>;
 
-const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState }: TableAdminItemProps) => {
+const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState, isReorder }: TableAdminItemProps) => {
     return (
         <tr>
             {isEdit
@@ -68,56 +71,99 @@ const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState }: Tab
 
                     const dataProps = { [`data-${keys === 'id' ? 'id' : 'value'}`]: datum[keys] };
 
-                    return (
-                        <td
-                            key={`${keys}${index}`}
-                            {...dataProps}
-                            {...(tdClass ? { className: tdClass } : {})}>
-                            {value}
-                        </td>
-                    );
+                    if (keys !== 'order')
+                        return (
+                            <td
+                                key={`${keys}${index}`}
+                                {...dataProps}
+                                {...(tdClass ? { className: tdClass } : {})}>
+                                {value}
+                            </td>
+                        );
                 })}
             </>
 
             <td className="text-center">
                 <ButtonGroup>
-                    {!isEdit && (
+                    {!isEdit && !isReorder && (
                         <Button
                             variant="base"
                             type="button"
                             className="btn btn-outline-warning"
+                            title="edit"
                             events={{
                                 onClick: () => events?.onEdit && events.onEdit(index),
                             }}>
                             <CiEdit size={24} />
                         </Button>
                     )}
-                    {isEdit && (
+
+                    {(isEdit || isReorder) && (
                         <Button
                             variant="base"
                             type="submit"
-                            className="btn btn-outline-success">
+                            className="btn btn-outline-success"
+                            title="submit">
                             <CiCircleCheck size={24} />
                         </Button>
                     )}
+
+                    {isReorder ? (
+                        <div
+                            className="btn btn-outline-primary p-0"
+                            data-order={index}
+                            style={{
+                                width: '40px',
+                                background: 'white',
+                            }}>
+                            <Input
+                                variant="regular"
+                                className="border-0 text-center"
+                                input={{
+                                    id: 'order',
+                                    value: isEditState?.prevValue?.order ?? '',
+                                    setValue: isEditState?.setValue,
+                                    prevValue: isEditState?.prevValue,
+                                    pattern: COMMON_REGEX.NUMBER_VALIDATION,
+                                    type: 'number',
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <Button
+                            variant="base"
+                            type="button"
+                            className="btn btn-outline-primary"
+                            title="re-order"
+                            events={{
+                                onClick: () => events?.onEditReorder && events.onEditReorder(index),
+                            }}>
+                            <CiLineHeight size={24} />
+                        </Button>
+                    )}
+
                     <Button
                         variant="base"
                         type="button"
                         className="btn btn-outline-danger"
+                        title="cancel"
                         events={{
                             onClick: () => {
                                 // Event Delete Data
-                                if (!isEdit) {
+                                if (!isEdit && !isReorder) {
                                     events?.onDelete && events.onDelete(datum.id);
                                 }
 
                                 // Event Cancel Editing
                                 if (isEdit) {
-                                    events?.onEditCancel && events.onEditCancel(undefined);
+                                    events?.onEdit && events.onEdit(undefined);
+                                }
+                                if (isReorder) {
+                                    events?.onEditReorder && events.onEditReorder(undefined);
                                 }
                             },
                         }}>
-                        {isEdit ? <CiCircleRemove size={24} /> : <CiTrash size={20} />}
+                        {isEdit || isReorder ? <CiCircleRemove size={24} /> : <CiTrash size={20} />}
                     </Button>
                 </ButtonGroup>
             </td>
@@ -125,7 +171,16 @@ const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState }: Tab
     );
 };
 
-const TableAdmin = ({ id, header, body, events, slug, isEdit, isEditState }: TableAdminProps): React.ReactElement => {
+const TableAdmin = ({
+    id,
+    header,
+    body,
+    events,
+    slug,
+    isEdit,
+    isEditState,
+    isReorder,
+}: TableAdminProps): React.ReactElement => {
     return (
         <form
             id={id}
@@ -169,6 +224,7 @@ const TableAdmin = ({ id, header, body, events, slug, isEdit, isEditState }: Tab
                                     index={i}
                                     slug={slug}
                                     isEdit={isEdit === i}
+                                    isReorder={isReorder === i}
                                     isEditState={{
                                         setValue: isEditState?.setValue,
                                         prevValue: isEditState?.prevValue,
@@ -176,7 +232,9 @@ const TableAdmin = ({ id, header, body, events, slug, isEdit, isEditState }: Tab
                                     events={{
                                         onDelete: () => events?.onDelete && events.onDelete(datum.id),
                                         onEdit: () => events?.onEdit && events.onEdit(isEdit === i ? undefined : i),
-                                        onEditCancel: () => events?.onEditCancel && events.onEditCancel(undefined),
+                                        onEditReorder: () =>
+                                            events?.onEditReorder &&
+                                            events.onEditReorder(isReorder === i ? undefined : i),
                                     }}
                                 />
                             ))}
