@@ -11,6 +11,7 @@ export const INPUT_VARIANTS = {
 export const INPUT_TYPE = {
     SWITCH: 'switch',
     TEXT: 'text',
+    NUMBER: 'number',
 } as const;
 
 export const INPUT_HANDLES = {

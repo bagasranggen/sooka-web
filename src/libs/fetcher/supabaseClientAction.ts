@@ -4,65 +4,92 @@ import { PostgrestError } from '@supabase/supabase-js';
 
 export type SupabaseVariantProps = (typeof SUPABASE_VARIANTS)[keyof typeof SUPABASE_VARIANTS];
 
+export type SupabaseEventsProps = {
+    onFinish?: () => void;
+};
+
 export type SupabaseInsertActionProps = {
     variant: 'insert';
     relation: SupabaseVariantProps;
     data: any[];
-};
+} & SupabaseEventsProps;
 
 export type SupabaseUpdateActionProps = {
     variant: 'update';
     relation: SupabaseVariantProps;
     id: number;
     data: any;
-};
+} & SupabaseEventsProps;
 
 export type SupabaseDeleteActionProps = {
     variant: 'delete';
     relation: SupabaseVariantProps;
     id: number;
-};
+} & SupabaseEventsProps;
+
+export type SupabaseDeleteAllActionProps = {
+    variant: 'delete-all';
+    relation: SupabaseVariantProps;
+} & SupabaseEventsProps;
 
 export type SupabaseReturnProps = {
     data?: any[] | null;
     error?: PostgrestError | null;
 };
 
-export type SupabaseActionProps = SupabaseInsertActionProps | SupabaseUpdateActionProps | SupabaseDeleteActionProps;
+export type SupabaseActionProps =
+    | SupabaseInsertActionProps
+    | SupabaseUpdateActionProps
+    | SupabaseDeleteActionProps
+    | SupabaseDeleteAllActionProps;
 
-export const supabaseClientAction = async (props: SupabaseActionProps): Promise<SupabaseReturnProps> => {
+export const supabaseClientAction = async (props: SupabaseActionProps) => {
     const supabase = supabaseClient();
 
     switch (props.variant) {
         case 'insert':
-            const { data: insertData, error: insertError }: SupabaseReturnProps = await supabase
+            await supabase
                 .from(props.relation)
                 .insert(props.data)
-                .select();
+                .select()
+                .then(() => {
+                    props?.onFinish && props.onFinish();
+                });
 
-            console.log(insertData, insertError);
-
-            return { data: insertData, error: insertError };
+            break;
 
         case 'delete':
-            const { error: deleteError }: SupabaseReturnProps = await supabase
+            await supabase
                 .from(props.relation)
                 .delete()
-                .eq('id', props.id.toString());
+                .eq('id', props.id.toString())
+                .then(() => {
+                    props?.onFinish && props.onFinish();
+                });
 
-            console.log(deleteError);
+            break;
 
-            return { error: deleteError };
+        case 'delete-all':
+            await supabase
+                .from(props.relation)
+                .delete()
+                .neq('id', 0)
+                .then(() => {
+                    props.onFinish && props?.onFinish();
+                });
+
+            break;
 
         case 'update':
-            const { data: updateData, error: updateError }: SupabaseReturnProps = await supabase
+            await supabase
                 .from(props.relation)
                 .update(props.data)
                 .eq('id', props.id)
-                .select();
+                .select()
+                .then(() => {
+                    props?.onFinish && props.onFinish();
+                });
 
-            console.log(updateData, updateError);
-
-            return { data: updateData, error: updateError };
+            break;
     }
 };

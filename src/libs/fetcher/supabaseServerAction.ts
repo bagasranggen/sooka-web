@@ -13,7 +13,10 @@ export const supabaseServerAction = async (props: SupabaseServerActionProps): Pr
 
     switch (props.variant) {
         case 'fetch':
-            const { data: fetchData } = await supabase.from(props.relation).select();
+            const { data: fetchData } = await supabase
+                .from(props.relation)
+                .select()
+                .order('order', { ascending: true });
 
             return { data: fetchData };
     }

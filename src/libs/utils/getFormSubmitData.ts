@@ -6,6 +6,7 @@ export const getFormSubmitData = (form: HTMLElement) => {
 
         switch (type) {
             case 'text':
+            case 'number':
                 if ('value' in element) submitForm[element.id] = element.value;
                 break;
 
