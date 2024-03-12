@@ -31,6 +31,7 @@ export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
         editType: 'switch',
     },
 ];
+
 export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [
     {
         slug: 'label',
@@ -40,6 +41,24 @@ export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [
     {
         slug: 'slug',
         label: 'Slug',
+        editType: 'text',
+    },
+];
+
+export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
+    {
+        slug: 'slug',
+        label: 'Slug',
+        editType: 'text',
+    },
+    {
+        slug: 'title',
+        label: 'Title',
+        editType: 'text',
+    },
+    {
+        slug: 'short_description',
+        label: 'Short Description',
         editType: 'text',
     },
 ];

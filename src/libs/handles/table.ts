@@ -5,6 +5,7 @@ import TableAdminAdd from '@/components/common/table/tableAdminAdd/TableAdminAdd
 
 import TableNavigationForm from '@/components/common/table/sharedTable/TableNavigationForm';
 import TableCategoriesForm from '@/components/common/table/sharedTable/TableCategoriesForm';
+import TablePagesForm from '@/components/common/table/sharedTable/TablePagesForm';
 
 export const TABLE_VARIANTS = {
     ADMIN: 'admin',
@@ -19,4 +20,5 @@ export const TABLE_HANDLES = {
 export const TABLE_FORM_HANDLES = {
     [SUPABASE_VARIANTS.NAVIGATION]: TableNavigationForm,
     [SUPABASE_VARIANTS.CATEGORIES]: TableCategoriesForm,
+    [SUPABASE_VARIANTS.PAGES]: TablePagesForm,
 };
