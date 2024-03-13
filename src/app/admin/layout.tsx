@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
 
         return {
             label,
-            slug: slug.toLowerCase(),
+            slug: slug,
             href: `/admin/${slug}`,
         };
     });
