@@ -1,11 +1,11 @@
 import React from 'react';
-import type { InputTypeProps } from '@/libs/@types';
+import type { InputTypeProps, InputValueTypeProps } from '@/libs/@types';
 
 export type InputTextProps = {
     id: string;
     value?: string | number;
     prevValue?: any;
-    setValue?: React.Dispatch<React.SetStateAction<string | number | boolean>>;
+    setValue?: React.Dispatch<React.SetStateAction<InputValueTypeProps>>;
     isDisabled?: boolean;
     pattern?: any;
 } & InputTypeProps;

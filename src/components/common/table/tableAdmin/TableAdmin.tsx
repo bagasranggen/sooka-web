@@ -193,9 +193,8 @@ const TableAdmin = ({
                             return (
                                 <th
                                     key={i}
-                                    {...(header?.size
-                                        ? { style: { width: header.size }, className: 'text-center' }
-                                        : {})}>
+                                    {...(header.align ? { className: `text-${header.align}` } : {})}
+                                    {...(header?.size ? { style: { width: header.size } } : {})}>
                                     {header?.label}
                                 </th>
                             );

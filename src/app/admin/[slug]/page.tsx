@@ -27,13 +27,6 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
         relation: slug,
     });
 
-    const { data: test } = await supabaseServerAction({
-        variant: 'fetch',
-        relation: '*',
-    });
-
-    console.log('test', test);
-
     return (
         <AdminIndex
             entries={{

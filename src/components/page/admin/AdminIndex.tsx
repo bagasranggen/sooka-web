@@ -165,8 +165,6 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         setForm(data);
     }, [isEditing, isAddingRow, isReordering]);
 
-    console.log(entries.table);
-
     return (
         <>
             <h1>{entries.title}</h1>
@@ -190,7 +188,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                 }}
             />
 
-            {!isEditing && (
+            {typeof isEditing === 'undefined' && typeof isReordering === 'undefined' && (
                 <Button
                     variant="block"
                     type="button"

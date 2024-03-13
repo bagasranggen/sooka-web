@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { INPUT_TYPE_HANDLES, INPUT_VARIANTS } from '@/libs/handles';
-import type { InputTypeProps } from '@/libs/@types';
 import { createDynamicElement } from '@/libs/factory';
-import { InputTextProps } from '@/components/common/input/inputShared/inputText';
-import { InputSwitchProps } from '@/components/common/input/inputShared/InputSwitch';
+
+import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import type { InputSwitchProps } from '@/components/common/input/inputShared/InputSwitch';
+import type { InputCkEditorProps } from '@/components/common/input/inputShared/InputCKEditor';
 
 export type InputRegularProps = {
     variant: typeof INPUT_VARIANTS.REGULAR;
@@ -12,7 +13,7 @@ export type InputRegularProps = {
     // hook?: {
     //     register: UseFormRegister<InputHookValue>;
     // };
-    input: InputTextProps | InputSwitchProps;
+    input: InputTextProps | InputSwitchProps | InputCkEditorProps;
 };
 
 const InputRegular = ({ input, className }: InputRegularProps): React.ReactElement => {

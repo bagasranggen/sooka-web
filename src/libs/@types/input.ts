@@ -4,3 +4,4 @@ export type TextareaTypeProps = {
     type?: 'textarea';
     height: number;
 };
+export type InputValueTypeProps = string | number | boolean;

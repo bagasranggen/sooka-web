@@ -4,6 +4,7 @@ export type SupabaseHeaderProps = {
     slug: string;
     label: string;
     size?: string;
+    align?: 'left' | 'center' | 'right';
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
 };
 
@@ -50,15 +51,18 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
         slug: 'slug',
         label: 'Slug',
         editType: 'text',
+        size: '20%',
     },
     {
         slug: 'title',
         label: 'Title',
         editType: 'text',
+        size: '20%',
     },
     {
         slug: 'short_description',
         label: 'Short Description',
         editType: 'text',
+        size: '50%',
     },
 ];
