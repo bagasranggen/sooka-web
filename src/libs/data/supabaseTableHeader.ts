@@ -66,3 +66,30 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
         size: '50%',
     },
 ];
+
+export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
+    {
+        slug: 'name',
+        label: 'Name',
+        editType: 'text',
+        size: '20%',
+    },
+    {
+        slug: 'category',
+        label: 'Category',
+        editType: 'text',
+        size: '10%',
+    },
+    {
+        slug: 'ingredients',
+        label: 'Ingredients',
+        editType: 'text',
+        size: '30%',
+    },
+    {
+        slug: 'package',
+        label: 'Package',
+        editType: 'text',
+        size: '30%',
+    },
+];
