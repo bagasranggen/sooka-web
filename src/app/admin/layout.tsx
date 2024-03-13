@@ -31,7 +31,7 @@ const Layout = ({ children }: LayoutProps): React.ReactElement => {
                             />
                         </div>
                     </div>
-                    <div className="col">{children}</div>
+                    <div className="col-md-9">{children}</div>
                 </div>
             </div>
         </section>

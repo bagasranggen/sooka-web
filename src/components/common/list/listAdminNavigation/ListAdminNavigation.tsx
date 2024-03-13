@@ -3,8 +3,8 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 
-import { LIST_VARIANTS } from '@/libs/handles';
 import type { LinkProps } from '@/libs/@types';
+import { LIST_VARIANTS } from '@/libs/handles';
 import { getActivePath } from '@/libs/utils';
 
 import Button from '@/components/common/button/Button';

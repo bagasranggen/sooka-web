@@ -186,62 +186,64 @@ const TableAdmin = ({
         <form
             id={id}
             onSubmit={events?.onSubmit}>
-            <table className="table table-responsive table--admin">
-                <thead>
-                    <tr>
-                        {header.map((header: SupabaseHeaderProps, i: number) => {
-                            return (
-                                <th
-                                    key={i}
-                                    {...(header.align ? { className: `text-${header.align}` } : {})}
-                                    {...(header?.size ? { style: { width: header.size } } : {})}>
-                                    {header?.label}
-                                </th>
-                            );
-                        })}
-                        <th
-                            className="text-center"
-                            style={{ width: '80px' }}>
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {body.length === 0 ? (
+            <div className="table-responsive">
+                <table className="table table--admin">
+                    <thead>
                         <tr>
-                            <td
+                            {header.map((header: SupabaseHeaderProps, i: number) => {
+                                return (
+                                    <th
+                                        key={i}
+                                        {...(header.align ? { className: `text-${header.align}` } : {})}
+                                        {...(header?.size ? { style: { width: header.size } } : {})}>
+                                        {header?.label}
+                                    </th>
+                                );
+                            })}
+                            <th
                                 className="text-center"
-                                colSpan={header.length + 1}>
-                                <h5 className="mb-0">No data found</h5>
-                            </td>
+                                style={{ width: '80px' }}>
+                                Action
+                            </th>
                         </tr>
-                    ) : (
-                        <>
-                            {body?.map((datum: any, i: number) => (
-                                <TableAdminItem
-                                    key={i}
-                                    datum={datum}
-                                    index={i}
-                                    slug={slug}
-                                    isEdit={isEdit === i}
-                                    isReorder={isReorder === i}
-                                    isEditState={{
-                                        setValue: isEditState?.setValue,
-                                        prevValue: isEditState?.prevValue,
-                                    }}
-                                    events={{
-                                        onDelete: () => events?.onDelete && events.onDelete(datum.id),
-                                        onEdit: () => events?.onEdit && events.onEdit(isEdit === i ? undefined : i),
-                                        onEditReorder: () =>
-                                            events?.onEditReorder &&
-                                            events.onEditReorder(isReorder === i ? undefined : i),
-                                    }}
-                                />
-                            ))}
-                        </>
-                    )}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {body.length === 0 ? (
+                            <tr>
+                                <td
+                                    className="text-center"
+                                    colSpan={header.length + 1}>
+                                    <h5 className="mb-0">No data found</h5>
+                                </td>
+                            </tr>
+                        ) : (
+                            <>
+                                {body?.map((datum: any, i: number) => (
+                                    <TableAdminItem
+                                        key={i}
+                                        datum={datum}
+                                        index={i}
+                                        slug={slug}
+                                        isEdit={isEdit === i}
+                                        isReorder={isReorder === i}
+                                        isEditState={{
+                                            setValue: isEditState?.setValue,
+                                            prevValue: isEditState?.prevValue,
+                                        }}
+                                        events={{
+                                            onDelete: () => events?.onDelete && events.onDelete(datum.id),
+                                            onEdit: () => events?.onEdit && events.onEdit(isEdit === i ? undefined : i),
+                                            onEditReorder: () =>
+                                                events?.onEditReorder &&
+                                                events.onEditReorder(isReorder === i ? undefined : i),
+                                        }}
+                                    />
+                                ))}
+                            </>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </form>
     );
 };

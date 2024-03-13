@@ -35,7 +35,6 @@ const InputCkEditor = ({ id, value }: InputCkEditorProps): React.ReactElement =>
                 //     console.log('Editor is ready to use!', editor);
                 // }}
                 onChange={(event, editor) => {
-                    console.log(event, editor.getData());
                     setInputValue(editor.getData());
                 }}
                 // onBlur={(event, editor) => {

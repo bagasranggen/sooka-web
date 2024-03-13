@@ -1,11 +1,12 @@
 import { supabaseClient } from '@/libs/fetcher/supabaseClient';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { PostgrestError } from '@supabase/supabase-js';
+import { SupabaseFetchActionProps } from '@/libs/fetcher/supabaseServerAction';
 
 export type SupabaseVariantProps = (typeof SUPABASE_VARIANTS)[keyof typeof SUPABASE_VARIANTS];
 
 export type SupabaseEventsProps = {
-    onFinish?: () => void;
+    onFinish?: (res?: any) => void;
 };
 
 export type SupabaseInsertActionProps = {
@@ -38,6 +39,7 @@ export type SupabaseReturnProps = {
 };
 
 export type SupabaseActionProps =
+    | (SupabaseFetchActionProps & SupabaseEventsProps)
     | SupabaseInsertActionProps
     | SupabaseUpdateActionProps
     | SupabaseDeleteActionProps
@@ -47,12 +49,24 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
     const supabase = supabaseClient();
 
     switch (props.variant) {
+        case 'fetch':
+            await supabase
+                .from(props.relation)
+                .select()
+                .order('order', { ascending: true })
+                .then((res) => {
+                    props?.onFinish && props.onFinish(res);
+                });
+
+            break;
+
         case 'insert':
             await supabase
                 .from(props.relation)
                 .insert(props.data)
                 .select()
-                .then(() => {
+                .then((res) => {
+                    console.log(res);
                     props?.onFinish && props.onFinish();
                 });
 
@@ -86,7 +100,8 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                 .update(props.data)
                 .eq('id', props.id)
                 .select()
-                .then(() => {
+                .then((res) => {
+                    console.log(res);
                     props?.onFinish && props.onFinish();
                 });
 

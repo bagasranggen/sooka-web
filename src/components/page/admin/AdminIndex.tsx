@@ -33,9 +33,10 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             variant: 'delete',
             relation: entries.slug,
             id,
+            onFinish: () => {
+                router.refresh();
+            },
         });
-
-        router.refresh();
     };
 
     const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -86,7 +87,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     data: updateReorder,
                     onFinish: () => {
                         setIsReordering(undefined);
-                        router.refresh();
+                        // router.refresh();
                     },
                 });
             },
@@ -101,7 +102,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             data,
             onFinish: () => {
                 setIsEditing(undefined);
-                router.refresh();
+                // router.refresh();
             },
         });
     };
@@ -114,6 +115,8 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         const id = (
             form.querySelectorAll('tbody tr')[isEditing as number]?.querySelector('[data-id]') as Element
         )?.getAttribute('data-id') as string;
+
+        console.log(submitForm);
 
         if (id) {
             submitUpdateIndividualHandler(submitForm, parseInt(id));
@@ -164,6 +167,14 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
 
         setForm(data);
     }, [isEditing, isAddingRow, isReordering]);
+
+    useEffect(() => {
+        console.log(isEditing, isReordering);
+        if (typeof isEditing !== 'undefined' || typeof isReordering !== 'undefined') return;
+        console.log('should run after closing');
+
+        setTimeout(() => router.refresh(), 200);
+    }, [isEditing, isReordering]);
 
     return (
         <>
