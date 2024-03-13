@@ -33,13 +33,21 @@ const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps):
             />
         </td>
         <td>
+            {/*<Input*/}
+            {/*    variant="regular"*/}
+            {/*    input={{*/}
+            {/*        id: 'short_description',*/}
+            {/*        value: prevValue?.['short_description'] ?? '',*/}
+            {/*        setValue,*/}
+            {/*        prevValue,*/}
+            {/*    }}*/}
+            {/*/>*/}
             <Input
                 variant="regular"
                 input={{
                     id: 'short_description',
+                    type: 'ck-editor',
                     value: prevValue?.['short_description'] ?? '',
-                    setValue,
-                    prevValue,
                 }}
             />
         </td>
