@@ -6,6 +6,7 @@ import { TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
 
 import { CiCircleCheck, CiCircleRemove, CiEdit, CiLineHeight, CiTrash } from 'react-icons/ci';
+import ReactHtmlParser from 'react-html-parser';
 
 import Button, { ButtonGroup } from '@/components/common/button/Button';
 import Input from '@/components/common/input/Input';
@@ -77,7 +78,7 @@ const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState, isReo
                                 key={`${keys}${index}`}
                                 {...dataProps}
                                 {...(tdClass ? { className: tdClass } : {})}>
-                                {value}
+                                {typeof value === 'string' ? ReactHtmlParser(value) : value}
                             </td>
                         );
                 })}
