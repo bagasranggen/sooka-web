@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 
 import { Init } from '@/libs/animations/init';
 import { NavigationEvents } from '@/libs/utils';
@@ -18,7 +18,9 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
 
     return (
         <>
-            <NavigationEvents endHandler={() => setPageCount((prevState: number) => prevState + 1)} />
+            <Suspense fallback={null}>
+                <NavigationEvents endHandler={() => setPageCount((prevState: number) => prevState + 1)} />
+            </Suspense>
             <Preloader isOpen={pageCount <= 2} />
             <main>{children}</main>
         </>

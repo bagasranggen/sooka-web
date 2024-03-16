@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import type { Metadata } from 'next';
 
 import '@fontsource/mulish';
@@ -40,9 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 {...(layout.height && ({ style: layout.height } as React.HTMLAttributes<HTMLElement>))}>
                 <Providers>
                     <Navigation items={navigation as NavigationItemProps[]} />
-                    <Suspense fallback={null}>
-                        <MainLayout>{children}</MainLayout>
-                    </Suspense>
+                    <MainLayout>{children}</MainLayout>
                     <Footer />
                 </Providers>
             </body>
