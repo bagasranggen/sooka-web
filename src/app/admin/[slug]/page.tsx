@@ -10,7 +10,9 @@ import AdminIndex from '@/components/page/admin/AdminIndex';
 export type PageProps = DynamicPageProps;
 
 export const generateStaticParams = () => {
-    return Object.keys(SUPABASE_VARIANTS).map((key: string) => ({ slug: key }));
+    return Object.keys(SUPABASE_VARIANTS).map((key: string) => ({
+        slug: SUPABASE_VARIANTS[key as keyof typeof SUPABASE_VARIANTS],
+    }));
 };
 
 export const generateMetadata = ({ params }: PageProps) => {
