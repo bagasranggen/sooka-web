@@ -12,7 +12,19 @@ export type SupabaseFetchFindActionProps = {
     slug: string;
 };
 
-export type SupabaseServerActionProps = SupabaseFetchActionProps | SupabaseFetchFindActionProps;
+export type SupabaseFetchFilterActionProps = {
+    variant: 'fetch-filter';
+    relation: SupabaseVariantProps;
+    filter: {
+        key: string;
+        slug: string;
+    };
+};
+
+export type SupabaseServerActionProps =
+    | SupabaseFetchActionProps
+    | SupabaseFetchFindActionProps
+    | SupabaseFetchFilterActionProps;
 
 export const supabaseServerAction = async (props: SupabaseServerActionProps): Promise<SupabaseReturnProps> => {
     const supabase = supabaseServer();
@@ -30,5 +42,13 @@ export const supabaseServerAction = async (props: SupabaseServerActionProps): Pr
             const { data: fetchFindData } = await supabase.from(props.relation).select('*').eq('slug', props.slug);
 
             return { data: fetchFindData };
+
+        case 'fetch-filter':
+            const { data: fetchFilterData } = await supabase
+                .from(props.relation)
+                .select()
+                .eq(props.filter.key, props.filter.slug);
+
+            return { data: fetchFilterData };
     }
 };
