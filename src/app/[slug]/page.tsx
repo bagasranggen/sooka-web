@@ -19,7 +19,7 @@ const getPage = async (slug: string): Promise<{ data: ProductListingIndexProps['
         slug,
     });
 
-    return { data: data ? data[0] : {} };
+    return { data: data ? { title: data[0].title, shortDescription: data[0]['short_description'] } : ({} as any) };
 };
 
 const getProductListing = async (slug: string) => {
@@ -64,6 +64,8 @@ export const generateMetadata = async ({ params }: PageProps) => {
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const { data: page } = await getPage(params.slug as string);
     const { data: products } = await getProductListing(params.slug as string);
+
+    console.log(page);
 
     return (
         <ProductListingIndex

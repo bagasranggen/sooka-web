@@ -10,31 +10,31 @@ import { gsap } from 'gsap';
 registerAnimation();
 
 export const Init = (selector?: string) => {
-    const pathname = usePathname();
+    // const pathname = usePathname();
 
-    useEffect(() => {
-        // console.log('run init anim');
+    // useEffect(() => {
+    // console.log('run init anim');
 
-        const context = gsap.context(() => {
-            // Common Animation
-            gsap.utils
-                .toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`)
-                .forEach((element: any, i: number) => {
-                    const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
-                    const config = getAnimationProps(element);
+    const context = gsap.context(() => {
+        // Common Animation
+        gsap.utils
+            .toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`)
+            .forEach((element: any, i: number) => {
+                const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
+                const config = getAnimationProps(element);
 
-                    gsap.effects?.[type] && gsap.effects?.[type](element, config, i);
-                });
-        });
+                gsap.effects?.[type] && gsap.effects?.[type](element, config, i);
+            });
+    });
 
-        return () => context.revert();
-    }, [selector, pathname]);
+    return () => context.revert();
+    // }, [selector, pathname]);
 };
 
-export const InitAnimations = () => {
+export const InitAnimations = (selector?: string) => {
     // const pathname = usePathname();
     // const searchParams = useSearchParams();
 
     // Re-run on first load and  every page change
-    Init();
+    Init(selector ?? '');
 };

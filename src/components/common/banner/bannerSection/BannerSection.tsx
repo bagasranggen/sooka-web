@@ -3,6 +3,7 @@ import React from 'react';
 import { BANNER_VARIANTS } from '@/libs/handles';
 
 import { Container } from 'react-bootstrap';
+import ReactHtmlParser from 'react-html-parser';
 
 export type BannerSectionProps = {
     variant: typeof BANNER_VARIANTS.SECTION;
@@ -15,7 +16,7 @@ const BannerSection = ({ title, description }: BannerSectionProps): React.ReactE
         <Container>
             <div className="banner__title">
                 <h1>{title}</h1>
-                <p>{description}</p>
+                <div className="">{ReactHtmlParser(description)}</div>
             </div>
         </Container>
     </section>
