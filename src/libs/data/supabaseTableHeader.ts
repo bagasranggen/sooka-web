@@ -21,7 +21,7 @@ export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
     },
     {
         slug: 'target',
-        label: 'Open new Tab',
+        label: 'Open New Tab',
         size: '130px',
         editType: 'switch',
     },
@@ -64,6 +64,43 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
         label: 'Short Description',
         editType: 'text',
         size: '50%',
+    },
+];
+
+export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
+    {
+        slug: 'href',
+        label: 'Href',
+        editType: 'text',
+        size: '10%',
+    },
+    {
+        slug: 'target',
+        label: 'Open New Tab',
+        editType: 'switch',
+        align: 'center',
+        size: '130px',
+    },
+    {
+        slug: 'is_show',
+        label: 'Show',
+        editType: 'switch',
+        align: 'center',
+        size: '80px',
+    },
+    {
+        slug: 'title',
+        label: 'Title',
+        editType: 'text',
+        align: 'center',
+        size: '30%',
+    },
+    {
+        slug: 'images',
+        label: 'Images',
+        editType: 'text',
+        align: 'center',
+        size: '30%',
     },
 ];
 
