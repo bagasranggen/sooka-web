@@ -65,8 +65,6 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const { data: page } = await getPage(params.slug as string);
     const { data: products } = await getProductListing(params.slug as string);
 
-    console.log(page);
-
     return (
         <ProductListingIndex
             page={page}

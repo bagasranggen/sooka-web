@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+// import { useEffect } from 'react';
+// import { usePathname, useSearchParams } from 'next/navigation';
 
 import { COMMON_ANIMATIONS } from '@/libs/handles';
 import { registerAnimation } from '@/libs/animations/register';
@@ -18,8 +18,6 @@ export const Init = (selector?: string) => {
         gsap.utils
             .toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`)
             .forEach((element: any, i: number) => {
-                console.log(element);
-
                 const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
                 const config = getAnimationProps(element);
 
