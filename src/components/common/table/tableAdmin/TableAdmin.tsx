@@ -69,8 +69,20 @@ const RenderTableAdminData = ({ datum, index, isEdit }: RenderTableAdminDataProp
     <>
         {Object.keys(datum).map((keys: string) => {
             let value = datum[keys];
-            if (value === true) value = <CiCircleCheck size={30} />;
-            if (value === false) value = <CiCircleRemove size={30} />;
+            if (value === true)
+                value = (
+                    <CiCircleCheck
+                        size={30}
+                        color="var(--bs-success)"
+                    />
+                );
+            if (value === false)
+                value = (
+                    <CiCircleRemove
+                        size={30}
+                        color="var(--bs-danger)"
+                    />
+                );
 
             let renderValue = value;
             if (typeof value === 'string') renderValue = ReactHtmlParser(value);
