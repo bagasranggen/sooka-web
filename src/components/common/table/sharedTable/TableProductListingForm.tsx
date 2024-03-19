@@ -2,11 +2,13 @@
 
 import React, { useEffect, useState } from 'react';
 
+import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
+import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
+
 import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
 import type { TableAdminCommonProps } from '@/components/common/table/tableAdmin/TableAdmin';
 
 import Input from '@/components/common/input/Input';
-import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
 
 export type TableCategoriesFormProps = TableAdminCommonProps & Pick<InputTextProps, 'setValue' | 'prevValue'>;
 
@@ -29,7 +31,7 @@ const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps):
 
     return (
         <>
-            <td colSpan={4}>
+            <td colSpan={SUPABASE_HEADER_HANDLES.productListing.length}>
                 <div className="row gy-3 gx-1">
                     <div className="col-md-8">
                         <Input
@@ -81,14 +83,34 @@ const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps):
                             }}
                         />
                     </div>
+                    <div className="col-md-6">
+                        <Input
+                            variant="regular"
+                            label="Image Desktop"
+                            input={{
+                                id: 'imageDesktop',
+                                type: 'text',
+                                value: prevValue?.imageDesktop ?? '',
+                                setValue,
+                                prevValue,
+                            }}
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <Input
+                            variant="regular"
+                            label="Image Mobile"
+                            input={{
+                                id: 'imageMobile',
+                                type: 'text',
+                                value: prevValue?.imageMobile ?? '',
+                                setValue,
+                                prevValue,
+                            }}
+                        />
+                    </div>
                 </div>
             </td>
-            {/*<td>*/}
-            {/*</td>*/}
-            {/*<td>*/}
-            {/*</td>*/}
-            {/*<td>*/}
-            {/*</td>*/}
         </>
     );
 };
