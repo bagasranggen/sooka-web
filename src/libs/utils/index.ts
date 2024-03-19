@@ -11,4 +11,5 @@ export * from './getSpacingValue';
 export * from './getWhatsappEncoded';
 export * from './joinClassnameString';
 export * from './resizeFakerImage';
+export * from './truncateString';
 export * from './NavigationEvents';

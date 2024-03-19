@@ -92,4 +92,10 @@ export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
         editType: 'text',
         size: '30%',
     },
+    {
+        slug: 'images',
+        label: 'Images',
+        editType: 'text',
+        size: '30%',
+    },
 ];

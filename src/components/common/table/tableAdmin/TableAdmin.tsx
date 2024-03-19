@@ -4,6 +4,7 @@ import type { SupabaseVariantProps } from '@/libs/fetcher';
 import { COMMON_REGEX, SupabaseHeaderProps } from '@/libs/data';
 import { TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
+import { truncateString } from '@/libs/utils';
 
 import { CiCircleCheck, CiCircleRemove, CiEdit, CiLineHeight, CiTrash } from 'react-icons/ci';
 import ReactHtmlParser from 'react-html-parser';
@@ -16,11 +17,14 @@ export type TableAdminCommonProps = {
     type: 'edit' | 'add';
 };
 
-export type TableAdminItemProps = {
+export type RenderTableAdminDataProps = {
     datum: any;
     index: number;
+    isEdit: boolean;
+};
+
+export type TableAdminItemProps = {
     slug: SupabaseVariantProps;
-    isEdit?: boolean;
     isReorder?: boolean;
     isEditState?: {
         setValue?: InputTextProps['setValue'];
@@ -31,7 +35,7 @@ export type TableAdminItemProps = {
         onEdit?: (index: number | undefined) => void;
         onEditReorder?: (index: number | undefined) => void;
     };
-};
+} & RenderTableAdminDataProps;
 
 export type TableAdminProps = {
     variant: typeof TABLE_VARIANTS.ADMIN;
@@ -44,6 +48,55 @@ export type TableAdminProps = {
         onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
     } & TableAdminItemProps['events'];
 } & Pick<TableAdminItemProps, 'isEditState' | 'slug'>;
+
+const RenderImagesArray = ({ items }: { items: string[] }): React.ReactElement => (
+    <ul>
+        {items.map((item: string, i: number) => (
+            <li key={i}>
+                <Button
+                    variant="base"
+                    type="anchor"
+                    href={item}
+                    openNewTab>
+                    {truncateString(item, 45)}
+                </Button>
+            </li>
+        ))}
+    </ul>
+);
+
+const RenderTableAdminData = ({ datum, index, isEdit }: RenderTableAdminDataProps) => (
+    <>
+        {Object.keys(datum).map((keys: string) => {
+            let value = datum[keys];
+            if (value === true) value = <CiCircleCheck size={30} />;
+            if (value === false) value = <CiCircleRemove size={30} />;
+
+            let renderValue = value;
+            if (typeof value === 'string') renderValue = ReactHtmlParser(value);
+            if (value instanceof Array) renderValue = <RenderImagesArray items={value} />;
+
+            let dataPropsKey = 'data-value';
+            if (keys === 'id') dataPropsKey = 'data-id';
+            if (keys === 'images') dataPropsKey = 'data-images';
+            const dataProps = { [dataPropsKey]: datum[keys] };
+
+            const tdShow = isEdit || keys === 'id' ? 'd-none' : '';
+            const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';
+            const tdClass = `${tdShow}${tdAlign}`;
+
+            if (keys !== 'order')
+                return (
+                    <td
+                        key={`${keys}${index}`}
+                        {...dataProps}
+                        {...(tdClass ? { className: tdClass } : {})}>
+                        {renderValue}
+                    </td>
+                );
+        })}
+    </>
+);
 
 const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState, isReorder }: TableAdminItemProps) => {
     return (
@@ -60,29 +113,11 @@ const TableAdminItem = ({ datum, index, slug, events, isEdit, isEditState, isReo
                   })
                 : null}
 
-            <>
-                {Object.keys(datum).map((keys: string) => {
-                    let value = datum[keys];
-                    if (value === true) value = <CiCircleCheck size={30} />;
-                    if (value === false) value = <CiCircleRemove size={30} />;
-
-                    const tdShow = isEdit || keys === 'id' ? 'd-none' : '';
-                    const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';
-                    const tdClass = `${tdShow}${tdAlign}`;
-
-                    const dataProps = { [`data-${keys === 'id' ? 'id' : 'value'}`]: datum[keys] };
-
-                    if (keys !== 'order')
-                        return (
-                            <td
-                                key={`${keys}${index}`}
-                                {...dataProps}
-                                {...(tdClass ? { className: tdClass } : {})}>
-                                {typeof value === 'string' ? ReactHtmlParser(value) : value}
-                            </td>
-                        );
-                })}
-            </>
+            <RenderTableAdminData
+                datum={datum}
+                index={index}
+                isEdit={isEdit}
+            />
 
             <td className="text-center">
                 <ButtonGroup>
