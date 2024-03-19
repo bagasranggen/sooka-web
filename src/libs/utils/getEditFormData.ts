@@ -55,7 +55,7 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
             data[keys] = d;
         });
 
-        if (tableImages) {
+        if (tableImages.length > 0) {
             data['images'] = tableImages;
 
             tableImages.map((image: string, i: number) => {

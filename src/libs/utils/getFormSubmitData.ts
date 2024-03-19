@@ -15,34 +15,37 @@ const submitImagesArray = ({ data, handle, value }: SubmitImagesArrayProps) => {
 export const getFormSubmitData = (form: HTMLElement) => {
     const submitForm: any = {};
 
-    form.querySelectorAll('input, select').forEach((element: HTMLInputElement | Element) => {
+    form.querySelectorAll('input[id], select[id]').forEach((element: HTMLInputElement | Element) => {
         const tag = element.tagName;
         const type = element.getAttribute('type');
+        const id = element.id;
+
+        if (id === 'selectFrom') return;
 
         switch (tag) {
             case 'INPUT':
                 switch (type) {
                     case 'text':
                     case 'number':
-                        const isImageArr = element.id.includes('image');
+                        const isImageArr = id.includes('image');
 
                         if ('value' in element && isImageArr) {
                             submitImagesArray({ data: submitForm, handle: 'images', value: element.value });
                         }
 
                         if ('value' in element && !isImageArr) {
-                            submitForm[element.id] = element.value;
+                            submitForm[id] = element.value;
                         }
                         break;
 
                     case 'checkbox':
-                        if ('checked' in element) submitForm[element.id] = element?.checked;
+                        if ('checked' in element) submitForm[id] = element?.checked;
                         break;
                 }
                 break;
 
             case 'SELECT':
-                if ('value' in element) submitForm[element.id] = element.value;
+                if ('value' in element) submitForm[id] = element.value;
                 break;
         }
     });
