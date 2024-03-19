@@ -13,13 +13,13 @@ export const Init = (selector?: string) => {
     // const pathname = usePathname();
 
     // useEffect(() => {
-    // console.log('run init anim');
-
     const context = gsap.context(() => {
         // Common Animation
         gsap.utils
             .toArray(`${selector ?? ''}[${COMMON_ANIMATIONS.ATTRIBUTES.TYPE}]`)
             .forEach((element: any, i: number) => {
+                console.log(element);
+
                 const type: string = element.getAttribute(COMMON_ANIMATIONS.ATTRIBUTES.TYPE);
                 const config = getAnimationProps(element);
 
@@ -29,12 +29,4 @@ export const Init = (selector?: string) => {
 
     return () => context.revert();
     // }, [selector, pathname]);
-};
-
-export const InitAnimations = (selector?: string) => {
-    // const pathname = usePathname();
-    // const searchParams = useSearchParams();
-
-    // Re-run on first load and  every page change
-    Init(selector ?? '');
 };
