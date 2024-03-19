@@ -2,6 +2,7 @@ export * from './getActivePath';
 export * from './getAnimationElement';
 export * from './getAnimationProps';
 export * from './getBackgroundImage';
+export * from './getEditFormData';
 export * from './getFadeOffset';
 export * from './getFormSubmitData';
 export * from './getGoogleDriveImage';
