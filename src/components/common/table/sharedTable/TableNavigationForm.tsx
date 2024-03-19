@@ -86,7 +86,7 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
         if (type === 'add') {
             setValue && setValue({ ...prevValue, ...{ label: '' } });
         }
-    }, [type, selectFrom]);
+    }, [type, selectFrom, setValue, prevValue]);
 
     return (
         <>

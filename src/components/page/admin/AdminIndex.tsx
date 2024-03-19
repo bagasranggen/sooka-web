@@ -132,7 +132,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         });
 
         setForm(data);
-    }, [isEditing, isAddingRow, isReordering]);
+    }, [entries.slug, isEditing, isAddingRow, isReordering]);
 
     return (
         <>

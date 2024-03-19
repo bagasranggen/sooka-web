@@ -16,7 +16,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
 
     return (
         <>
-            <Suspense fallback={null}>
+            <Suspense fallback={<div className="preloader preloader--is-open" />}>
                 <NavigationEvents
                     endHandler={() => {
                         Init();
