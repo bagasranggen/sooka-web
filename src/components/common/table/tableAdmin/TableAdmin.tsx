@@ -230,7 +230,9 @@ const TableAdmin = ({
                                     <th
                                         key={i}
                                         {...(header.align ? { className: `text-${header.align}` } : {})}
-                                        {...(header?.size ? { style: { width: header.size } } : {})}>
+                                        {...(header?.size
+                                            ? { style: { width: header.size, minWidth: header.size } }
+                                            : {})}>
                                         {header?.label}
                                     </th>
                                 );

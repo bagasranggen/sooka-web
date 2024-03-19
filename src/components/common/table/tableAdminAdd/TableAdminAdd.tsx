@@ -29,7 +29,9 @@ const TableAdminAdd = ({ header, type, events, stateData }: TableAdminAddProps):
                         return (
                             <th
                                 key={i}
-                                {...(header?.size ? { style: { width: header.size }, className: 'text-center' } : {})}>
+                                {...(header?.size
+                                    ? { style: { width: header.size, minWidth: header.size }, className: 'text-center' }
+                                    : {})}>
                                 {header?.label}
                             </th>
                         );
