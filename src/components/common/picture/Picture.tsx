@@ -31,7 +31,12 @@ const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
         className: 'img-fluid',
     };
 
-    return <img alt={props.alt} />;
+    return (
+        <img
+            {...props}
+            alt={props.alt}
+        />
+    );
 };
 
 const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
