@@ -19,7 +19,11 @@ const getPage = async (slug: string): Promise<{ data: ProductListingIndexProps['
         slug,
     });
 
-    return { data: data ? { title: data[0].title, shortDescription: data[0]['short_description'] } : ({} as any) };
+    if (data?.length === 0) return notFound();
+
+    return {
+        data: data ? { title: data[0]?.title, shortDescription: data[0]['short_description'] } : ({} as any),
+    };
 };
 
 const getProductListing = async (slug: string) => {
@@ -53,8 +57,6 @@ export const generateStaticParams = async () => {
 
 export const generateMetadata = async ({ params }: PageProps) => {
     const { data: page } = await getPage(params.slug as string);
-
-    if (!page) return notFound();
 
     return {
         title: page.title,
