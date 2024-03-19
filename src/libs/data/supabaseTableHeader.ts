@@ -24,12 +24,14 @@ export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
         label: 'Open New Tab',
         size: '130px',
         editType: 'switch',
+        align: 'center',
     },
     {
         slug: 'is_show',
         label: 'Show',
         size: '80px',
         editType: 'switch',
+        align: 'center',
     },
 ];
 
