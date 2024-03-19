@@ -3,10 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import type { SupabaseHeaderProps } from '@/libs/data';
 import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
-import { getFormSubmitData } from '@/libs/utils';
-import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
+import { getEditFormData, getFormSubmitData } from '@/libs/utils';
 
 import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Table from '@/components/common/table/Table';
@@ -116,8 +114,6 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             form.querySelectorAll('tbody tr')[isEditing as number]?.querySelector('[data-id]') as Element
         )?.getAttribute('data-id') as string;
 
-        // console.log(submitForm);
-
         if (id) {
             submitUpdateIndividualHandler(submitForm, parseInt(id));
         } else {
@@ -128,53 +124,15 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
     useEffect(() => {
         if (typeof document === undefined) return;
 
-        let type: 'add' | 'edit' | 'reorder' = 'add';
-        if (typeof isEditing !== 'undefined') type = 'edit';
-        if (typeof isReordering !== 'undefined') type = 'reorder';
-
-        const tableKeys = SUPABASE_HEADER_HANDLES[entries.slug].map((header: SupabaseHeaderProps) => header.slug);
-        const tableForm = document.querySelector(`#${tableId}`) as unknown as HTMLElement;
-
-        let tempData: string[] | number = [];
-        if (type === 'edit' && typeof isEditing !== 'undefined') {
-            const editData = tableForm.querySelectorAll('tbody tr')[isEditing].querySelectorAll('[data-value]');
-            editData.forEach((element: Element) =>
-                (tempData as string[]).push(element.getAttribute('data-value') as string)
-            );
-        }
-        if (type === 'reorder' && typeof isReordering !== 'undefined') {
-            const editData = tableForm.querySelectorAll('tbody tr')[isReordering].querySelectorAll('[data-order]');
-            tempData = parseInt(editData[0].getAttribute('data-order') as string);
-        }
-
-        const data: any = {};
-        if (type !== 'reorder') {
-            tableKeys.map((keys: string, i: number) => {
-                let d: string | boolean = '';
-
-                if (type === 'edit' && typeof tempData === 'object') {
-                    d = tempData[i];
-                    if (tempData[i] === 'true') d = true;
-                    if (tempData[i] === 'false') d = false;
-                }
-
-                data[keys] = d;
-            });
-        }
-        if (type === 'reorder') {
-            data.order = tempData;
-        }
+        const data = getEditFormData({
+            slug: entries.slug,
+            tableId,
+            isEditing,
+            isReordering,
+        });
 
         setForm(data);
     }, [isEditing, isAddingRow, isReordering]);
-
-    // useEffect(() => {
-    //     console.log(isEditing, isReordering);
-    //     if (typeof isEditing !== 'undefined' || typeof isReordering !== 'undefined') return;
-    //     console.log('should run after closing');
-    //
-    //     setTimeout(() => router.refresh(), 200);
-    // }, [isEditing, isReordering]);
 
     return (
         <>
