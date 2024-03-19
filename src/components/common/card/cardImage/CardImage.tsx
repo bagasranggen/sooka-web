@@ -47,6 +47,7 @@ const CardImageItem = ({ name, category, isPackage, ingredients, images }: CardI
                     )}
                     <Button
                         type="anchor"
+                        className="mt-3"
                         href={getWhatsappEncoded(name)}
                         size="sm"
                         variant="ripple"

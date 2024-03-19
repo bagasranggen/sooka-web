@@ -16,7 +16,7 @@ const ButtonRipple = (props: ButtonRippleProps): React.ReactElement => {
     const btnColor = props.color ? ` btn--${props.color}` : '';
     const btnClass = `btn btn--${props.variant}${btnColor}${btnSize}${props.className ? ` ${props.className}` : ''}`;
 
-    const { variant, ...rest } = props;
+    const { variant, className, ...rest } = props;
 
     return (
         <ButtonBase
