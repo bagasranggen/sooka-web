@@ -16,33 +16,33 @@ export type ProductListingProps = {
 };
 
 const ProductListing = ({ option, filterItems, productItems }: ProductListingProps): React.ReactElement => {
-    const searchParams = useSearchParams();
-    const activeCategory = searchParams?.get(option.filterKey) ?? '';
-
-    const [items, setItems] = useState<ProductListingProps['productItems']>(productItems);
-
-    useEffect(() => {
-        if (!activeCategory) {
-            setItems(productItems);
-            return;
-        }
-        const filtered = [...productItems].filter((item: CardImageItemProps) => item.category === activeCategory);
-        setItems(filtered);
-    }, [activeCategory, productItems]);
+    // const searchParams = useSearchParams();
+    // const activeCategory = searchParams?.get(option.filterKey) ?? '';
+    //
+    // const [items, setItems] = useState<ProductListingProps['productItems']>(productItems);
+    //
+    // useEffect(() => {
+    //     if (!activeCategory) {
+    //         setItems(productItems);
+    //         return;
+    //     }
+    //     const filtered = [...productItems].filter((item: CardImageItemProps) => item.category === activeCategory);
+    //     setItems(filtered);
+    // }, [activeCategory, productItems]);
 
     return (
         <>
-            {filterItems.length > 0 && (
-                <Filter
-                    className="text-end"
-                    variant="product"
-                    options={{ filterKey: option.filterKey }}
-                    items={filterItems}
-                />
-            )}
+            {/*{filterItems.length > 0 && (*/}
+            {/*    <Filter*/}
+            {/*        className="text-end"*/}
+            {/*        variant="product"*/}
+            {/*        options={{ filterKey: option.filterKey }}*/}
+            {/*        items={filterItems}*/}
+            {/*    />*/}
+            {/*)}*/}
             <Card
                 variant="image"
-                items={items}
+                items={productItems}
             />
         </>
     );

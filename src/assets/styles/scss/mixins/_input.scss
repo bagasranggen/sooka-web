@@ -4,3 +4,81 @@
         @content
     }
 }
+
+@mixin input-switch {
+    @extend %position-relative;
+
+    --toggle-size: 2.5rem;
+    --toggle-height: calc(var(--toggle-size) + .2rem);
+    --toggle-width: calc(var(--toggle-size) * 2 - .4rem);
+    --toggle-bg: #{sooka-light};
+    --toggle-bg-box-shadow: 0 -12px 15px rgba(0, 0, 0, 0.02) inset, 0px 0px 0px 2px #ddd inset;
+    --toggle-icon-position-x: 0;
+
+    height: var(--toggle-height);
+    width: var(--toggle-width);
+
+    &__toggle {
+        //@extend %position-relative;
+
+        cursor: pointer;
+        content: '';
+        width: var(--toggle-width);
+        height: var(--toggle-height);
+
+        &:before {
+            @extend %position-absolute;
+
+            content: '';
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: var(--toggle-bg-box-shadow);
+            background-color: var(--toggle-bg);
+            border-radius: 1.3rem;
+
+            @include make-transition(background-color box-shadow, .4s);
+        }
+
+        &:after {
+            @extend %position-absolute;
+
+            content: '';
+            pointer-events: none;
+            left: var(--toggle-icon-position-x);
+            width: var(--toggle-size);
+            height: var(--toggle-size);
+            border: .15rem solid #ccc;
+            box-shadow: 0 -12px 15px rgba(0, 0, 0, 0.02) inset, 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+            background: $sooka-light;
+            border-radius: 50%;
+            margin: .1rem;
+            z-index: 19;
+
+            @include make-transition(left, .3s);
+        }
+    }
+
+    input[type=checkbox] {
+        &:checked {
+            ~ label {
+                --toggle-icon-position-x: calc(var(--toggle-size) - .6rem);
+            }
+        }
+    }
+}
+
+@mixin input-switch-size($size) {
+    --toggle-size: #{$size};
+}
+
+@mixin input-switch-color($color) {
+    input[type=checkbox] {
+        &:checked {
+            ~ label {
+                --toggle-bg: #{$color};
+                --toggle-bg-box-shadow: 0 -12px 15px rgba(0, 0, 0, 0.02) inset, 0px 0px 0px 13px $color inset;
+            }
+        }
+    }
+}

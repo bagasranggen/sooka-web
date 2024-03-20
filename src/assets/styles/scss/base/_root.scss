@@ -1,7 +1,9 @@
 :root {
     --bs-navbar-height: #{$navbar-height-mobile};
+    --bs-footer-height: #{$footer-height-mobile};
 
     @include media-breakpoint-up(lg) {
         --bs-navbar-height: #{$navbar-height};
+        --bs-footer-height: #{$footer-height};
     }
 }

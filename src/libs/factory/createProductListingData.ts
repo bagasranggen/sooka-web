@@ -1,16 +1,12 @@
 import type { CardImageItemProps } from '@/components/common/card/cardImage/CardImage';
 import { createGoogleDriveImage } from '@/libs/factory';
 
-export type ProductListingDataProps = Record<
-    'imageDesktop' | 'imageDesktopSize' | 'imageMobile' | 'imageMobileSize',
-    string
-> &
-    CardImageItemProps;
+export type ProductListingDataProps = CardImageItemProps;
 
 export const createProductListingData = (datum: ProductListingDataProps) => {
     const images = createGoogleDriveImage({
-        imageSources: [datum.imageDesktop, datum.imageMobile],
-        imageSizes: [JSON.parse(datum.imageDesktopSize), JSON.parse(datum.imageMobileSize)],
+        imageSources: datum.images as unknown as string[],
+        imageSizes: 'product-listing',
         alt: datum.name,
     });
 

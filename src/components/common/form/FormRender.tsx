@@ -4,15 +4,17 @@ import { getResponsiveClass, joinClassnameString } from '@/libs/utils';
 import type { CreateArrayWithLengthX, NumericRange, ResponsiveClassProps } from '@/libs/@types';
 
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
-import Input, { InputProps } from '@/components/common/input/Input';
-import type { InputHookValue } from '@/components/common/input/inputFloating/InputFloating';
+
+import Input from '@/components/common/input/Input';
+import type { InputFloatingProps, InputHookValue } from '@/components/common/input/inputFloating/InputFloating';
 
 export type FormRenderItemProps = {
     size: ResponsiveClassProps;
     validation?: {
+        message?: string;
         additionalMessage?: string;
     };
-} & Omit<InputProps, 'hook'>;
+} & Omit<InputFloatingProps, 'hook'>;
 
 export type FormRenderProps = {
     spacing: NumericRange<CreateArrayWithLengthX<0>, 15>;

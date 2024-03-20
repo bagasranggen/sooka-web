@@ -26,13 +26,17 @@ const PictureItemSource = (item: PictureItemProps): React.ReactElement => {
 
 const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
     const { props: image } = getImageProps(item);
-    const props = {
+    const props: any = {
         ...image,
         className: 'img-fluid',
     };
 
-    // eslint-disable-next-line jsx-a11y/alt-text
-    return <img {...(props as any)} />;
+    return (
+        <img
+            {...props}
+            alt={props.alt}
+        />
+    );
 };
 
 const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
@@ -40,8 +44,9 @@ const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
         <picture {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
             {items.map((item: PictureItemProps, i: number) => {
                 const Image = items.length - 1 === i ? PictureItemImg : PictureItemSource;
-                // eslint-disable-next-line jsx-a11y/alt-text
+
                 return (
+                    // eslint-disable-next-line jsx-a11y/alt-text
                     <Image
                         key={i}
                         {...item}
