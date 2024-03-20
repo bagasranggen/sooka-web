@@ -48,4 +48,36 @@
             }
         }
     }
+
+    &--block {
+        @include btn-block;
+
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-primary, $sooka-light, $sooka-primary);
+                @include btn-block-color-hover($sooka-light, $sooka-primary, $sooka-primary);
+            }
+
+            &--light {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-light);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+
+            &--dark {
+                @include btn-block-color($sooka-dark, $sooka-light, $sooka-dark);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
+
+    &--outline {
+        @include btn-block;
+
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-primary);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
 }

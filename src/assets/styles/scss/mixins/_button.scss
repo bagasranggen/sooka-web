@@ -155,3 +155,32 @@
     --btn-ripple-border-color: #{$border-color};
     --btn-ripple-border-color-hover: #{$border-color-hover};
 }
+
+@mixin btn-block {
+    --bs-border-radius: 0;
+    --bs-border-width: .1rem;
+    --bs-btn-padding-x: 2rem;
+    --bs-btn-padding-y: .5rem;
+
+    border-width: .1rem;
+    border-style: solid;
+    border-color: var(--bs-btn-border-color, #{$sooka-primary});
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: .1rem;
+    text-transform: uppercase;
+}
+
+@mixin btn-block-color($bg, $color, $border-color) {
+    --bs-btn-bg: #{$bg};
+    --bs-btn-color: #{$color};
+    --bs-btn-border-color: #{$border-color};
+}
+
+@mixin btn-block-color-hover($bg, $color, $border-color) {
+    @include media-breakpoint-up(lg) {
+        --bs-btn-hover-bg: #{$bg};
+        --bs-btn-hover-color: #{$color};
+        --bs-btn-hover-border-color: #{$border-color}
+    }
+}

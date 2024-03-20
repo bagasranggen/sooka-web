@@ -7,7 +7,7 @@
 
             &:not(:last-child) {
                 margin-right: .75rem;
-                
+
                 @include media-breakpoint-up(lg) {
                     margin-right: 1.25rem;
                 }
@@ -25,6 +25,45 @@
 
             &.active {
                 color: $sooka-primary;
+            }
+        }
+    }
+
+    &--admin-navigation {
+        li {
+            @extend %text-uppercase;
+
+            letter-spacing: .15rem;
+            font-weight: 700;
+
+            &:not(:first-child) {
+                @extend %mt-1;
+            }
+
+            a {
+                --bs-link-color-rgb: #{$sooka-light-rgb};
+
+                @include media-breakpoint-up(lg) {
+                    @include make-transition(color padding-left);
+                }
+            }
+
+            &:not(.active):not(:hover) {
+                a {
+                    --bs-link-opacity: .6;
+                }
+            }
+
+            &.active {
+                a {
+                    padding-left: 2.5rem;
+                }
+            }
+
+            &:not(.active):hover {
+                a {
+                    padding-left: 1.5rem;
+                }
             }
         }
     }

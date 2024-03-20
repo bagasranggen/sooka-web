@@ -2,7 +2,7 @@ import React from 'react';
 
 import Link from 'next/link';
 import type { LinkProps } from '@/libs/@types';
-import { BUTTON_TYPES } from '@/libs/handles/';
+import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles/';
 
 export type ButtonCommonProps = {
     children: React.ReactNode;
@@ -21,22 +21,26 @@ export type ButtonAnchorProps = {
 
 export type ButtonRegularProps = {
     type: typeof BUTTON_TYPES.BUTTON | typeof BUTTON_TYPES.SUBMIT | typeof BUTTON_TYPES.RESET;
-    event?: Partial<ButtonEventProps>;
+    events?: Partial<ButtonEventProps>;
 } & ButtonCommonProps;
 
-export type ButtonBaseProps = ButtonAnchorProps | ButtonRegularProps;
+export type ButtonBaseTypeProps = ButtonAnchorProps | ButtonRegularProps;
+
+export type ButtonBaseProps = {
+    variant: typeof BUTTON_VARIANTS.BASE;
+} & ButtonBaseTypeProps;
 
 const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
     switch (props.type) {
         case 'button':
         case 'submit':
         case 'reset':
-            const { event, ...restButton } = props;
+            const { events, ...restButton } = props;
 
             return (
                 <button
                     {...restButton}
-                    onClick={event?.onClick}>
+                    onClick={events?.onClick}>
                     {props.children}
                 </button>
             );

@@ -42,13 +42,17 @@
                     background-color: $sooka-light;
                 }
 
-                p {
+                div {
                     @extend %fs-14, %mb-lg-0;
 
                     b {
                         @extend %fs-10, %text-uppercase;
 
                         letter-spacing: .1rem;
+                    }
+
+                    p {
+                        @extend %d-inline;
                     }
                 }
             }

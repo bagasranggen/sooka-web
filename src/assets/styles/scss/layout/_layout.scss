@@ -37,3 +37,7 @@
         }
     }
 }
+
+.navbar ~ main {
+    min-height: calc(100vh - var(--bs-navbar-height) - var(--bs-footer-height));
+}

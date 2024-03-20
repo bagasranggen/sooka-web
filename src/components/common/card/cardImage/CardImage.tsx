@@ -7,6 +7,7 @@ import { createAnimation } from '@/libs/factory';
 import { Col, Row } from 'react-bootstrap';
 import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
 import Button from '@/components/common/button/Button';
+import ReactHtmlParser from 'react-html-parser';
 
 export type CardImageItemProps = {
     name: string;
@@ -39,13 +40,14 @@ const CardImageItem = ({ name, category, isPackage, ingredients, images }: CardI
                     {/*<h3>{category}</h3>*/}
                     <h2>{name}</h2>
                     {ingredients && (
-                        <p>
+                        <div>
                             <b>{isPackage ? 'Contents' : 'Ingredients'}: </b>
-                            {ingredients}
-                        </p>
+                            {ReactHtmlParser(ingredients)}
+                        </div>
                     )}
                     <Button
                         type="anchor"
+                        className="mt-3"
                         href={getWhatsappEncoded(name)}
                         size="sm"
                         variant="ripple"
