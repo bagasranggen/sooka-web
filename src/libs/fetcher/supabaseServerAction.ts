@@ -47,7 +47,8 @@ export const supabaseServerAction = async (props: SupabaseServerActionProps): Pr
             const { data: fetchFilterData } = await supabase
                 .from(props.relation)
                 .select()
-                .eq(props.filter.key, props.filter.slug);
+                .eq(props.filter.key, props.filter.slug)
+                .order('order', { ascending: true });
 
             return { data: fetchFilterData };
     }

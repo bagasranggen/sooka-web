@@ -29,8 +29,9 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { layout } = reduxStore.getState();
     const { data: navigation } = await supabaseServerAction({
-        variant: 'fetch',
+        variant: 'fetch-filter',
         relation: 'navigation',
+        filter: { key: 'is_show', slug: 'TRUE' },
     });
 
     return (

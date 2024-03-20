@@ -25,7 +25,7 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
             .querySelectorAll('tbody tr')
             [isEditing].querySelectorAll('[data-value], [data-images]');
         editData.forEach((element: Element) => {
-            if (element?.hasAttribute('data-images')) {
+            if (element?.hasAttribute('data-value')) {
                 (tempData as string[]).push(element.getAttribute('data-value') as string);
             }
 
