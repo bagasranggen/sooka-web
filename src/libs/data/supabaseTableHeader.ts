@@ -71,6 +71,12 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
 
 export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
     {
+        slug: 'title',
+        label: 'Title',
+        editType: 'text',
+        size: '30%',
+    },
+    {
         slug: 'href',
         label: 'Href',
         editType: 'text',
@@ -89,13 +95,6 @@ export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
         editType: 'switch',
         align: 'center',
         size: '80px',
-    },
-    {
-        slug: 'title',
-        label: 'Title',
-        editType: 'text',
-        align: 'center',
-        size: '30%',
     },
     {
         slug: 'images',
