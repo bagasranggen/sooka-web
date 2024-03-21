@@ -23,6 +23,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
     const [isAddingRow, setIsAddingRow] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<undefined | number>(undefined);
     const [isReordering, setIsReordering] = useState<undefined | number>(undefined);
+    const [isOpenDetail, setIsOpenDetail] = useState<undefined | number>(undefined);
     const [form, setForm] = useState<any>({});
     const tableId = 'cms-simple';
 
@@ -143,6 +144,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                 header={entries.table.header}
                 body={entries.table.body}
                 slug={entries.slug}
+                isOpenDetail={isOpenDetail}
                 isReorder={isReordering}
                 isEdit={isEditing}
                 isEditState={{
@@ -153,6 +155,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     onDelete: (id: number) => deleteDataHandler(id),
                     onEdit: (index: number | undefined) => setIsEditing(index),
                     onEditReorder: (index: number | undefined) => setIsReordering(index),
+                    onOpenDetail: (index: number | undefined) => setIsOpenDetail(index),
                     onSubmit: submitUpdateFormHandler,
                 }}
             />

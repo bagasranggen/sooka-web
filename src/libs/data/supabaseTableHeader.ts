@@ -6,6 +6,7 @@ export type SupabaseHeaderProps = {
     size?: string;
     align?: 'left' | 'center' | 'right';
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
+    isDetail?: boolean;
 };
 
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
@@ -110,30 +111,32 @@ export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
         slug: 'name',
         label: 'Name',
         editType: 'text',
-        size: '20%',
+        size: '35%',
     },
     {
         slug: 'category',
         label: 'Category',
         editType: 'text',
-        size: '10%',
+        size: '12%',
     },
     {
         slug: 'ingredients',
         label: 'Ingredients',
         editType: 'text',
         size: '30%',
+        isDetail: true,
     },
     {
         slug: 'package',
         label: 'Package',
         editType: 'text',
         size: '30%',
+        isDetail: true,
     },
     {
         slug: 'images',
         label: 'Images',
         editType: 'text',
-        size: '30%',
+        size: '35%',
     },
 ];
