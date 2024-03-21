@@ -104,7 +104,7 @@ const RenderTableAdminData = ({ handle, datum, index, isEdit }: RenderTableAdmin
 
                 let dataPropsKey = 'data-value';
                 if (keys === 'images') dataPropsKey = 'data-images';
-                const dataProps = { [dataPropsKey]: datum[keys] };
+                const dataProps = { [dataPropsKey]: datum?.[keys] ?? '' };
 
                 const tdShow = isEdit ? 'd-none' : '';
                 const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';

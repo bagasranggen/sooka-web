@@ -78,7 +78,7 @@ export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
     },
     {
         slug: 'href',
-        label: 'Href',
+        label: 'Link',
         editType: 'text',
         size: '10%',
     },
