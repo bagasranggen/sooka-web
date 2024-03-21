@@ -9,59 +9,33 @@ export type SupabaseHeaderProps = {
     isDetail?: boolean;
 };
 
+export type SupabaseCommonProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
+
+export const SUPABASE_COMMON = ({ size }: { size?: string }): Record<SupabaseCommonProps, SupabaseHeaderProps[]> => ({
+    SLUG: [{ slug: 'slug', label: 'Slug', editType: 'text', ...(size ? { size: size } : {}) }],
+    IS_SHOW: [{ slug: 'is_show', label: 'Show', size: '80px', editType: 'switch', align: 'center' }],
+    TARGET: [{ slug: 'target', label: 'Open New Tab', size: '130px', editType: 'switch', align: 'center' }],
+    LINK: [{ slug: 'href', label: 'Link', editType: 'text', ...(size ? { size: size } : {}) }],
+    IMAGES: [{ slug: 'images', label: 'Images', editType: 'text', ...(size ? { size: size } : {}) }],
+    TITLE: [{ slug: 'title', label: 'Title', editType: 'text', ...(size ? { size: size } : {}) }],
+    LABEL: [{ slug: 'label', label: 'Label', editType: 'text' }],
+});
+
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
-    {
-        slug: 'label',
-        label: 'Label',
-        editType: 'text',
-    },
-    {
-        slug: 'href',
-        label: 'Href',
-        editType: 'text',
-    },
-    {
-        slug: 'target',
-        label: 'Open New Tab',
-        size: '130px',
-        editType: 'switch',
-        align: 'center',
-    },
-    {
-        slug: 'is_show',
-        label: 'Show',
-        size: '80px',
-        editType: 'switch',
-        align: 'center',
-    },
+    ...SUPABASE_COMMON({}).LABEL,
+    ...SUPABASE_COMMON({}).LINK,
+    ...SUPABASE_COMMON({}).TARGET,
+    ...SUPABASE_COMMON({}).IS_SHOW,
 ];
 
 export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [
-    {
-        slug: 'label',
-        label: 'Label',
-        editType: 'text',
-    },
-    {
-        slug: 'slug',
-        label: 'Slug',
-        editType: 'text',
-    },
+    ...SUPABASE_COMMON({}).LABEL,
+    ...SUPABASE_COMMON({}).SLUG,
 ];
 
 export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
-    {
-        slug: 'slug',
-        label: 'Slug',
-        editType: 'text',
-        size: '20%',
-    },
-    {
-        slug: 'title',
-        label: 'Title',
-        editType: 'text',
-        size: '20%',
-    },
+    ...SUPABASE_COMMON({ size: '16%' }).SLUG,
+    ...SUPABASE_COMMON({ size: '20%' }).TITLE,
     {
         slug: 'short_description',
         label: 'Short Description',
@@ -71,39 +45,11 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
 ];
 
 export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
-    {
-        slug: 'title',
-        label: 'Title',
-        editType: 'text',
-        size: '30%',
-    },
-    {
-        slug: 'href',
-        label: 'Link',
-        editType: 'text',
-        size: '10%',
-    },
-    {
-        slug: 'target',
-        label: 'Open New Tab',
-        editType: 'switch',
-        align: 'center',
-        size: '130px',
-    },
-    {
-        slug: 'is_show',
-        label: 'Show',
-        editType: 'switch',
-        align: 'center',
-        size: '80px',
-    },
-    {
-        slug: 'images',
-        label: 'Images',
-        editType: 'text',
-        align: 'center',
-        size: '30%',
-    },
+    ...SUPABASE_COMMON({ size: '30%' }).TITLE,
+    ...SUPABASE_COMMON({ size: '10%' }).LINK,
+    ...SUPABASE_COMMON({}).TARGET,
+    ...SUPABASE_COMMON({}).IS_SHOW,
+    ...SUPABASE_COMMON({ size: '30%' }).IMAGES,
 ];
 
 export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
@@ -133,10 +79,5 @@ export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
         size: '30%',
         isDetail: true,
     },
-    {
-        slug: 'images',
-        label: 'Images',
-        editType: 'text',
-        size: '35%',
-    },
+    ...SUPABASE_COMMON({ size: '35%' }).IMAGES,
 ];
