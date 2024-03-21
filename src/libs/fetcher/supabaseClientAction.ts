@@ -33,6 +33,14 @@ export type SupabaseDeleteAllActionProps = {
     relation: SupabaseVariantProps;
 } & SupabaseEventsProps;
 
+export type SupabaseUserLoginActionProps = {
+    variant: 'user-login';
+    data: {
+        email: string;
+        password: string;
+    };
+} & SupabaseEventsProps;
+
 export type SupabaseReturnProps = {
     data?: any[] | null;
     error?: PostgrestError | null;
@@ -43,7 +51,8 @@ export type SupabaseActionProps =
     | SupabaseInsertActionProps
     | SupabaseUpdateActionProps
     | SupabaseDeleteActionProps
-    | SupabaseDeleteAllActionProps;
+    | SupabaseDeleteAllActionProps
+    | SupabaseUserLoginActionProps;
 
 export const supabaseClientAction = async (props: SupabaseActionProps) => {
     const supabase = supabaseClient();
@@ -106,5 +115,20 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                 });
 
             break;
+
+        case 'user-login':
+            try {
+                await supabase.auth
+                    .signInWithPassword({
+                        email: props.data.email,
+                        password: props.data.password,
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        props.onFinish && props.onFinish(res);
+                    });
+            } catch (err) {
+                console.log(err);
+            }
     }
 };
