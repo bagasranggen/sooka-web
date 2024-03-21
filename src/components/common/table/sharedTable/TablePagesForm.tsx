@@ -1,7 +1,5 @@
 import React from 'react';
 
-import slugify from 'react-slugify';
-
 import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
 import type { TableAdminCommonProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Input from '@/components/common/input/Input';
@@ -33,15 +31,6 @@ const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps):
             />
         </td>
         <td>
-            {/*<Input*/}
-            {/*    variant="regular"*/}
-            {/*    input={{*/}
-            {/*        id: 'short_description',*/}
-            {/*        value: prevValue?.['short_description'] ?? '',*/}
-            {/*        setValue,*/}
-            {/*        prevValue,*/}
-            {/*    }}*/}
-            {/*/>*/}
             <Input
                 variant="regular"
                 input={{

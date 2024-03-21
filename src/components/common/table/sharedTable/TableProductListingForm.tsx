@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 
+import type { SupabaseHeaderProps } from '@/libs/data';
 import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
 import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
 
@@ -13,6 +14,8 @@ import Input from '@/components/common/input/Input';
 export type TableCategoriesFormProps = TableAdminCommonProps & Pick<InputTextProps, 'setValue' | 'prevValue'>;
 
 const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps): React.ReactElement => {
+    const header = SUPABASE_HEADER_HANDLES.productListing.filter((item: SupabaseHeaderProps) => !item?.isDetail);
+
     const [category, setCategory] = useState<any>([]);
 
     const getCategory = async () => {
@@ -31,7 +34,7 @@ const TableCategoriesForm = ({ setValue, prevValue }: TableCategoriesFormProps):
 
     return (
         <>
-            <td colSpan={SUPABASE_HEADER_HANDLES.productListing.length}>
+            <td colSpan={header.length}>
                 <div className="row gy-3 gx-1">
                     <div className="col-md-8">
                         <Input
