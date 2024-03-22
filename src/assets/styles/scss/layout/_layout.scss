@@ -1,43 +1,43 @@
 .ts {
-    &--margin,
-    &--padding {
-        &.ts--primary {
-            @extend %position-relative;
+	&--margin,
+	&--padding {
+		&.ts--primary {
+			@extend %position-relative;
 
-            &:before {
-                @extend %position-absolute;
+			&:before {
+				@extend %position-absolute;
 
-                content: '';
-                left: 0;
-                width: 100%;
-                height: var(--bs-navbar-height);
-                background-color: $sooka-primary;
-                pointer-events: none;
-            }
-        }
-    }
+				content: '';
+				left: 0;
+				width: 100%;
+				height: var(--bs-navbar-height);
+				background-color: $sooka-primary;
+				pointer-events: none;
+			}
+		}
+	}
 
-    &--margin {
-        margin-top: var(--bs-navbar-height);
+	&--margin {
+		margin-top: var(--bs-navbar-height);
 
-        &.ts--primary {
-            &:before {
-                top: calc(var(--bs-navbar-height) * -1);
-            }
-        }
-    }
+		&.ts--primary {
+			&:before {
+				top: calc(var(--bs-navbar-height) * -1);
+			}
+		}
+	}
 
-    &--padding {
-        padding-top: var(--bs-navbar-height);
+	&--padding {
+		padding-top: var(--bs-navbar-height);
 
-        &.ts--primary {
-            &:before {
-                top: 0;
-            }
-        }
-    }
+		&.ts--primary {
+			&:before {
+				top: 0;
+			}
+		}
+	}
 }
 
 .navbar ~ main {
-    min-height: calc(100vh - var(--bs-navbar-height) - var(--bs-footer-height));
+	min-height: calc(100vh - var(--bs-footer-height));
 }
