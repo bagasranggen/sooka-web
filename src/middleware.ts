@@ -5,9 +5,7 @@ export function middleware(request: NextRequest) {
     const data = userString ? JSON?.parse(userString) : '';
 
     if (!data.user) {
-        console.log(request.nextUrl.pathname);
-
-        return NextResponse.redirect(new URL(`/login?to=${request.nextUrl.pathname}`, request.url));
+        return NextResponse.redirect(new URL(`/login?to=${encodeURI(request.nextUrl.pathname)}`, request.url));
     }
     //
     // if (!currentUser && !request.nextUrl.pathname.startsWith('/login')) {
