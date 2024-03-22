@@ -45,5 +45,8 @@
 .section {
 	&--login {
 		@extend %d-flex, %flex-column, %justify-content-center;
+
+		padding-top: 15rem;
+		padding-bottom: 15rem;
 	}
 }
