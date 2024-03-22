@@ -49,4 +49,8 @@
 		padding-top: 15rem;
 		padding-bottom: 15rem;
 	}
+
+	&[class*=admin] {
+		min-height: calc(100vh - var(--bs-footer-height));
+	}
 }
