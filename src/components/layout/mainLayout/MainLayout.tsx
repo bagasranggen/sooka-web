@@ -4,7 +4,7 @@ import React, { Suspense, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { Init } from '@/libs/animations/init';
-import { getActivePath, NavigationEvents } from '@/libs/utils';
+import { NavigationEvents } from '@/libs/utils';
 
 import Preloader from '@/components/common/preloader/Preloader';
 
@@ -14,9 +14,7 @@ export type MainLayoutProps = {
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
     const pathname = usePathname();
-    const active = getActivePath(pathname);
-    const activeSlug = active.replace('/', '');
-    const section = `section--${activeSlug}`;
+    const section = `section section-${pathname.replace(/\//g, '-')}`;
 
     const [pageCount, setPageCount] = useState<number>(0);
 

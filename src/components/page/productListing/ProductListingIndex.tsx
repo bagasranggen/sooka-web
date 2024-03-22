@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Container } from 'react-bootstrap';
+
 import ProductListing, { type ProductListingProps } from '@/components/page/productListing/components/ProductListing';
 import Banner, { type BannerSectionProps } from '@/components/common/banner/Banner';
 
