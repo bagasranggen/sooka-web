@@ -2,6 +2,7 @@ import React from 'react';
 
 import type { InputCommonProps, InputTypeProps, TextareaTypeProps } from '@/libs/@types';
 import { INPUT_VARIANTS } from '@/libs/handles';
+import { joinClassnameString } from '@/libs/utils';
 
 import { UseFormRegister } from 'react-hook-form';
 
@@ -18,6 +19,7 @@ export type InputFloatingProps = {
     } & InputCommonProps &
         (InputTypeProps | TextareaTypeProps);
     options?: {
+        align?: 'left' | 'center';
         required?: boolean;
         valueAsNumber?: boolean;
         pattern?: any;
@@ -28,7 +30,7 @@ export type InputFloatingProps = {
     };
 };
 
-const InputFloating = ({ hook, input, options, validation }: InputFloatingProps): React.ReactElement => {
+const InputFloating = ({ className, hook, input, options, validation }: InputFloatingProps): React.ReactElement => {
     const Input: keyof React.JSX.IntrinsicElements = input.type === 'textarea' ? 'textarea' : 'input';
 
     const hookOptions = {
@@ -36,8 +38,13 @@ const InputFloating = ({ hook, input, options, validation }: InputFloatingProps)
         ...(options?.pattern ? { pattern: options.pattern } : {}),
     };
 
+    let inputClass: string | string[] = ['input-group', 'input-group--floating'];
+    if (options?.align) inputClass.push(`input-group--${options.align}`);
+    if (className) inputClass.push(className);
+    inputClass = joinClassnameString(inputClass);
+
     return (
-        <div className="input-group input-group--floating">
+        <div className={inputClass}>
             <div className={`form-floating${validation?.isError ? ' is-invalid' : ''}`}>
                 <Input
                     type={input.type ?? 'text'}

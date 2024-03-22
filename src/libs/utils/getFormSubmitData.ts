@@ -25,8 +25,11 @@ export const getFormSubmitData = (form: HTMLElement) => {
         switch (tag) {
             case 'INPUT':
                 switch (type) {
-                    case 'text':
-                    case 'number':
+                    case 'checkbox':
+                        if ('checked' in element) submitForm[id] = element?.checked;
+                        break;
+
+                    default:
                         const isImageArr = id.includes('image');
 
                         if ('value' in element && isImageArr) {
@@ -36,10 +39,6 @@ export const getFormSubmitData = (form: HTMLElement) => {
                         if ('value' in element && !isImageArr) {
                             submitForm[id] = element.value;
                         }
-                        break;
-
-                    case 'checkbox':
-                        if ('checked' in element) submitForm[id] = element?.checked;
                         break;
                 }
                 break;

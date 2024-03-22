@@ -27,12 +27,11 @@ const ListAdminNavigation = ({ items }: ListAdminNavigationProps): React.ReactEl
     return (
         <ul className="list-unstyled list--admin-navigation">
             {items.map((item: ListAdminNavigationItemProps, i: number) => (
-                <li
-                    key={i}
-                    {...(activeSlug === item.slug ? { className: 'active' } : {})}>
+                <li key={i}>
                     <Button
                         variant="base"
                         type="anchor"
+                        {...(activeSlug === item.slug ? { className: 'active' } : {})}
                         href={item.href}>
                         {item.label}
                     </Button>
