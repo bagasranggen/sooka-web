@@ -1,7 +1,6 @@
 .input {
 	&-group {
 		&--floating {
-
 			.form-control {
 				border-top-width: 0;
 				border-left-width: 0;
@@ -24,6 +23,29 @@
 				line-height: 1;
 			}
 
+			&.input-group {
+				&--center {
+					input,
+					label {
+						@extend %text-center;
+					}
+
+					label {
+						left: 50%;
+						width: 100%;
+						transform: translateX(-50%);
+					}
+
+					.form-control:focus,
+					.form-control:not(:placeholder-shown),
+					.form-control-plaintext,
+					.form-select {
+						~ label {
+							transform: $form-floating-label-center-transform;
+						}
+					}
+				}
+			}
 		}
 
 		&--regular {

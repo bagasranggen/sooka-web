@@ -5,9 +5,10 @@ import { getWhatsappEncoded } from '@/libs/utils';
 import { createAnimation } from '@/libs/factory';
 
 import { Col, Row } from 'react-bootstrap';
+import ReactHtmlParser from 'react-html-parser';
+
 import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
 import Button from '@/components/common/button/Button';
-import ReactHtmlParser from 'react-html-parser';
 
 export type CardImageItemProps = {
     name: string;
@@ -25,7 +26,7 @@ export type CardImageProps = {
 
 const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <Col>
-        <div className="my-8 text-center fw-bold">{children}</div>
+        <div className="my-8 text-center fw-bold fs-30">{children}</div>
     </Col>
 );
 

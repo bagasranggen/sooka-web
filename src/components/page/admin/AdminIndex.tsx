@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
 import { getEditFormData, getFormSubmitData } from '@/libs/utils';
 
+import { deleteCookie } from 'cookies-next';
+
 import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Table from '@/components/common/table/Table';
 import Button from '@/components/common/button/Button';
@@ -122,6 +124,16 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         }
     };
 
+    const userLogout = () => {
+        supabaseClientAction({
+            variant: 'user-logout',
+            onFinish: () => {
+                deleteCookie('user');
+                router.push('/');
+            },
+        });
+    };
+
     useEffect(() => {
         if (typeof document === undefined) return;
 
@@ -137,7 +149,19 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
 
     return (
         <>
-            <h1>{entries.title}</h1>
+            <div className="mb-5 row align-items-center">
+                <div className="col-md">
+                    <h1 className="mb-0">{entries.title}</h1>
+                </div>
+                <div className="col-md-auto">
+                    <Button
+                        variant="outline"
+                        type="button"
+                        events={{ onClick: userLogout }}>
+                        Log out
+                    </Button>
+                </div>
+            </div>
             <Table
                 variant="admin"
                 id={tableId}

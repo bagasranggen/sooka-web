@@ -1,70 +1,70 @@
 .list {
-    &--filter-product {
-        li {
-            @extend %fw-700, %fs-10, %fs-md-14, %text-uppercase;
+	&--filter-product {
+		li {
+			@extend %fw-700, %fs-10, %fs-md-14, %text-uppercase;
 
-            letter-spacing: .1rem;
+			letter-spacing: .1rem;
 
-            &:not(:last-child) {
-                margin-right: .75rem;
+			&:not(:last-child) {
+				margin-right: .75rem;
 
-                @include media-breakpoint-up(lg) {
-                    margin-right: 1.25rem;
-                }
-            }
-        }
+				@include media-breakpoint-up(lg) {
+					margin-right: 1.25rem;
+				}
+			}
+		}
 
-        a {
-            color: $sooka-dark;
+		a {
+			color: $sooka-dark;
 
-            @include media-breakpoint-up(lg) {
-                @include hover() {
-                    color: lighten($sooka-primary, 20);
-                }
-            }
+			@include media-breakpoint-up(lg) {
+				@include hover() {
+					color: lighten($sooka-primary, 20);
+				}
+			}
 
-            &.active {
-                color: $sooka-primary;
-            }
-        }
-    }
+			&.active {
+				color: $sooka-primary;
+			}
+		}
+	}
 
-    &--admin-navigation {
-        li {
-            @extend %text-uppercase;
+	&--admin-navigation {
+		li {
+			@extend %text-uppercase;
 
-            letter-spacing: .15rem;
-            font-weight: 700;
+			letter-spacing: .15rem;
+			font-weight: 700;
 
-            &:not(:first-child) {
-                @extend %mt-1;
-            }
+			&:not(:first-child) {
+				@extend %mt-1;
+			}
 
-            a {
-                --bs-link-color-rgb: #{$sooka-light-rgb};
+			a {
+				--bs-link-color-rgb: #{$sooka-light-rgb};
 
-                @include media-breakpoint-up(lg) {
-                    @include make-transition(color padding-left);
-                }
-            }
+				@include media-breakpoint-up(lg) {
+					@include make-transition(color padding-left);
+				}
+			}
 
-            &:not(.active):not(:hover) {
-                a {
-                    --bs-link-opacity: .6;
-                }
-            }
+			a:not(.active):not(:hover) {
+				//a {
+				--bs-link-opacity: .6;
+				//}
+			}
 
-            &.active {
-                a {
-                    padding-left: 2.5rem;
-                }
-            }
+			.active {
+				//a {
+				padding-left: 2.5rem;
+				//}
+			}
 
-            &:not(.active):hover {
-                a {
-                    padding-left: 1.5rem;
-                }
-            }
-        }
-    }
+			a:not(.active):hover {
+				//a {
+				padding-left: 1.5rem;
+				//}
+			}
+		}
+	}
 }

@@ -22,7 +22,7 @@ const getPage = async (slug: string): Promise<{ data: ProductListingIndexProps['
     if (data?.length === 0) return notFound();
 
     return {
-        data: data ? { title: data[0]?.title, shortDescription: data[0]['short_description'] } : ({} as any),
+        data: data ? { title: data[0]?.title, description: data[0]['short_description'] } : ({} as any),
     };
 };
 
