@@ -126,7 +126,7 @@ const TableAdminUpdateButton = ({
                     events={{
                         onClick: () => {
                             // Event Delete Data
-                            if (!isEdit && !isReorder) {
+                            if (!isEdit && !isReorder && !isOpenDetail) {
                                 events?.onDelete && events.onDelete(datum.id);
                             }
 
