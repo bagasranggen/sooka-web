@@ -1,9 +1,10 @@
 'use client';
 
 import React, { Suspense, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 import { Init } from '@/libs/animations/init';
-import { NavigationEvents } from '@/libs/utils';
+import { getActivePath, NavigationEvents } from '@/libs/utils';
 
 import Preloader from '@/components/common/preloader/Preloader';
 
@@ -12,6 +13,11 @@ export type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
+    const pathname = usePathname();
+    const active = getActivePath(pathname);
+    const activeSlug = active.replace('/', '');
+    const section = `section--${activeSlug}`;
+
     const [pageCount, setPageCount] = useState<number>(0);
 
     return (
@@ -25,7 +31,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
                 />
                 <Preloader isOpen={pageCount <= 2} />
             </Suspense>
-            <main>{children}</main>
+            <main className={section}>{children}</main>
         </>
     );
 };
