@@ -41,3 +41,9 @@
 .navbar ~ main {
 	min-height: calc(100vh - var(--bs-footer-height));
 }
+
+.section {
+	&--login {
+		@extend %d-flex, %flex-column, %justify-content-center;
+	}
+}
