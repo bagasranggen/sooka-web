@@ -10,10 +10,6 @@ export type ButtonCommonProps = {
     title?: string;
 };
 
-export type ButtonEventProps = {
-    onClick: () => void;
-};
-
 export type ButtonAnchorProps = {
     type: typeof BUTTON_TYPES.ANCHOR;
 } & LinkProps &
@@ -21,7 +17,7 @@ export type ButtonAnchorProps = {
 
 export type ButtonRegularProps = {
     type: typeof BUTTON_TYPES.BUTTON | typeof BUTTON_TYPES.SUBMIT | typeof BUTTON_TYPES.RESET;
-    events?: Partial<ButtonEventProps>;
+    events?: React.DOMAttributes<HTMLButtonElement>;
 } & ButtonCommonProps;
 
 export type ButtonBaseTypeProps = ButtonAnchorProps | ButtonRegularProps;
@@ -36,11 +32,12 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
         case 'submit':
         case 'reset':
             const { events, ...restButton } = props;
+            const eventsButton = events ?? {};
 
             return (
                 <button
                     {...restButton}
-                    onClick={events?.onClick}>
+                    {...eventsButton}>
                     {props.children}
                 </button>
             );
