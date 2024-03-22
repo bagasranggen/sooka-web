@@ -38,9 +38,9 @@
 	}
 }
 
-.navbar ~ main {
-	min-height: calc(100vh - var(--bs-footer-height));
-}
+//.navbar ~ main {
+//	min-height: calc(100vh - var(--bs-footer-height));
+//}
 
 .section {
 	&--login {

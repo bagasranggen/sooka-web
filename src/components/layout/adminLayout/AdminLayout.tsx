@@ -32,7 +32,9 @@ const AdminLayout = ({ children }: AdminLayoutProps): React.ReactElement => {
                             />
                         </div>
                     </div>
-                    <div className="col-md-9">{children}</div>
+                    <div className="col-md-9">
+                        <div className="simple-cms__content">{children}</div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -25,7 +25,7 @@ export type CardImageProps = {
 
 const CardImageEmpty = ({ children }: { children: React.ReactNode }): React.ReactElement => (
     <Col>
-        <div className="my-8 text-center fw-bold">{children}</div>
+        <div className="my-8 text-center fw-bold fs-30">{children}</div>
     </Col>
 );
 
