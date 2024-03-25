@@ -14,7 +14,7 @@ const Footer = ({}: FooterProps): React.ReactElement => {
     const { globalInfo } = reduxStore.getState();
 
     return (
-        <footer className="mt-10 footer">
+        <footer className="footer">
             <Container>
                 <Row className="justify-content-center">
                     <Col lg={11}>

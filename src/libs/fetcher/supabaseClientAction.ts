@@ -33,6 +33,18 @@ export type SupabaseDeleteAllActionProps = {
     relation: SupabaseVariantProps;
 } & SupabaseEventsProps;
 
+export type SupabaseUserLoginActionProps = {
+    variant: 'user-login';
+    data: {
+        email: string;
+        password: string;
+    };
+} & SupabaseEventsProps;
+
+export type SupabaseUserLogoutActionProps = {
+    variant: 'user-logout';
+} & SupabaseEventsProps;
+
 export type SupabaseReturnProps = {
     data?: any[] | null;
     error?: PostgrestError | null;
@@ -43,7 +55,9 @@ export type SupabaseActionProps =
     | SupabaseInsertActionProps
     | SupabaseUpdateActionProps
     | SupabaseDeleteActionProps
-    | SupabaseDeleteAllActionProps;
+    | SupabaseDeleteAllActionProps
+    | SupabaseUserLoginActionProps
+    | SupabaseUserLogoutActionProps;
 
 export const supabaseClientAction = async (props: SupabaseActionProps) => {
     const supabase = supabaseClient();
@@ -105,6 +119,34 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                     props?.onFinish && props.onFinish();
                 });
 
+            break;
+
+        case 'user-login':
+            try {
+                await supabase.auth
+                    .signInWithPassword({
+                        email: props.data.email,
+                        password: props.data.password,
+                    })
+                    .then((res) => {
+                        console.log(res);
+                        props.onFinish && props.onFinish(res);
+                    });
+            } catch (err) {
+                console.log(err);
+            }
+
+            break;
+
+        case 'user-logout':
+            try {
+                await supabase.auth.signOut().then((res) => {
+                    console.log(res);
+                    props.onFinish && props.onFinish(res);
+                });
+            } catch (err) {
+                console.log(err);
+            }
             break;
     }
 };

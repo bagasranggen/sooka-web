@@ -6,9 +6,10 @@ export type IconSookaProps = {
     variant: typeof ICON_VARIANTS.SOOKA;
     id?: string;
     color: 'primary' | 'light';
+    style?: React.CSSProperties;
 };
 
-const IconSooka = ({ color }: IconSookaProps): React.ReactElement => (
+const IconSooka = ({ color, style }: IconSookaProps): React.ReactElement => (
     <svg
         suppressHydrationWarning={true}
         version="1.1"
@@ -22,7 +23,8 @@ const IconSooka = ({ color }: IconSookaProps): React.ReactElement => (
                 enableBackground: 'new 0 0 1080 1080',
                 width: '100%',
                 ...(color === 'light' ? { '--icon-color': '#FFFFFF' } : {}),
-            } as any
+                ...style,
+            } as React.CSSProperties
         }
         xmlSpace="preserve"
         viewBox="185.93 430.8 719.05 290.16">

@@ -1,14 +1,12 @@
 import React from 'react';
 
 import { Container } from 'react-bootstrap';
+
 import ProductListing, { type ProductListingProps } from '@/components/page/productListing/components/ProductListing';
-import Banner from '@/components/common/banner/Banner';
+import Banner, { type BannerSectionProps } from '@/components/common/banner/Banner';
 
 export type ProductListingIndexProps = {
-    page: {
-        title: string;
-        shortDescription: string;
-    };
+    page: Pick<BannerSectionProps, 'title' | 'description'>;
     entries: {
         products: ProductListingProps['productItems'];
         categories: ProductListingProps['filterItems'];
@@ -20,10 +18,10 @@ const ProductListingIndex = ({ page, entries }: ProductListingIndexProps): React
         <Banner
             variant="section"
             title={page.title}
-            description={page.shortDescription}
+            description={page.description}
         />
 
-        <section className="mt-5">
+        <section className="my-5">
             <Container>
                 <ProductListing
                     option={{ filterKey: 'category' }}

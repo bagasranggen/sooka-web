@@ -2,6 +2,7 @@ import React from 'react';
 
 import type { DynamicPageProps } from '@/libs/@types';
 import type { SupabaseVariantProps } from '@/libs/fetcher';
+import type { SupabaseHeaderProps } from '@/libs/data';
 import { SUPABASE_HANDLES, SUPABASE_HEADER_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
 import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
@@ -23,6 +24,7 @@ export const generateMetadata = ({ params }: PageProps) => {
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as SupabaseVariantProps;
+    const header = SUPABASE_HEADER_HANDLES[slug].filter((header: SupabaseHeaderProps) => !header?.isDetail);
 
     const { data } = await supabaseServerAction({
         variant: 'fetch',
@@ -35,7 +37,7 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
                 slug,
                 title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
                 table: {
-                    header: SUPABASE_HEADER_HANDLES[slug as keyof typeof SUPABASE_HEADER_HANDLES],
+                    header,
                     body: data,
                 },
             }}

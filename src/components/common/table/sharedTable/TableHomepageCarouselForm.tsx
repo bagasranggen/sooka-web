@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
 import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
 
+import slugify from 'react-slugify';
+
 import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
 import type { TableAdminCommonProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import type { InputSelectItem } from '@/components/common/input/inputShared/InputSelect';
@@ -17,12 +19,13 @@ const TableHomepageCarouselForm = ({
     prevValue,
     type,
 }: TableHomepageCarouselFormProps): React.ReactElement => {
-    const selectFromLabel = '-- Select Navigation From --';
+    const selectFromLabel = '-- Select Href From --';
     const selectFromItems: InputSelectItem[] = [
         { slug: 'categories', label: 'Categories' },
         { slug: 'custom', label: 'Custom' },
     ];
 
+    const [categorySelected, setCategorySelected] = useState<any>('');
     const [category, setCategory] = useState<any>([]);
     const [selectFrom, setSelectFrom] = useState<any>(undefined);
 
@@ -30,20 +33,28 @@ const TableHomepageCarouselForm = ({
     switch (selectFrom) {
         case 'categories':
             inputLabel = (
-                <Input
-                    variant="regular"
-                    label="Category"
-                    input={{
-                        type: 'select',
-                        id: 'label',
-                        items: category,
-                        label: '-- Select Category --',
-                        value: prevValue?.label ?? '',
-                        setValue,
-                        prevValue,
-                        selectValue: 'label',
-                    }}
-                />
+                <>
+                    <Input
+                        variant="regular"
+                        label="Category"
+                        input={{
+                            type: 'select',
+                            id: 'selectFrom',
+                            items: category,
+                            label: '-- Select Category --',
+                            value: prevValue?.href ? prevValue.href.replace('/', '') : categorySelected,
+                            setValue: setCategorySelected,
+                        }}
+                    />
+                    <Input
+                        variant="regular"
+                        input={{
+                            id: 'href',
+                            value: `/${slugify(prevValue?.href ? prevValue.href.replace('/', '') : categorySelected)}`,
+                            isDisabled: true,
+                        }}
+                    />
+                </>
             );
             break;
 
@@ -53,8 +64,8 @@ const TableHomepageCarouselForm = ({
                     variant="regular"
                     label="Custom"
                     input={{
-                        id: 'label',
-                        value: prevValue?.label ?? '',
+                        id: 'href',
+                        value: prevValue?.href ?? '',
                         setValue,
                         prevValue,
                     }}
@@ -79,17 +90,11 @@ const TableHomepageCarouselForm = ({
 
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
-            const selectFromOnEdit = category.find((item: InputSelectItem) => item.label === prevValue.label);
+            const selectFromOnEdit = category.find((item: InputSelectItem) => `/${item.slug}` === prevValue.href);
 
             setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');
         }
     }, [type, prevValue, category]);
-
-    useEffect(() => {
-        if (type === 'add') {
-            setValue && setValue({ ...prevValue, ...{ label: '' } });
-        }
-    }, [type, selectFrom, setValue, prevValue]);
 
     return (
         <>
@@ -122,32 +127,27 @@ const TableHomepageCarouselForm = ({
                             }}
                         />
                     </div>
-                    <div className="col-md-6">
-                        <Input
-                            variant="regular"
-                            className={selectFrom === undefined || selectFrom === selectFromLabel ? '' : 'mb-1'}
-                            input={{
-                                type: 'select',
-                                id: 'selectFrom',
-                                label: selectFromLabel,
-                                value: selectFrom,
-                                setValue: setSelectFrom,
-                                items: selectFromItems,
-                            }}
-                        />
-                        {inputLabel}
-                        {/*<Input*/}
-                        {/*    variant="regular"*/}
-                        {/*    label="Href"*/}
-                        {/*    input={{*/}
-                        {/*        id: 'href',*/}
-                        {/*        value: prevValue.href ?? '',*/}
-                        {/*        setValue,*/}
-                        {/*        prevValue,*/}
-                        {/*    }}*/}
-                        {/*/>*/}
+                    <div className="col-md-10">
+                        <div className="row gx-2">
+                            <div className="col-md-6">
+                                <Input
+                                    variant="regular"
+                                    label="Link"
+                                    className={selectFrom === undefined || selectFrom === selectFromLabel ? '' : 'mb-1'}
+                                    input={{
+                                        type: 'select',
+                                        id: 'selectFrom',
+                                        label: selectFromLabel,
+                                        value: selectFrom,
+                                        setValue: setSelectFrom,
+                                        items: selectFromItems,
+                                    }}
+                                />
+                            </div>
+                            <div className="col-md-6">{inputLabel}</div>
+                        </div>
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-2">
                         <Input
                             variant="regular"
                             label="Open New Tab"
