@@ -8,5 +8,5 @@ type CreateDynamicElementProps = {
 };
 
 export const createDynamicElement = ({ handles, selector, props }: CreateDynamicElementProps) => {
-    return React.createElement(handles[selector], props, props?.children ?? null);
+    return handles?.[selector] ? React.createElement(handles[selector], props, props?.children ?? null) : <></>;
 };
