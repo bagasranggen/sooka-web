@@ -6,7 +6,7 @@ import type { SupabaseHeaderProps } from '@/libs/data';
 import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
 import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
 
-import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 import type { TableAdminCommonProps } from '@/components/common/table/tableAdmin/TableAdmin';
 
 import Input from '@/components/common/input/Input';

@@ -16,16 +16,19 @@ export type InputSelectProps = {
     prevValue?: any;
     setValue?: React.Dispatch<React.SetStateAction<InputValueTypeProps>>;
     selectValue?: 'value' | 'label';
+    events?: React.DOMAttributes<HTMLSelectElement>;
 } & InputCommonProps;
 
 const InputSelect = ({
     id,
+    name,
     items,
     label,
     value,
     prevValue,
     setValue,
     selectValue,
+    events,
     ...rest
 }: InputSelectProps): React.ReactElement => {
     const { className } = rest as any;
@@ -48,9 +51,11 @@ const InputSelect = ({
                     if (isReturnLabel && selectLabel) targetValue = selectLabel;
 
                     if (setValue) {
-                        if (prevValue) setValue({ ...prevValue, ...{ [id]: targetValue } });
+                        if (prevValue) setValue({ ...prevValue, ...{ [name ?? id]: targetValue } });
                         if (!prevValue) setValue(targetValue);
                     }
+
+                    events?.onChange && events.onChange(e);
                 }}>
                 {label ? <option>{label}</option> : null}
                 {items.map((item: InputSelectItem, i: number) => (

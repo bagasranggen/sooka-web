@@ -7,7 +7,7 @@ import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
 
 import slugify from 'react-slugify';
 
-import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 import type { TableAdminCommonProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import type { InputSelectItem } from '@/components/common/input/inputShared/InputSelect';
 import Input from '@/components/common/input/Input';

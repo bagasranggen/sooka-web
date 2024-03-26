@@ -1,7 +1,7 @@
 import InputFloating from '@/components/common/input/inputFloating/InputFloating';
 import InputRegular from '@/components/common/input/inputRegular/InputRegular';
 import InputSwitch from '@/components/common/input/inputShared/InputSwitch';
-import InputText from '@/components/common/input/inputShared/inputText';
+import InputText from '@/components/common/input/inputShared/InputText';
 import InputCkEditor from '@/components/common/input/inputShared/InputCKEditor';
 import InputSelect from '@/components/common/input/inputShared/InputSelect';
 

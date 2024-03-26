@@ -26,7 +26,8 @@ const Tab = ({ id, className, items }: TabProps): React.ReactElement => (
             <ReactTab
                 key={i}
                 eventKey={slugify(item.title)}
-                title={item.title}>
+                title={item.title}
+                suppressHydrationWarning>
                 {item.children}
             </ReactTab>
         ))}

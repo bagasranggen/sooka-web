@@ -3,7 +3,7 @@ import React from 'react';
 import { INPUT_TYPE_HANDLES, INPUT_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
 
-import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 import type { InputSwitchProps } from '@/components/common/input/inputShared/InputSwitch';
 import type { InputCkEditorProps } from '@/components/common/input/inputShared/InputCKEditor';
 import type { InputSelectProps } from '@/components/common/input/inputShared/InputSelect';
@@ -20,9 +20,6 @@ export type InputRegularProps = {
 
 const InputRegular = ({ input, label, className }: InputRegularProps): React.ReactElement => {
     const InputWrapper = label ? 'div' : React.Fragment;
-
-    // console.log({ ...input, ...{ className: className } });
-    if (input.type === 'switch') console.log({ ...input, ...{ className: className } });
 
     return (
         <InputWrapper {...(label ? { className: 'input-group--regular' } : {})}>

@@ -25,8 +25,6 @@ const AdminAddIndex = ({ state }: AdminAddIndexProps): React.ReactElement => {
         }
     };
 
-    // console.log(state);
-
     return (
         <>
             <h1>ADD</h1>
@@ -34,7 +32,7 @@ const AdminAddIndex = ({ state }: AdminAddIndexProps): React.ReactElement => {
             <Tab
                 id="admin-add-form"
                 items={[
-                    // { title: SUPABASE_HANDLES.pages, children: <Form variant="pages" /> },
+                    { title: SUPABASE_HANDLES.pages, children: <Form variant="pages" /> },
                     {
                         title: SUPABASE_HANDLES.homepageCarousel,
                         children: (

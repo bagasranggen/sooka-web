@@ -1,4 +1,5 @@
 import React from 'react';
+
 import type { InputCommonProps, InputTypeProps, InputValueTypeProps } from '@/libs/@types';
 
 export type InputTextProps = {
@@ -11,7 +12,7 @@ export type InputTextProps = {
 
 const InputText = ({
     id,
-    key,
+    name,
     type,
     value,
     setValue,
@@ -23,20 +24,15 @@ const InputText = ({
     const { className } = rest as any;
     const inputClass = `form-control${className ? ` ${className}` : ''}`;
 
-    // console.log(id, key, rest);
-
     return (
         <input
-            {...(id ? {} : { id: id })}
-            // {...(key || id ? { name: key ?? id } : {})}
+            {...(id ? { id: id } : {})}
             className={inputClass}
             value={value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (setValue) {
                     if (prevValue) {
-                        // console.log(key, id);
-
-                        setValue({ ...prevValue, ...{ [id]: e.target.value } });
+                        setValue({ ...prevValue, ...{ [name ?? id]: e.target.value } });
                     }
                     if (!prevValue) setValue(e.target.value);
                 }
