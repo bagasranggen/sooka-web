@@ -21,6 +21,9 @@ export type InputRegularProps = {
 const InputRegular = ({ input, label, className }: InputRegularProps): React.ReactElement => {
     const InputWrapper = label ? 'div' : React.Fragment;
 
+    // console.log({ ...input, ...{ className: className } });
+    if (input.type === 'switch') console.log({ ...input, ...{ className: className } });
+
     return (
         <InputWrapper {...(label ? { className: 'input-group--regular' } : {})}>
             {label && <label htmlFor={input.id}>{label}</label>}

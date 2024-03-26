@@ -14,6 +14,7 @@ export type InputSwitchProps = {
 const InputSwitch = ({
     type,
     id,
+    keyT,
     color,
     align,
     isChecked,
@@ -25,6 +26,8 @@ const InputSwitch = ({
     const inputClass = `input-${type}${inputColor}${inputAlign}`;
 
     const checkedProps = { [setIsChecked ? 'checked' : 'defaultChecked']: isChecked };
+
+    console.log(id, keyT);
 
     return (
         <div className={inputClass}>
@@ -40,8 +43,10 @@ const InputSwitch = ({
                         setIsChecked && setIsChecked(e.target.checked);
                     }
 
-                    if (prevValue) {
-                        setIsChecked && setIsChecked({ ...prevValue, ...{ [id]: e.target.checked } });
+                    if (prevValue && (key || id)) {
+                        if (setIsChecked) {
+                            setIsChecked({ ...prevValue, ...{ [key ?? (id as string)]: e.target.checked } });
+                        }
                     }
                 }}
                 hidden
