@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react';
 
-import AdminAddIndex from '@/components/page/admin/AdminAddIndex';
+import type { DynamicPageProps } from '@/libs/@types';
 import { supabaseServerAction } from '@/libs/fetcher';
+
+import AdminAddIndex from '@/components/page/admin/AdminAddIndex';
 
 const getData = async () => {
     const { data: categories } = await supabaseServerAction({
@@ -12,14 +14,19 @@ const getData = async () => {
     return { categories };
 };
 
-export type PageProps = {};
+export type PageProps = DynamicPageProps;
 
-const Page = async ({}: PageProps): Promise<React.ReactElement> => {
+const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const data = await getData();
+
+    console.log(params);
 
     return (
         <Suspense>
-            <AdminAddIndex state={data} />
+            <AdminAddIndex
+                slug={params.slug as string}
+                state={data}
+            />
         </Suspense>
     );
 };

@@ -2,17 +2,17 @@
 
 import React from 'react';
 
-import { SUPABASE_HANDLES } from '@/libs/handles';
+import { ADMIN_ENTRY_HANDLES } from '@/libs/handles';
 
 import Tab from '@/components/common/tab/Tab';
 import Button from '@/components/common/button/Button';
-import Form from '@/components/admin/form/Form';
 
 export type AdminAddIndexProps = {
+    slug: string;
     state: any;
 };
 
-const AdminAddIndex = ({ state }: AdminAddIndexProps): React.ReactElement => {
+const AdminAddIndex = ({ slug, state }: AdminAddIndexProps): React.ReactElement => {
     const formSubmitHandler = () => {
         const tab = document.querySelector('.tab-content');
         const forms = tab?.querySelectorAll('form[id]');
@@ -31,19 +31,10 @@ const AdminAddIndex = ({ state }: AdminAddIndexProps): React.ReactElement => {
 
             <Tab
                 id="admin-add-form"
-                items={[
-                    { title: SUPABASE_HANDLES.pages, children: <Form variant="pages" /> },
-                    {
-                        title: SUPABASE_HANDLES.homepageCarousel,
-                        children: (
-                            <Form
-                                variant="homepageCarousel"
-                                state={state}
-                            />
-                        ),
-                    },
-                ]}
+                className="mt-3"
+                items={ADMIN_ENTRY_HANDLES[slug as keyof typeof ADMIN_ENTRY_HANDLES](state)}
             />
+
             <Button
                 variant="outline"
                 type="button"

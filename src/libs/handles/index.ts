@@ -1,3 +1,4 @@
+export * from './admin';
 export * from './adminForm';
 export * from './animations';
 export * from './banner';
