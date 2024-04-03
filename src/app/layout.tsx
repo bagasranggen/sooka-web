@@ -12,7 +12,6 @@ import '../assets/styles/scss/main.scss';
 
 import type { NavigationItemProps } from '@/libs/@types';
 import { supabaseServerAction } from '@/libs/fetcher';
-import { useFetch } from '@/libs/hooks/useFetch';
 import { Providers, reduxStore } from '@/store/redux';
 
 import Navigation from '@/components/layout/navigation/Navigation';
@@ -29,21 +28,11 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { layout } = reduxStore.getState();
-    // const { data: navigation } = await supabaseServerAction({
-    //     variant: 'fetch-filter',
-    //     relation: 'navigation',
-    //     filter: { key: 'is_show', slug: 'TRUE' },
-    // });
-    //
-    // const res = await fetch('http://localhost:3000/api/navigation', { next: { tags: ['navigation'] } });
-    // const data = await res.json();
-
-    const { data: navigation } = await useFetch({ type: 'navigation', tags: ['navigation'] });
-
-    // console.log(data, useData);
-    // console.log(useData.data);
-
-    console.log(navigation);
+    const { data: navigation } = await supabaseServerAction({
+        variant: 'fetch-filter',
+        relation: 'navigation',
+        filter: { key: 'is_show', slug: 'TRUE' },
+    });
 
     return (
         <html lang="en">
@@ -51,7 +40,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 suppressHydrationWarning={true}
                 {...(layout.height && ({ style: layout.height } as React.HTMLAttributes<HTMLElement>))}>
                 <Providers>
-                    <Navigation items={navigation as unknown as NavigationItemProps[]} />
+                    <Navigation items={navigation as NavigationItemProps[]} />
                     <MainLayout>{children}</MainLayout>
                     <Footer />
                 </Providers>
@@ -60,4 +49,4 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     );
 }
 
-// export const revalidate = 60;
+export const revalidate = 60;

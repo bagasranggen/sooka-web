@@ -11,8 +11,6 @@ import { deleteCookie } from 'cookies-next';
 import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Table from '@/components/common/table/Table';
 import Button from '@/components/common/button/Button';
-import action from '@/libs/utils/action';
-// import { revalidateTag } from 'next/cache';
 
 export type AdminIndexProps = {
     entries: {
@@ -105,8 +103,6 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             data,
             onFinish: () => {
                 setIsEditing(undefined);
-                // revalidateTag('navigation');
-                action();
                 router.refresh();
             },
         });
