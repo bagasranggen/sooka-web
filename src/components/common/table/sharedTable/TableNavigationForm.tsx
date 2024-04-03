@@ -20,6 +20,8 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
         { slug: 'custom', label: 'Custom' },
     ];
 
+    console.log(prevValue);
+
     const [category, setCategory] = useState<any>([]);
     const [selectFrom, setSelectFrom] = useState<any>(undefined);
 
@@ -32,10 +34,10 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
                     label="Category"
                     input={{
                         type: 'select',
-                        id: 'label',
+                        id: 'category',
                         items: category,
                         label: '-- Select Category --',
-                        value: prevValue?.label ?? '',
+                        value: prevValue?.category ?? prevValue?.label ?? '',
                         setValue,
                         prevValue,
                         selectValue: 'label',
@@ -76,7 +78,9 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
 
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
-            const selectFromOnEdit = category.find((item: InputSelectItem) => item.label === prevValue.label);
+            const selectFromOnEdit = category.find(
+                (item: InputSelectItem) => item.label === prevValue.label || item.label === prevValue.category
+            );
 
             setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');
         }
@@ -110,7 +114,7 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
                     variant="regular"
                     input={{
                         id: 'href',
-                        value: `/${slugify(prevValue?.label ?? '')}`,
+                        value: `/${slugify(selectFrom === 'categories' ? prevValue.category : prevValue?.label ?? '')}`,
                         isDisabled: true,
                     }}
                 />

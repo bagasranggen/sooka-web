@@ -5,20 +5,30 @@ export type SupabaseHeaderProps = {
     label: string;
     size?: string;
     align?: 'left' | 'center' | 'right';
+    relation?: string;
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
     isDetail?: boolean;
+    isHidden?: boolean;
 };
 
-export type SupabaseCommonProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
+export type SupabaseCommonKeyProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
 
-export const SUPABASE_COMMON = ({ size }: { size?: string }): Record<SupabaseCommonProps, SupabaseHeaderProps[]> => ({
+type SupabaseCommonProps = {
+    size?: string;
+    relation?: string;
+};
+
+export const SUPABASE_COMMON = ({
+    size,
+    relation,
+}: SupabaseCommonProps): Record<SupabaseCommonKeyProps, SupabaseHeaderProps[]> => ({
     SLUG: [{ slug: 'slug', label: 'Slug', editType: 'text', ...(size ? { size: size } : {}) }],
     IS_SHOW: [{ slug: 'is_show', label: 'Show', size: '80px', editType: 'switch', align: 'center' }],
     TARGET: [{ slug: 'target', label: 'Open New Tab', size: '130px', editType: 'switch', align: 'center' }],
     LINK: [{ slug: 'href', label: 'Link', editType: 'text', ...(size ? { size: size } : {}) }],
     IMAGES: [{ slug: 'images', label: 'Images', editType: 'text', ...(size ? { size: size } : {}) }],
     TITLE: [{ slug: 'title', label: 'Title', editType: 'text', ...(size ? { size: size } : {}) }],
-    LABEL: [{ slug: 'label', label: 'Label', editType: 'text' }],
+    LABEL: [{ slug: 'label', label: 'Label', editType: 'text', ...(relation ? { relation: relation } : {}) }],
 });
 
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
@@ -26,6 +36,12 @@ export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
     ...SUPABASE_COMMON({}).LINK,
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
+    {
+        slug: 'category',
+        label: 'Category',
+        editType: 'text',
+        isHidden: true,
+    },
 ];
 
 export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [

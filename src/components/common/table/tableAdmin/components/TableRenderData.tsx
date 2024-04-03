@@ -77,7 +77,7 @@ export const RenderTableAdminData = ({ table, datum, index, isEdit }: RenderTabl
                 if (keys === 'images') dataPropsKey = 'data-images';
                 const dataProps = { [dataPropsKey]: datum?.[keys] ?? '' };
 
-                const tdShow = isEdit ? 'd-none' : '';
+                const tdShow = isEdit || order.isHidden ? 'd-none' : '';
                 const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';
                 const tdClass = `${tdShow}${tdAlign}`;
 
