@@ -28,11 +28,19 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     const { layout } = reduxStore.getState();
-    const { data: navigation } = await supabaseServerAction({
+    const { data } = await supabaseServerAction({
         variant: 'fetch-filter',
         relation: 'navigation',
         filter: { key: 'is_show', slug: 'TRUE' },
     });
+
+    const navigation = data?.map(
+        (datum): NavigationItemProps => ({
+            label: datum?.['categories_label'] ?? datum?.label,
+            href: `/${datum?.['categories_slug'] ?? datum.slug}`,
+            target: datum?.target ? '_blank' : undefined,
+        })
+    );
 
     return (
         <html lang="en">

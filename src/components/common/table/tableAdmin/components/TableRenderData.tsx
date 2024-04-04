@@ -54,6 +54,8 @@ export const RenderTableAdminData = ({ table, datum, index, isEdit }: RenderTabl
                 const keys = order.slug;
 
                 let value = datum[keys];
+                if (order?.relation && datum[order.relation]) value = datum[order.relation];
+                if (order?.label && order.label.toLowerCase() === 'link' && value) value = `/${value}`;
                 if (value === true)
                     value = (
                         <CiCircleCheck
@@ -77,6 +79,8 @@ export const RenderTableAdminData = ({ table, datum, index, isEdit }: RenderTabl
                 if (keys === 'images') dataPropsKey = 'data-images';
                 const dataProps = { [dataPropsKey]: datum?.[keys] ?? '' };
 
+                const dataRelationsProps = order?.relation ? { 'data-relation': datum?.[order.relation] } : {};
+
                 const tdShow = isEdit || order.isHidden ? 'd-none' : '';
                 const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';
                 const tdClass = `${tdShow}${tdAlign}`;
@@ -86,6 +90,7 @@ export const RenderTableAdminData = ({ table, datum, index, isEdit }: RenderTabl
                         <td
                             key={`${keys}${index}`}
                             {...dataProps}
+                            {...dataRelationsProps}
                             {...(tdClass ? { className: tdClass } : {})}>
                             {renderValue}
                         </td>

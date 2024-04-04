@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 
 import { supabaseClientAction } from '@/libs/fetcher/supabaseClientAction';
+import { SUPABASE_HEADER_HANDLES } from '@/libs/handles';
+import type { SupabaseHeaderProps } from '@/libs/data';
 
 import slugify from 'react-slugify';
 
@@ -14,13 +16,13 @@ import Input from '@/components/common/input/Input';
 export type TableCategoriesFormProps = TableAdminCommonProps & Pick<InputTextProps, 'setValue' | 'prevValue'>;
 
 const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormProps): React.ReactElement => {
+    const header = SUPABASE_HEADER_HANDLES.navigation.filter((item: SupabaseHeaderProps) => !item?.isHidden);
+
     const selectFromLabel = '-- Select Navigation From --';
     const selectFromItems: InputSelectItem[] = [
         { slug: 'categories', label: 'Categories' },
         { slug: 'custom', label: 'Custom' },
     ];
-
-    console.log(prevValue);
 
     const [category, setCategory] = useState<any>([]);
     const [selectFrom, setSelectFrom] = useState<any>(undefined);
@@ -29,20 +31,42 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
     switch (selectFrom) {
         case 'categories':
             inputLabel = (
-                <Input
-                    variant="regular"
-                    label="Category"
-                    input={{
-                        type: 'select',
-                        id: 'category',
-                        items: category,
-                        label: '-- Select Category --',
-                        value: prevValue?.category ?? prevValue?.label ?? '',
-                        setValue,
-                        prevValue,
-                        selectValue: 'label',
-                    }}
-                />
+                <>
+                    <Input
+                        variant="regular"
+                        label="Category"
+                        input={{
+                            type: 'select',
+                            id: 'categories_label',
+                            items: category,
+                            label: '-- Select Category --',
+                            value: prevValue?.['categories_label'] ?? prevValue?.label ?? '',
+                            setValue,
+                            prevValue,
+                            selectValue: 'label',
+                        }}
+                    />
+                    <Input
+                        variant="regular"
+                        label="Label"
+                        input={{
+                            id: 'label',
+                            value: '',
+                            isDisabled: true,
+                            isHidden: true,
+                        }}
+                    />
+                    <Input
+                        variant="regular"
+                        label="Slug"
+                        input={{
+                            id: 'slug',
+                            value: '',
+                            isDisabled: true,
+                            isHidden: true,
+                        }}
+                    />
+                </>
             );
             break;
 
@@ -79,7 +103,8 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
             const selectFromOnEdit = category.find(
-                (item: InputSelectItem) => item.label === prevValue.label || item.label === prevValue.category
+                (item: InputSelectItem) =>
+                    item.label === prevValue.label || item.label === prevValue['categories_label']
             );
 
             setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');
@@ -94,56 +119,69 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
 
     return (
         <>
-            <td>
-                <Input
-                    variant="regular"
-                    className={selectFrom === undefined || selectFrom === selectFromLabel ? '' : 'mb-1'}
-                    input={{
-                        type: 'select',
-                        id: 'selectFrom',
-                        label: selectFromLabel,
-                        value: selectFrom,
-                        setValue: setSelectFrom,
-                        items: selectFromItems,
-                    }}
-                />
-                {inputLabel}
-            </td>
-            <td>
-                <Input
-                    variant="regular"
-                    input={{
-                        id: 'href',
-                        value: `/${slugify(selectFrom === 'categories' ? prevValue.category : prevValue?.label ?? '')}`,
-                        isDisabled: true,
-                    }}
-                />
-            </td>
-            <td>
-                <Input
-                    variant="regular"
-                    input={{
-                        id: 'target',
-                        type: 'switch',
-                        color: 'primary',
-                        isChecked: prevValue?.target ?? false,
-                        setIsChecked: setValue,
-                        prevValue,
-                    }}
-                />
-            </td>
-            <td>
-                <Input
-                    variant="regular"
-                    input={{
-                        id: 'is_show',
-                        type: 'switch',
-                        color: 'primary',
-                        isChecked: type === 'add' ? true : prevValue?.['is_show'] ?? false,
-                        setIsChecked: setValue,
-                        prevValue,
-                    }}
-                />
+            <td colSpan={header.length}>
+                <div className="row gx-2">
+                    <div className="col-md">
+                        <Input
+                            variant="regular"
+                            className={selectFrom === undefined || selectFrom === selectFromLabel ? '' : 'mb-1'}
+                            label="Select Navigation From"
+                            input={{
+                                type: 'select',
+                                id: 'type',
+                                label: selectFromLabel,
+                                value: selectFrom,
+                                setValue: setSelectFrom,
+                                items: selectFromItems,
+                            }}
+                        />
+                    </div>
+                    <div className="col-md-auto">
+                        <Input
+                            variant="regular"
+                            label="Open New Tab"
+                            input={{
+                                id: 'target',
+                                type: 'switch',
+                                color: 'primary',
+                                isChecked: prevValue?.target ?? false,
+                                setIsChecked: setValue,
+                                prevValue,
+                            }}
+                        />
+                    </div>
+                    <div className="col-md-auto">
+                        <Input
+                            variant="regular"
+                            label="Show"
+                            input={{
+                                id: 'is_show',
+                                type: 'switch',
+                                color: 'primary',
+                                isChecked: type === 'add' ? true : prevValue?.['is_show'] ?? false,
+                                setIsChecked: setValue,
+                                prevValue,
+                            }}
+                        />
+                    </div>
+                </div>
+
+                <div className="row gx-2">
+                    <div className="col-md-6">{inputLabel}</div>
+                    <div className="col-md-6">
+                        <Input
+                            variant="regular"
+                            label="Slug"
+                            input={{
+                                id: selectFrom === 'categories' ? 'categories_slug' : 'slug',
+                                value: slugify(
+                                    selectFrom === 'categories' ? prevValue['categories_label'] : prevValue.label
+                                ),
+                                isDisabled: true,
+                            }}
+                        />
+                    </div>
+                </div>
             </td>
         </>
     );

@@ -46,7 +46,7 @@ const TableAdminUpdateButton = ({
     return (
         <td
             className="text-center"
-            rowSpan={isOpenDetail ? 2 : 1}>
+            {...(isOpenDetail ? { rowSpan: 2 } : {})}>
             <ButtonGroup>
                 {!isEdit && !isReorder && (
                     <Button

@@ -5,24 +5,33 @@ export type SupabaseHeaderProps = {
     label: string;
     size?: string;
     align?: 'left' | 'center' | 'right';
-    relation?: string;
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
     isDetail?: boolean;
     isHidden?: boolean;
-};
+} & Pick<SupabaseCommonProps, 'relation'>;
 
 export type SupabaseCommonKeyProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
 
 type SupabaseCommonProps = {
     size?: string;
     relation?: string;
+    aliasLabel?: string;
 };
 
 export const SUPABASE_COMMON = ({
     size,
     relation,
+    aliasLabel,
 }: SupabaseCommonProps): Record<SupabaseCommonKeyProps, SupabaseHeaderProps[]> => ({
-    SLUG: [{ slug: 'slug', label: 'Slug', editType: 'text', ...(size ? { size: size } : {}) }],
+    SLUG: [
+        {
+            slug: 'slug',
+            label: aliasLabel ?? 'Slug',
+            editType: 'text',
+            ...(size ? { size: size } : {}),
+            ...(relation ? { relation: relation } : {}),
+        },
+    ],
     IS_SHOW: [{ slug: 'is_show', label: 'Show', size: '80px', editType: 'switch', align: 'center' }],
     TARGET: [{ slug: 'target', label: 'Open New Tab', size: '130px', editType: 'switch', align: 'center' }],
     LINK: [{ slug: 'href', label: 'Link', editType: 'text', ...(size ? { size: size } : {}) }],
@@ -32,13 +41,13 @@ export const SUPABASE_COMMON = ({
 });
 
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
-    ...SUPABASE_COMMON({}).LABEL,
-    ...SUPABASE_COMMON({}).LINK,
+    ...SUPABASE_COMMON({ relation: 'categories_label' }).LABEL,
+    ...SUPABASE_COMMON({ relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
     {
-        slug: 'category',
-        label: 'Category',
+        slug: 'categories_label',
+        label: 'Categories Label',
         editType: 'text',
         isHidden: true,
     },

@@ -7,6 +7,7 @@ export type InputTextProps = {
     prevValue?: any;
     setValue?: React.Dispatch<React.SetStateAction<InputValueTypeProps>>;
     isDisabled?: boolean;
+    isHidden?: boolean;
     pattern?: any;
 } & (InputTypeProps & InputCommonProps);
 
@@ -18,6 +19,7 @@ const InputText = ({
     setValue,
     prevValue,
     isDisabled,
+    isHidden,
     pattern,
     ...rest
 }: InputTextProps): React.ReactElement => {
@@ -40,6 +42,7 @@ const InputText = ({
             type={type ?? 'text'}
             {...(pattern ? { pattern: pattern } : {})}
             {...(isDisabled ? { disabled: true } : {})}
+            {...(isHidden ? { hidden: true } : {})}
         />
     );
 };
