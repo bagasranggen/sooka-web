@@ -23,7 +23,7 @@ const initData = {
 };
 
 const FormHomepageCarousel = ({ state }: FormHomepageCarouselProps): React.ReactElement => {
-    const [formData, setFormData] = useState<any[]>([]);
+    const [formData, setFormData] = useState<any[]>(state.carousels);
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -54,9 +54,9 @@ const FormHomepageCarousel = ({ state }: FormHomepageCarouselProps): React.React
         setFormData(duplicateData);
     };
 
-    useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+    // useEffect(() => {
+    //     console.log(formData);
+    // }, [formData]);
 
     return (
         <form
@@ -72,7 +72,7 @@ const FormHomepageCarousel = ({ state }: FormHomepageCarouselProps): React.React
             {formData.map((item: any, i: number) => (
                 <FormHomepageCarouselItem
                     key={i}
-                    state={state}
+                    state={state.categories}
                     value={formData[i]}
                     setValue={setFormData}
                     prevValue={formData}

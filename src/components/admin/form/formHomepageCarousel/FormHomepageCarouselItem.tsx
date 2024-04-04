@@ -22,6 +22,22 @@ export type FormHomepageCarouselItemProps = {
     };
 };
 
+const convertHomepageCarouselData = (data: any, category: any) => {
+    const images = {
+        imageDesktop: data?.images?.[0] ?? '',
+        imageMobile: data?.images?.[1] ?? '',
+    };
+
+    let selectFrom = {};
+    if (data.slug) selectFrom = { selectFrom: 'custom' };
+    if (data?.['categories_slug']) {
+        const selectedFromCategory = category?.find((item: any) => item.slug === data['categories_slug']);
+        if (selectedFromCategory?.slug) selectFrom = { selectFrom: 'categories' };
+    }
+
+    return { ...data, ...images, ...selectFrom };
+};
+
 const FormHomepageCarouselItem = ({
     index,
     isLast,
@@ -31,8 +47,8 @@ const FormHomepageCarouselItem = ({
     prevValue,
     events,
 }: FormHomepageCarouselItemProps) => {
-    const [data, setData] = useState<any>(value);
-    const [category, setCategory] = useState<any>(state.categories);
+    const [data, setData] = useState<any>(convertHomepageCarouselData(value, state));
+    const [category, setCategory] = useState<any>(state);
 
     const debounceData = useDebounce(data, 500);
 
@@ -52,21 +68,25 @@ const FormHomepageCarouselItem = ({
                         label="Category"
                         input={{
                             type: 'select',
-                            id: `href_category_${index}`,
-                            name: 'href',
+                            id: `categories_slug_${index}`,
+                            name: 'categories_slug',
                             items: category,
                             label: '-- Select Category --',
-                            value: data?.href ? data.href.replace('/', '') : '',
+                            value: data?.['categories_slug'] ?? '',
                             setValue: setData,
                             prevValue: data,
                         }}
                     />
+
                     <Input
                         variant="regular"
+                        label="Custom"
                         input={{
-                            id: 'href_label',
-                            value: `/${slugify(data?.href ? data.href.replace('/', '') : '')}`,
-                            isDisabled: true,
+                            id: 'slug_empty',
+                            name: 'slug',
+                            value: '',
+                            setValue: setData,
+                            prevValue: data,
                         }}
                     />
                 </>
@@ -80,8 +100,8 @@ const FormHomepageCarouselItem = ({
                     label="Custom"
                     input={{
                         id: 'href_custom',
-                        name: 'href',
-                        value: data?.href ?? '',
+                        name: 'slug',
+                        value: data?.slug ?? '',
                         setValue: setData,
                         prevValue: data,
                     }}
@@ -91,8 +111,8 @@ const FormHomepageCarouselItem = ({
     }
 
     useEffect(() => {
-        setData(value);
-    }, [value]);
+        setData(convertHomepageCarouselData(value, state));
+    }, [value, state]);
 
     useEffect(() => {
         const duplicateArray = [...prevValue];
@@ -165,8 +185,8 @@ const FormHomepageCarouselItem = ({
                                     items: selectFromItems,
                                     events: {
                                         onChange: () => {
-                                            data?.href &&
-                                                setData((prevValue: any) => ({ ...prevValue, ...{ href: '' } }));
+                                            data?.slug &&
+                                                setData((prevValue: any) => ({ ...prevValue, ...{ slug: '' } }));
                                         },
                                     },
                                 }}

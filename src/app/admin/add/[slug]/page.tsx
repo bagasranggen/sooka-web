@@ -4,6 +4,7 @@ import type { DynamicPageProps } from '@/libs/@types';
 import { supabaseServerAction } from '@/libs/fetcher';
 
 import AdminAddIndex from '@/components/page/admin/AdminAddIndex';
+import { getHomepageData } from '@/components/page/admin/components/addData';
 
 const getData = async () => {
     const { data: categories } = await supabaseServerAction({
@@ -17,9 +18,10 @@ const getData = async () => {
 export type PageProps = DynamicPageProps;
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
-    const data = await getData();
+    // const data = await getData();
+    const data = await getHomepageData();
 
-    console.log(params);
+    // console.log(params, data);
 
     return (
         <Suspense>
