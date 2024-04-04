@@ -71,10 +71,16 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
 
 export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
     ...SUPABASE_COMMON({ size: '30%' }).TITLE,
-    ...SUPABASE_COMMON({ size: '10%' }).LINK,
+    ...SUPABASE_COMMON({ size: '10%', relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
     ...SUPABASE_COMMON({ size: '30%' }).IMAGES,
+    {
+        slug: 'categories_slug',
+        label: 'Categories Slug',
+        editType: 'text',
+        isHidden: true,
+    },
 ];
 
 export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [

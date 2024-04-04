@@ -19,6 +19,8 @@ const TableHomepageCarouselForm = ({
     prevValue,
     type,
 }: TableHomepageCarouselFormProps): React.ReactElement => {
+    const header = SUPABASE_HEADER_HANDLES.homepageCarousel.filter((item: any) => !item.isHidden);
+
     const selectFromLabel = '-- Select Href From --';
     const selectFromItems: InputSelectItem[] = [
         { slug: 'categories', label: 'Categories' },
@@ -42,16 +44,25 @@ const TableHomepageCarouselForm = ({
                             id: 'selectFrom',
                             items: category,
                             label: '-- Select Category --',
-                            value: prevValue?.href ? prevValue.href.replace('/', '') : categorySelected,
+                            value: prevValue?.['categories_slug'] ?? categorySelected,
                             setValue: setCategorySelected,
                         }}
                     />
                     <Input
                         variant="regular"
                         input={{
-                            id: 'href',
-                            value: `/${slugify(prevValue?.href ? prevValue.href.replace('/', '') : categorySelected)}`,
+                            id: 'categories_slug',
+                            value: slugify(prevValue?.['categories_slug'] ?? categorySelected),
                             isDisabled: true,
+                        }}
+                    />
+                    <Input
+                        variant="regular"
+                        input={{
+                            id: 'slug',
+                            value: '',
+                            isDisabled: true,
+                            isHidden: true,
                         }}
                     />
                 </>
@@ -64,8 +75,8 @@ const TableHomepageCarouselForm = ({
                     variant="regular"
                     label="Custom"
                     input={{
-                        id: 'href',
-                        value: prevValue?.href ?? '',
+                        id: 'slug',
+                        value: prevValue?.slug ?? '',
                         setValue,
                         prevValue,
                     }}
@@ -90,7 +101,9 @@ const TableHomepageCarouselForm = ({
 
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
-            const selectFromOnEdit = category.find((item: InputSelectItem) => `/${item.slug}` === prevValue.href);
+            const selectFromOnEdit = category.find(
+                (item: InputSelectItem) => item.slug === prevValue.slug || item.slug === prevValue['categories_slug']
+            );
 
             setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');
         }
@@ -98,7 +111,7 @@ const TableHomepageCarouselForm = ({
 
     return (
         <>
-            <td colSpan={SUPABASE_HEADER_HANDLES.homepageCarousel.length}>
+            <td colSpan={header.length}>
                 <div className="row gy-2 gx-2">
                     <div className="col-md-10">
                         <Input

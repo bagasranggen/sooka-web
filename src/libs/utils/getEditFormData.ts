@@ -26,11 +26,11 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
             [isEditing].querySelectorAll('[data-value], [data-images]');
         editData.forEach((element: Element) => {
             if (element?.hasAttribute('data-value')) {
-                if (element?.hasAttribute('data-relation')) {
-                    (tempData as string[]).push(element.getAttribute('data-relation') as string);
-                } else {
-                    (tempData as string[]).push(element.getAttribute('data-value') as string);
-                }
+                (tempData as string[]).push(element.getAttribute('data-value') as string);
+            }
+
+            if (element?.hasAttribute('data-relation')) {
+                (tempData as string[]).push(element.getAttribute('data-relation') as string);
             }
 
             if (element?.hasAttribute('data-images')) {
