@@ -20,6 +20,7 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
     const tableForm = document.querySelector(`#${tableId}`) as unknown as HTMLElement;
 
     let tempData: string[] | number = [];
+    let tempDataRelation: any = {};
     if (type === 'edit' && typeof isEditing !== 'undefined') {
         const editData = tableForm
             .querySelectorAll('tbody tr')
@@ -30,7 +31,8 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
             }
 
             if (element?.hasAttribute('data-relation')) {
-                (tempData as string[]).push(element.getAttribute('data-relation') as string);
+                tempDataRelation[element?.getAttribute('data-relation') as string] =
+                    element.getAttribute('data-relation-value');
             }
 
             if (element?.hasAttribute('data-images')) {
@@ -45,7 +47,7 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
         tempData = parseInt(editData[0].getAttribute('data-order') as string);
     }
 
-    const data: any = {};
+    let data: any = {};
     if (type !== 'reorder') {
         tableKeys.map((keys: string, i: number) => {
             let d: string | boolean = '';
@@ -68,6 +70,8 @@ export const getEditFormData = ({ slug, tableId, isEditing, isReordering }: Edit
                 data[key] = image;
             });
         }
+
+        data = { ...data, ...tempDataRelation };
     }
 
     if (type === 'reorder') {

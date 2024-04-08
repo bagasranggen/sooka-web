@@ -102,10 +102,10 @@ const TableHomepageCarouselForm = ({
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
             const selectFromOnEdit = category.find(
-                (item: InputSelectItem) => item.slug === prevValue.slug || item.slug === prevValue['categories_slug']
+                (item: InputSelectItem) => item.slug === prevValue['categories_slug']
             );
 
-            setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');
+            if (!prevValue.slug && selectFromOnEdit?.slug) setSelectFrom('categories');
         }
     }, [type, prevValue, category]);
 
