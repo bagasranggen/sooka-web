@@ -8,7 +8,7 @@ import { createDynamicElement } from '@/libs/factory';
 
 import { CiCircleCheck } from 'react-icons/ci';
 import Button from '@/components/common/button/Button';
-import { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import { InputTextProps } from '@/components/common/input/inputShared/InputText';
 
 export type TableAdminAddProps = {
     variant: typeof TABLE_VARIANTS.ADMIN_ADD;

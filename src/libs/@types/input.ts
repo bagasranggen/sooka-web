@@ -1,4 +1,4 @@
-export type InputCommonProps = { id: string };
+export type InputCommonProps = { id: string; name?: string };
 export type InputTypeProps = { type?: 'text' | 'email' | 'number' | 'tel' | 'password' };
 export type TextareaTypeProps = {
     type?: 'textarea';

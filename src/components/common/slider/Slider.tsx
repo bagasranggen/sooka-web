@@ -14,3 +14,5 @@ const Slider = (props: SliderProps): React.ReactElement =>
     });
 
 export default Slider;
+
+export type * from '@/components/common/slider/sliderImage/SliderImage';

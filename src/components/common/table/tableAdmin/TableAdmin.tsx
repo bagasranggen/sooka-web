@@ -4,6 +4,7 @@ import type { SupabaseVariantProps } from '@/libs/fetcher';
 import type { SupabaseHeaderProps } from '@/libs/data';
 import { SUPABASE_HEADER_HANDLES, TABLE_FORM_HANDLES, TABLE_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
+import { joinClassnameString } from '@/libs/utils';
 
 import TableAdminUpdateButton, {
     type TableAdminUpdateButtonProps,
@@ -126,10 +127,14 @@ const TableAdmin = ({
                     <thead>
                         <tr>
                             {header.map((header: SupabaseHeaderProps, i: number) => {
+                                let thClass = [];
+                                if (header.align) thClass.push(`text-${header.align}`);
+                                if (header.isHidden) thClass.push('d-none');
+
                                 return (
                                     <th
                                         key={i}
-                                        {...(header.align ? { className: `text-${header.align}` } : {})}
+                                        {...(thClass ? { className: joinClassnameString(thClass) } : {})}
                                         {...(header?.size
                                             ? { style: { width: header.size, minWidth: header.size } }
                                             : {})}>

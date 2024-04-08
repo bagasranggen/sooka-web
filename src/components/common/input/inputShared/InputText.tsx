@@ -1,22 +1,25 @@
 import React from 'react';
-import type { InputTypeProps, InputValueTypeProps } from '@/libs/@types';
+
+import type { InputCommonProps, InputTypeProps, InputValueTypeProps } from '@/libs/@types';
 
 export type InputTextProps = {
-    id: string;
     value?: string | number;
     prevValue?: any;
     setValue?: React.Dispatch<React.SetStateAction<InputValueTypeProps>>;
     isDisabled?: boolean;
+    isHidden?: boolean;
     pattern?: any;
-} & InputTypeProps;
+} & (InputTypeProps & InputCommonProps);
 
 const InputText = ({
     id,
+    name,
     type,
     value,
     setValue,
     prevValue,
     isDisabled,
+    isHidden,
     pattern,
     ...rest
 }: InputTextProps): React.ReactElement => {
@@ -25,19 +28,21 @@ const InputText = ({
 
     return (
         <input
-            id={id}
-            name={id}
+            {...(id ? { id: id } : {})}
             className={inputClass}
             value={value}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (setValue) {
-                    if (prevValue) setValue({ ...prevValue, ...{ [id]: e.target.value } });
+                    if (prevValue) {
+                        setValue({ ...prevValue, ...{ [name ?? id]: e.target.value } });
+                    }
                     if (!prevValue) setValue(e.target.value);
                 }
             }}
             type={type ?? 'text'}
             {...(pattern ? { pattern: pattern } : {})}
             {...(isDisabled ? { disabled: true } : {})}
+            {...(isHidden ? { hidden: true } : {})}
         />
     );
 };

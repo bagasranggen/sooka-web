@@ -3,8 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { SLIDER_VARIANTS } from '@/libs/handles';
 import type { LinkProps } from '@/libs/@types';
+import { SLIDER_VARIANTS } from '@/libs/handles';
 import { getBackgroundImage } from '@/libs/utils';
 import { getImageProps, ImageProps } from 'next/image';
 
@@ -35,10 +35,13 @@ const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
         speed={900}
         className="slider-image">
         {items.map((item: SliderImageItemProps, i: number) => {
-            const ConditionalLink: any = item?.link?.href ? Link : React.Fragment;
-            const conditionProps = item?.link?.href
+            const { openNewTab, ...links } = item?.link;
+
+            const ConditionalLink: any = links.href ? Link : React.Fragment;
+            const conditionProps = links.href
                 ? {
-                      ...item?.link,
+                      ...links,
+                      ...(openNewTab ? { target: '_blank' } : {}),
                       className: 'slider-image__item',
                   }
                 : {};
