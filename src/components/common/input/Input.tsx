@@ -6,6 +6,10 @@ import { INPUT_HANDLES } from '@/libs/handles';
 import type { InputFloatingProps } from '@/components/common/input/inputFloating/InputFloating';
 import type { InputRegularProps } from '@/components/common/input/inputRegular/InputRegular';
 
+export type * from '@/components/common/input/inputFloating/InputFloating';
+export type * from '@/components/common/input/inputRegular/InputRegular';
+export type * from '@/components/common/input/inputShared';
+
 export type InputProps = InputFloatingProps | InputRegularProps;
 
 const Input = (props: InputProps): React.ReactElement =>

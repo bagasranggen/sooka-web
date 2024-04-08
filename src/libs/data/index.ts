@@ -1,3 +1,4 @@
+export * from './adminEntryType';
 export * from './errorMessage';
 export * from './imageSize';
 export * from './regex';

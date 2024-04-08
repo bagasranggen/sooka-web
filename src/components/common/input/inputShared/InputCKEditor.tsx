@@ -5,9 +5,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { InputCommonProps, InputValueTypeProps } from '@/libs/@types';
 import { INPUT_TYPE } from '@/libs/handles';
 
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-
 export type InputCkEditorProps = {
     type: typeof INPUT_TYPE.CK_EDITOR;
     value: string | number;
@@ -43,7 +40,6 @@ const InputCkEditor = ({ id, value }: InputCkEditorProps): React.ReactElement =>
                 <CKEditor
                     editor={ClassicEditor}
                     data={value as string}
-                    // data="<p>Hello from CKEditor&nbsp;5!</p>"
                     // onReady={(editor) => {
                     //     // You can store the "editor" and use when it is needed.
                     //     console.log('Editor is ready to use!', editor);

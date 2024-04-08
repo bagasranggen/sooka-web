@@ -12,8 +12,7 @@ export type ButtonCommonProps = {
 
 export type ButtonAnchorProps = {
     type: typeof BUTTON_TYPES.ANCHOR;
-} & LinkProps &
-    ButtonCommonProps;
+} & (LinkProps & ButtonCommonProps);
 
 export type ButtonRegularProps = {
     type: typeof BUTTON_TYPES.BUTTON | typeof BUTTON_TYPES.SUBMIT | typeof BUTTON_TYPES.RESET;

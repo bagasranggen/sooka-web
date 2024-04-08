@@ -2,7 +2,7 @@ import React from 'react';
 import { COMMON_REGEX } from '@/libs/data';
 
 import type { RenderTableAdminDataProps } from '@/components/common/table/tableAdmin/components/TableRenderData';
-import type { InputTextProps } from '@/components/common/input/inputShared/inputText';
+import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 
 import {
     CiCircleCheck,
@@ -46,7 +46,7 @@ const TableAdminUpdateButton = ({
     return (
         <td
             className="text-center"
-            rowSpan={isOpenDetail ? 2 : 1}>
+            {...(isOpenDetail ? { rowSpan: 2 } : {})}>
             <ButtonGroup>
                 {!isEdit && !isReorder && (
                     <Button

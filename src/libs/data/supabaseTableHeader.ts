@@ -7,23 +7,48 @@ export type SupabaseHeaderProps = {
     align?: 'left' | 'center' | 'right';
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
     isDetail?: boolean;
+    isHidden?: boolean;
+} & Pick<SupabaseCommonProps, 'relation'>;
+
+export type SupabaseCommonKeyProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
+
+type SupabaseCommonProps = {
+    size?: string;
+    relation?: string;
+    aliasLabel?: string;
 };
 
-export type SupabaseCommonProps = 'SLUG' | 'IS_SHOW' | 'TARGET' | 'LINK' | 'IMAGES' | 'TITLE' | 'LABEL';
-
-export const SUPABASE_COMMON = ({ size }: { size?: string }): Record<SupabaseCommonProps, SupabaseHeaderProps[]> => ({
-    SLUG: [{ slug: 'slug', label: 'Slug', editType: 'text', ...(size ? { size: size } : {}) }],
+export const SUPABASE_COMMON = ({
+    size,
+    relation,
+    aliasLabel,
+}: SupabaseCommonProps): Record<SupabaseCommonKeyProps, SupabaseHeaderProps[]> => ({
+    SLUG: [
+        {
+            slug: 'slug',
+            label: aliasLabel ?? 'Slug',
+            editType: 'text',
+            ...(size ? { size: size } : {}),
+            ...(relation ? { relation: relation } : {}),
+        },
+    ],
     IS_SHOW: [{ slug: 'is_show', label: 'Show', size: '80px', editType: 'switch', align: 'center' }],
     TARGET: [{ slug: 'target', label: 'Open New Tab', size: '130px', editType: 'switch', align: 'center' }],
     LINK: [{ slug: 'href', label: 'Link', editType: 'text', ...(size ? { size: size } : {}) }],
     IMAGES: [{ slug: 'images', label: 'Images', editType: 'text', ...(size ? { size: size } : {}) }],
     TITLE: [{ slug: 'title', label: 'Title', editType: 'text', ...(size ? { size: size } : {}) }],
-    LABEL: [{ slug: 'label', label: 'Label', editType: 'text' }],
+    LABEL: [{ slug: 'label', label: 'Label', editType: 'text', ...(relation ? { relation: relation } : {}) }],
 });
 
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
-    ...SUPABASE_COMMON({}).LABEL,
-    ...SUPABASE_COMMON({}).LINK,
+    ...SUPABASE_COMMON({ relation: 'categories_label' }).LABEL,
+    {
+        slug: 'categories_label',
+        label: 'Categories Label',
+        editType: 'text',
+        isHidden: true,
+    },
+    ...SUPABASE_COMMON({ relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
 ];
@@ -46,7 +71,13 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
 
 export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
     ...SUPABASE_COMMON({ size: '30%' }).TITLE,
-    ...SUPABASE_COMMON({ size: '10%' }).LINK,
+    ...SUPABASE_COMMON({ size: '10%', relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
+    {
+        slug: 'categories_slug',
+        label: 'Categories Slug',
+        editType: 'text',
+        isHidden: true,
+    },
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
     ...SUPABASE_COMMON({ size: '30%' }).IMAGES,

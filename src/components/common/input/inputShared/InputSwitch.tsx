@@ -14,6 +14,7 @@ export type InputSwitchProps = {
 const InputSwitch = ({
     type,
     id,
+    name,
     color,
     align,
     isChecked,
@@ -33,15 +34,17 @@ const InputSwitch = ({
                 type="checkbox"
                 id={id}
                 name={id}
-                value={id}
+                value={name ?? id}
                 {...checkedProps}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     if (!prevValue) {
                         setIsChecked && setIsChecked(e.target.checked);
                     }
 
-                    if (prevValue) {
-                        setIsChecked && setIsChecked({ ...prevValue, ...{ [id]: e.target.checked } });
+                    if (prevValue && (name || id)) {
+                        if (setIsChecked) {
+                            setIsChecked({ ...prevValue, ...{ [name ?? id]: e.target.checked } });
+                        }
                     }
                 }}
                 hidden
