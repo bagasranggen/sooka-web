@@ -1,7 +1,3 @@
-/*#nprogress {*/
-/*    --progress-color: red;*/
-/*}*/
-
 #nprogress .bar {
     background: var(--progress-color) !important;
 }
