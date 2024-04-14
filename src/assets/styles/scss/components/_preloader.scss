@@ -1,5 +1,5 @@
 .preloader {
-    @extend %position-fixed, %d-flex, %justify-content-center, %align-items-center;
+    @extend %position-fixed, %d-flex, %flex-column, %justify-content-center, %align-items-center;
 
     z-index: 1080;
     top: 0;
@@ -19,5 +19,9 @@
         @extend %pre-fade-in-animation;
 
         max-width: 10vw;
+    }
+
+    &__text {
+        @extend %mt-2;
     }
 }

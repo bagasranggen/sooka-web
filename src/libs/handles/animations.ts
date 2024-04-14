@@ -22,6 +22,7 @@ export const COMMON_ANIMATIONS = {
     ATTRIBUTES: {
         TYPE: 'data-animation',
         DELAY: 'data-animation-delay',
+        LOOP: 'data-animation-loop',
     },
 };
 
