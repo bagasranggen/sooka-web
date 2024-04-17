@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { BANNER_VARIANTS } from '@/libs/handles';
+import { createAnimation } from '@/libs/factory';
 
 import { Container } from 'react-bootstrap';
 import ReactHtmlParser from 'react-html-parser';
@@ -14,7 +15,9 @@ export type BannerSectionProps = {
 const BannerSection = ({ title, description }: BannerSectionProps): React.ReactElement => (
     <section className="ts--margin ts--primary banner banner--section">
         <Container>
-            <div className="banner__title">
+            <div
+                className="banner__title"
+                {...createAnimation({ type: 'fade-in' })}>
                 <h1>{title}</h1>
                 <div className="">{ReactHtmlParser(description)}</div>
             </div>

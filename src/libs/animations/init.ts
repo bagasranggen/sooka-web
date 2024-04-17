@@ -1,8 +1,15 @@
 'use client';
 
-import { Init as InitAnimations } from '@/libs/animations/InitAnimations';
+import { initAnimations } from '@/libs/animations/initAnimations';
 
-export const Init = (selector?: string) => {
+type InitProps = {
+    selector?: string;
+    callback?: () => void;
+};
+
+export const Init = ({ selector, callback }: InitProps) => {
     // Run data-attribute-animation
-    InitAnimations(selector ?? '');
+    initAnimations(selector ?? '');
+
+    callback && callback();
 };

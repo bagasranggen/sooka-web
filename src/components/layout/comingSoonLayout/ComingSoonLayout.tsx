@@ -12,7 +12,7 @@ export type ComingSoonLayoutProps = {};
 const ComingSoonLayout = ({}: ComingSoonLayoutProps): React.ReactElement => {
     return (
         <Suspense fallback={<div className="preloader preloader--is-open" />}>
-            <NavigationEvents endHandler={Init} />
+            <NavigationEvents endHandler={() => Init({})} />
             <Preloader
                 isOpen={true}
                 options={{ loop: true }}>

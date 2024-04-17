@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 import { Init } from '@/libs/animations/init';
@@ -17,6 +17,9 @@ export type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
+    const animationRun = useRef<any>(null);
+    const page = useRef<any>(null);
+
     const pathname = usePathname();
     const section = `section section-${pathname.replace(/\//g, '-')}`;
 
@@ -33,7 +36,19 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
                 />
                 <NavigationEvents
                     endHandler={() => {
-                        Init();
+                        if (page.current !== pathname) {
+                            animationRun.current = false;
+                            page.current = pathname;
+                        }
+
+                        if (!animationRun.current) {
+                            Init({
+                                callback: () => {
+                                    animationRun.current = true;
+                                },
+                            });
+                        }
+
                         setPageCount((prevState: number) => prevState + 1);
                     }}
                 />
