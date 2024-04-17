@@ -8,6 +8,7 @@ export type PictureItemProps = {
 } & ImageProps;
 
 export type PictureProps = {
+    className?: string;
     items: PictureItemProps[];
     animation?: ImageZoomAnimationProps;
 };
@@ -39,9 +40,13 @@ const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
     );
 };
 
-const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
+const Picture = ({ className, items, animation }: PictureProps): React.ReactElement => {
+    const pictureClass = className ?? '';
+
     return (
-        <picture {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
+        <picture
+            className={pictureClass}
+            {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
             {items.map((item: PictureItemProps, i: number) => {
                 const Image = items.length - 1 === i ? PictureItemImg : PictureItemSource;
 

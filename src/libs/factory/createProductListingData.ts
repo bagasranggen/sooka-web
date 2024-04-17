@@ -1,7 +1,8 @@
-import type { CardImageItemProps } from '@/components/common/card/cardImage/CardImage';
+import slugify from 'react-slugify';
 import { createGoogleDriveImage } from '@/libs/factory';
+import type { CardRoundedItemProps } from '@/components/common/card/Card';
 
-export type ProductListingDataProps = CardImageItemProps;
+export type ProductListingDataProps = CardRoundedItemProps;
 
 export const createProductListingData = (datum: ProductListingDataProps) => {
     const images = createGoogleDriveImage({
@@ -12,6 +13,7 @@ export const createProductListingData = (datum: ProductListingDataProps) => {
 
     return {
         name: datum.name,
+        href: `/${datum.category}/${slugify(datum.name)}`,
         category: datum.category,
         isPackage: datum?.package !== '',
         ingredients: datum?.ingredients !== '' ? datum.ingredients : datum?.package ?? '',
