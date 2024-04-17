@@ -1,0 +1,19 @@
+.product-detail {
+    &__title {
+        @extend %text-center;
+
+        h1 {
+            @extend %fw-200, %fs-80, %mb-1;
+
+            line-height: 1;
+        }
+
+        h2 {
+            @extend %text-uppercase, %fw-400, %fs-30;
+
+            span {
+                @extend %fs-18, %fw-600;
+            }
+        }
+    }
+}

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
-export type ProductDetailProps = {};
+export type ProductDetailProps = {
+    title: string;
+};
 
-const ProductDetailIndex = ({}: ProductDetailProps): React.ReactElement => {
+const ProductDetailIndex = ({ title }: ProductDetailProps): React.ReactElement => {
     return (
-        <section className="ts--margin pt-5">
+        <section className="ts--margin pt-5 product-detail">
             <Container>
                 <Row className="gx-lg-8">
                     <Col lg={7}>
@@ -14,15 +16,20 @@ const ProductDetailIndex = ({}: ProductDetailProps): React.ReactElement => {
                         quia quibusdam quisquam tempore veritatis!
                     </Col>
                     <Col lg={5}>
-                        <div className="text-center">
-                            <h1>Mocca Nugget</h1>
-                            <h2>Rp150000</h2>
+                        <div className="product-detail__title">
+                            <h1>{title}</h1>
+                            <h2>
+                                <span>Rp</span>150000
+                            </h2>
                         </div>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolor eveniet impedit iste
-                        minima molestiae mollitia rem soluta suscipit. Accusamus at consequuntur facere fugit nam
-                        necessitatibus neque quia temporibus vitae? Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Ab accusamus, cumque eligendi excepturi facere in incidunt nam sint soluta! Deserunt
-                        dolores eaque itaque iusto pariatur, ullam voluptas. Aliquam deleniti, dolor!
+                        <div className="text-center">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque dolor eveniet impedit iste
+                            minima molestiae mollitia rem soluta suscipit. Accusamus at consequuntur facere fugit nam
+                            necessitatibus neque quia temporibus vitae? Lorem ipsum dolor sit amet, consectetur
+                            adipisicing elit. Ab accusamus, cumque eligendi excepturi facere in incidunt nam sint
+                            soluta! Deserunt dolores eaque itaque iusto pariatur, ullam voluptas. Aliquam deleniti,
+                            dolor!
+                        </div>
                     </Col>
                 </Row>
             </Container>

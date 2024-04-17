@@ -1,0 +1,53 @@
+import { supabaseServerAction } from '@/libs/fetcher';
+import slugify from 'react-slugify';
+
+const getAllProducts = async () => {
+    const { data } = await supabaseServerAction({
+        variant: 'fetch',
+        relation: 'productListing',
+    });
+
+    return { data };
+};
+
+const getProduct = async (slug: string) => {
+    const { data } = await supabaseServerAction({
+        variant: 'fetch-find',
+        relation: 'productListing',
+        slug,
+    });
+
+    return { data };
+};
+
+const getPath = async () => {
+    const { data } = await getAllProducts();
+
+    return { data: (data as any[]).map((datum: any) => `/${datum.category}/${slugify(datum.name)}`) };
+};
+
+const productDetailData = async (slug: string) => {
+    const { data: path } = await getPath();
+    const { data: productSelected } = await getProduct(slug);
+
+    const product = productSelected?.[0];
+
+    let page;
+    if (product) {
+        page = {
+            title: product.name,
+        };
+    }
+
+    let entries;
+    if (product) {
+        entries = {
+            title: product.name,
+            ...product,
+        };
+    }
+
+    return { path, page, entries };
+};
+
+export default productDetailData;

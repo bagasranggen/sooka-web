@@ -1,24 +1,33 @@
 import React from 'react';
-
-import slugify from 'react-slugify';
+import { notFound } from 'next/navigation';
 
 import type { DynamicPageProps } from '@/libs/@types';
-import { supabaseServerAction } from '@/libs/fetcher';
+
 import ProductDetailIndex from '@/components/page/productDetail/ProductDetailIndex';
+import ProductDetailData from '@/components/page/productDetail/ProductDetailData';
 
 export type PageProps = DynamicPageProps;
 
-export const generateStaticParams = async () => {
-    const { data } = await supabaseServerAction({
-        variant: 'fetch',
-        relation: 'productListing',
-    });
+export const generateStaticParams = async ({ params }: PageProps) => {
+    const { path } = await ProductDetailData(params.detail as string);
 
-    return (data as any[]).map((datum: any) => `/${datum.category}/${slugify(datum.name)}`);
+    return path;
 };
 
-const Page = ({ params }: PageProps): React.ReactElement => {
-    return <ProductDetailIndex />;
+export const generateMetadata = async ({ params }: PageProps) => {
+    const { page } = await ProductDetailData(params.detail as string);
+
+    if (!page?.title) return notFound();
+
+    return {
+        title: page.title,
+    };
+};
+
+const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
+    const { entries } = await ProductDetailData(params.detail as string);
+
+    return <ProductDetailIndex {...entries} />;
 };
 
 export default Page;
