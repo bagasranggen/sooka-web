@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { Init } from '@/libs/animations/init';
 import { NavigationEvents } from '@/libs/utils';
+import { selectGlobalInfo, useSelector } from '@/store/redux';
 
 import Preloader from '@/components/common/preloader/Preloader';
 
@@ -17,6 +18,8 @@ export type MainLayoutProps = {
 };
 
 const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
+    const { isDev } = useSelector(selectGlobalInfo);
+
     const animationRun = useRef<any>(null);
     const page = useRef<any>(null);
 
@@ -52,7 +55,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
                         setPageCount((prevState: number) => prevState + 1);
                     }}
                 />
-                <Preloader isOpen={pageCount <= 2} />
+                {!isDev && <Preloader isOpen={pageCount <= 2} />}
             </Suspense>
             <main className={section}>{children}</main>
         </>

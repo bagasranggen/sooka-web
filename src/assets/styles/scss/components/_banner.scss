@@ -1,24 +1,18 @@
 .banner {
     &--section {
-        @extend %bg-primary, %fc-light;
+        @extend %bg-secondary, %fc-dark;
 
-        padding-top: 8rem;
-        padding-bottom: 4rem;
-
-        @include media-breakpoint-up(md) {
-            padding-top: 18rem;
-
-        }
+        padding-top: 5rem;
+        padding-bottom: 5rem;
 
         .banner {
             &__title {
-                @extend %d-md-flex, %align-items-md-end;
+                @extend %text-center;
 
                 h1 {
-                    @extend %mb-md-0, %me-3, %fw-400, %fs-60, %fs-md-80;
+                    @extend %fw-100, %fs-60, %fs-md-90;
 
                     line-height: .9;
-                    letter-spacing: .4rem;
                 }
 
                 > div {
@@ -28,7 +22,6 @@
 
                     @include media-breakpoint-up(lg) {
                         line-height: 1.3;
-                        max-width: 55%;
                     }
                 }
             }
