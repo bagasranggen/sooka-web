@@ -8,8 +8,8 @@ import ProductDetailData from '@/components/page/productDetail/ProductDetailData
 
 export type PageProps = DynamicPageProps;
 
-export const generateStaticParams = async ({ params }: PageProps) => {
-    const { path } = await ProductDetailData(params.detail as string);
+export const generateStaticParams = async () => {
+    const { path } = await ProductDetailData();
 
     return path;
 };

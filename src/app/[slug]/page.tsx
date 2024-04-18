@@ -8,8 +8,8 @@ import ProductListingData from '@/components/page/productListing/ProductListingD
 
 export type PageProps = DynamicPageProps;
 
-export const generateStaticParams = async ({ params }: PageProps) => {
-    const { path } = await ProductListingData(params.slug as string);
+export const generateStaticParams = async () => {
+    const { path } = await ProductListingData();
 
     return path;
 };
@@ -30,7 +30,7 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     return (
         <ProductListingIndex
             page={page}
-            entries={{ products: products, categories: [] }}
+            entries={{ products: products ?? [], categories: [] }}
         />
     );
 };

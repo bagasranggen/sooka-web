@@ -12,7 +12,9 @@ const getAllProducts = async () => {
     return { data };
 };
 
-const getProduct = async (slug: string) => {
+const getProduct = async (slug?: string) => {
+    if (!slug) return { data: null };
+
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'productListing',
@@ -28,7 +30,7 @@ const getPath = async () => {
     return { data: (data as any[]).map((datum: any) => `/${datum.category}/${slugify(datum.name)}`) };
 };
 
-const productDetailData = async (slug: string) => {
+const productDetailData = async (slug?: string) => {
     const { data: path } = await getPath();
     const { data: productSelected } = await getProduct(slug);
 
@@ -41,7 +43,7 @@ const productDetailData = async (slug: string) => {
         };
     }
 
-    let entries;
+    let entries: any;
     if (product) {
         entries = {
             title: product.name,

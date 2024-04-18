@@ -4,7 +4,9 @@ import { createProductListingData, ProductListingDataProps } from '@/libs/factor
 import type { ProductListingIndexProps } from '@/components/page/productListing/ProductListingIndex';
 import type { FilterProductItemProps } from '@/components/common/filter/filterProduct/FilterProduct';
 
-const getPage = async (slug: string): Promise<{ data: ProductListingIndexProps['page'] }> => {
+const getPage = async (slug?: string): Promise<{ data: ProductListingIndexProps['page'] }> => {
+    if (!slug) return { data: { title: '', description: '' } };
+
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'pages',
@@ -16,7 +18,9 @@ const getPage = async (slug: string): Promise<{ data: ProductListingIndexProps['
     };
 };
 
-const getProductListing = async (slug: string) => {
+const getProductListing = async (slug?: string) => {
+    if (!slug) return { data: null };
+
     const { data } = await supabaseServerAction({
         variant: 'fetch-filter',
         relation: 'productListing',
@@ -45,7 +49,7 @@ const getPath = async () => {
     return { data: (data as any[]).map((datum: FilterProductItemProps) => datum.slug) };
 };
 
-const productListingData = async (slug: string) => {
+const productListingData = async (slug?: string) => {
     const { data: page } = await getPage(slug);
     const { data: products } = await getProductListing(slug);
     const { data: path } = await getPath();
