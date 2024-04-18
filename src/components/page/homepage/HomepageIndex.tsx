@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { Container } from 'react-bootstrap';
-import Slider from '@/components/common/slider/Slider';
-import type { SliderImageProps } from '@/components/common/slider/sliderImage/SliderImage';
+import Slider, { type SliderImageItemProps } from '@/components/common/slider/Slider';
 
 export type HomepageIndexProps = {
     entries: {
-        carousel: SliderImageProps['items'];
+        carousel: SliderImageItemProps[];
     };
 };
 
