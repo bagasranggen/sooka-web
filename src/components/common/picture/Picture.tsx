@@ -45,7 +45,7 @@ const Picture = ({ className, items, animation }: PictureProps): React.ReactElem
 
     return (
         <picture
-            className={pictureClass}
+            {...(className ? { className: pictureClass } : {})}
             {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
             {items.map((item: PictureItemProps, i: number) => {
                 const Image = items.length - 1 === i ? PictureItemImg : PictureItemSource;

@@ -14,7 +14,7 @@ $line-height-base: 1.8;
 
 // Typography
 $font-sets: (
-    mulish: ('Mulish')
+	mulish: ('Mulish')
 );
 
 // Spacing
@@ -78,26 +78,27 @@ $form-floating-transition: opacity $form-floating-transition-timing ease-in-out,
 
 // Background Colors
 $bg-color-sets: (
-    primary: $sooka-primary,
-    secondary: $sooka-secondary,
-    dark: $sooka-dark,
-    light: $sooka-light,
+	primary: $sooka-primary,
+	secondary: $sooka-secondary,
+	dark: $sooka-dark,
+	light: $sooka-light,
 );
 
 // Font Sizes
 $font-sizes-set: (
-    10: 1rem,
-    12: 1.2rem,
-    14: 1.4rem,
-    18: 1.8rem,
-    20: 2rem,
-    24: 2.4rem,
-    28: 2.8rem,
-    30: 3rem,
-    60: 6rem,
-    80: 8rem,
-    90: 9rem,
-    100: 10rem,
+	10: 1rem,
+	12: 1.2rem,
+	14: 1.4rem,
+	18: 1.8rem,
+	20: 2rem,
+	24: 2.4rem,
+	28: 2.8rem,
+	30: 3rem,
+	40: 4rem,
+	60: 6rem,
+	80: 8rem,
+	90: 9rem,
+	100: 10rem,
 );
 
 // Font Weight

@@ -1,19 +1,66 @@
 .product-detail {
-    &__title {
-        @extend %text-center;
+	&__content {
+		@extend %position-sticky;
 
-        h1 {
-            @extend %fw-200, %fs-80, %mb-1;
+		top: 5rem;
 
-            line-height: 1;
-        }
+		@include make-transition(top, .3s);
+	}
 
-        h2 {
-            @extend %text-uppercase, %fw-400, %fs-30;
+	&__title,
+	&__description {
+		@extend %text-center;
+	}
 
-            span {
-                @extend %fs-18, %fw-600;
-            }
-        }
-    }
+	&__title {
+		h1 {
+			@extend %fw-400, %fw-lg-200, %fs-40, %fs-lg-80, %mb-1, %mb-lg-3;
+
+			line-height: 1;
+		}
+
+		h2 {
+			@extend %text-uppercase, %fw-400, %fs-20, %fs-lg-30;
+
+			span {
+				@extend %fw-600, %fs-14, %fs-lg-18 ;
+			}
+		}
+	}
+
+	&__image {
+		--product-detail-border-radius: 10rem;
+
+		picture {
+			&:first-child {
+				img {
+					border-top-left-radius: var(--product-detail-border-radius);
+					border-top-right-radius: var(--product-detail-border-radius);
+				}
+			}
+
+			&:last-child {
+				img {
+					border-bottom-left-radius: var(--product-detail-border-radius);
+					border-bottom-right-radius: var(--product-detail-border-radius);
+				}
+			}
+
+			&:not(:first-child) {
+				img {
+					@extend %mt-2;
+				}
+			}
+		}
+	}
+}
+
+.navbar.navbar--show ~ main {
+	.product-detail {
+		&__content {
+			@extend %position-sticky;
+
+			top: calc(5rem + var(--bs-navbar-height, 0));
+		}
+	}
 }

@@ -19,6 +19,7 @@ export type CardRoundedItemProps = {
     ingredients?: string;
     package?: string;
     images: PictureItemProps[];
+    price: string;
 };
 
 export type CardRoundedProps = {
@@ -26,7 +27,7 @@ export type CardRoundedProps = {
     items: CardRoundedItemProps[];
 };
 
-const CardRoundedItem = ({ name, href, images }: CardRoundedItemProps): React.ReactElement => {
+const CardRoundedItem = ({ name, href, images, price }: CardRoundedItemProps): React.ReactElement => {
     return (
         <Col>
             <div className="card card--rounded">
@@ -37,7 +38,8 @@ const CardRoundedItem = ({ name, href, images }: CardRoundedItemProps): React.Re
                     <div className="card__title">
                         <h2>{name}</h2>
                         <h3>
-                            <span>Rp</span>230.000
+                            <span>Rp</span>
+                            {price}
                         </h3>
                     </div>
 

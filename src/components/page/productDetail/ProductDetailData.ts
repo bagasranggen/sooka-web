@@ -1,4 +1,6 @@
 import { supabaseServerAction } from '@/libs/fetcher';
+import { createProductListingData } from '@/libs/factory';
+
 import slugify from 'react-slugify';
 
 const getAllProducts = async () => {
@@ -43,7 +45,7 @@ const productDetailData = async (slug: string) => {
     if (product) {
         entries = {
             title: product.name,
-            ...product,
+            ...createProductListingData(product),
         };
     }
 
