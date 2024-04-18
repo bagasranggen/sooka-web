@@ -6,6 +6,12 @@ export type SupabaseFetchActionProps = {
     relation: SupabaseVariantProps;
 };
 
+export type SupabaseFetchLimitActionProps = {
+    variant: 'fetch-limit';
+    relation: SupabaseVariantProps;
+    limit: number;
+};
+
 export type SupabaseFetchFindActionProps = {
     variant: 'fetch-find';
     relation: SupabaseVariantProps;
@@ -23,6 +29,7 @@ export type SupabaseFetchFilterActionProps = {
 
 export type SupabaseServerActionProps =
     | SupabaseFetchActionProps
+    | SupabaseFetchLimitActionProps
     | SupabaseFetchFindActionProps
     | SupabaseFetchFilterActionProps;
 
@@ -37,6 +44,15 @@ export const supabaseServerAction = async (props: SupabaseServerActionProps): Pr
                 .order('order', { ascending: true });
 
             return { data: fetchData };
+
+        case 'fetch-limit':
+            const { data: fetchLimitData } = await supabase
+                .from(props.relation)
+                .select()
+                .order('order', { ascending: true })
+                .limit(props.limit);
+
+            return { data: fetchLimitData };
 
         case 'fetch-find':
             const { data: fetchFindData } = await supabase.from(props.relation).select('*').eq('slug', props.slug);

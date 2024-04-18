@@ -26,6 +26,10 @@ export type CardRoundedItemProps = {
 export type CardRoundedProps = {
     variant: typeof CARD_VARIANTS.ROUNDED;
     items: CardRoundedItemProps[];
+    options?: {
+        columns?: string;
+        gap?: string;
+    };
 };
 
 const CardRoundedItem = ({ name, href, images, price, isSold }: CardRoundedItemProps): React.ReactElement => {
@@ -72,11 +76,17 @@ const CardRoundedItem = ({ name, href, images, price, isSold }: CardRoundedItemP
     );
 };
 
-const CardRounded = ({ items }: CardRoundedProps): React.ReactElement => {
+const CardRounded = ({ items, options }: CardRoundedProps): React.ReactElement => {
     const isEmpty = items.length === 0;
 
-    const rowColumns = isEmpty ? [] : ['row-cols-1', 'row-cols-sm-2'];
-    const rowGap = ['gy-4', 'gy-lg-6', 'gx-lg-8'];
+    let rowColumns: string[] = [];
+    if (!isEmpty && !options?.columns) rowColumns.push('row-cols-1 row-cols-sm-2');
+    if (!isEmpty && options?.columns) rowColumns.push(options.columns);
+
+    let rowGap: string[] = [];
+    if (!options?.gap) rowGap.push('gy-4 gy-lg-6 gx-lg-8');
+    if (options?.gap) rowGap.push(options.gap);
+
     const rowClass = joinClassnameString([...rowColumns, ...rowGap]);
 
     let cards;

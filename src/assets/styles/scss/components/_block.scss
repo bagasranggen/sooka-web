@@ -1,0 +1,12 @@
+.block {
+    @extend %py-10;
+
+    &--primary {
+        //background-color: lighten($sooka-primary, 25);
+        background-color: #ffd8d0;
+    }
+
+    &--secondary {
+        @extend %bg-secondary;
+    }
+}
