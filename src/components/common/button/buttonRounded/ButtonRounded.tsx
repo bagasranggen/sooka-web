@@ -12,11 +12,10 @@ export type ButtonRoundedProps = {
 } & ButtonBaseTypeProps;
 
 const ButtonRounded = (props: ButtonRoundedProps): React.ReactElement => {
-    let btnClass: string | string[] = ['btn', 'btn--rounded'];
-
-    btnClass = joinClassnameString(btnClass);
-
     const { className, variant, ...rest } = props;
+
+    let btnClass: string | string[] = ['btn', 'btn--rounded'];
+    btnClass = joinClassnameString(btnClass);
 
     return (
         <ButtonBase

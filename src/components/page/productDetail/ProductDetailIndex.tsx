@@ -48,16 +48,15 @@ const ProductDetailIndex = ({ title, description, price, isSold, slides }: Produ
                             {description && (
                                 <div className="product-detail__description">{ReactHtmlParser(description)}</div>
                             )}
-                            {!isSold && (
-                                <ButtonGroup className="d-flex mt-3">
-                                    <Button
-                                        variant="rounded"
-                                        type="anchor"
-                                        href={getWhatsappEncoded(title ?? '')}>
-                                        Order
-                                    </Button>
-                                </ButtonGroup>
-                            )}
+                            <ButtonGroup className="d-flex mt-3">
+                                <Button
+                                    variant="rounded"
+                                    type="anchor"
+                                    href={getWhatsappEncoded(title ?? '')}
+                                    disabled={isSold}>
+                                    {isSold ? GLOBAL_MESSAGE.SOLD_OUT : 'Order'}
+                                </Button>
+                            </ButtonGroup>
                         </div>
                     </Col>
                 </Row>

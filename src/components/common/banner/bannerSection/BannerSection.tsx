@@ -16,7 +16,11 @@ const BannerSection = ({ title, description }: BannerSectionProps): React.ReactE
     <section className="ts--margin ts--primary banner banner--section">
         <Container>
             <div className="banner__title">
-                <h1 {...createAnimation({ type: 'fade-in' })}>{title}</h1>
+                <h1
+                    {...(!description ? { className: 'mb-0' } : {})}
+                    {...createAnimation({ type: 'fade-in' })}>
+                    {title}
+                </h1>
                 {description && (
                     <div
                         className="mt-4"
