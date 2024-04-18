@@ -29,9 +29,13 @@
 	}
 
 	&__image {
-		--product-detail-border-radius: 10rem;
+		--product-detail-border-radius: 6rem;
+		
+		@include media-breakpoint-up(lg) {
+			--product-detail-border-radius: 10rem;
+		}
 
-		picture {
+		> picture {
 			&:first-child {
 				img {
 					border-top-left-radius: var(--product-detail-border-radius);
