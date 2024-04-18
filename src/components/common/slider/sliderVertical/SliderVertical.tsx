@@ -34,7 +34,7 @@ export const SliderVerticalDesktop = ({ items }: Pick<SliderVerticalProps, 'item
 export const SliderVerticalMobile = ({ items }: Pick<SliderVerticalProps, 'items'>): React.ReactElement => {
     return (
         <SliderWrapper
-            className="d-lg-none"
+            className="d-lg-none "
             option={{ nested: true }}>
             <Swiper
                 className="slider-vertical"
