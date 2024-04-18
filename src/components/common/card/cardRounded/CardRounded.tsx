@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { CARD_VARIANTS } from '@/libs/handles';
-
-import { Col, Row } from 'react-bootstrap';
+import { GLOBAL_MESSAGE } from '@/libs/data';
 import { getWhatsappEncoded, joinClassnameString } from '@/libs/utils';
 
+import { Col, Row } from 'react-bootstrap';
 import { CiShoppingCart } from 'react-icons/ci';
 
 import Picture, { type PictureItemProps } from '@/components/common/picture/Picture';
@@ -20,6 +20,7 @@ export type CardRoundedItemProps = {
     package?: string;
     images: PictureItemProps[];
     price: string;
+    isSold: boolean;
 };
 
 export type CardRoundedProps = {
@@ -27,7 +28,15 @@ export type CardRoundedProps = {
     items: CardRoundedItemProps[];
 };
 
-const CardRoundedItem = ({ name, href, images, price }: CardRoundedItemProps): React.ReactElement => {
+const CardRoundedItem = ({ name, href, images, price, isSold }: CardRoundedItemProps): React.ReactElement => {
+    let productPrice = (
+        <>
+            <span>Rp</span>
+            {price}
+        </>
+    );
+    if (isSold) productPrice = <>{GLOBAL_MESSAGE.SOLD_OUT}</>;
+
     return (
         <Col>
             <div className="card card--rounded">
@@ -37,10 +46,7 @@ const CardRoundedItem = ({ name, href, images, price }: CardRoundedItemProps): R
                     href={href}>
                     <div className="card__title">
                         <h2>{name}</h2>
-                        <h3>
-                            <span>Rp</span>
-                            {price}
-                        </h3>
+                        <h3>{productPrice}</h3>
                     </div>
 
                     <Picture
@@ -49,16 +55,18 @@ const CardRoundedItem = ({ name, href, images, price }: CardRoundedItemProps): R
                     />
                 </Button>
 
-                <Button
-                    variant="base"
-                    type="anchor"
-                    className="card__button"
-                    href={getWhatsappEncoded(name)}>
-                    <div className="button__text">ORDER</div>
-                    <div className="button__icon">
-                        <CiShoppingCart size={40} />
-                    </div>
-                </Button>
+                {!isSold && (
+                    <Button
+                        variant="base"
+                        type="anchor"
+                        className="card__button"
+                        href={getWhatsappEncoded(name)}>
+                        <div className="button__text">ORDER</div>
+                        <div className="button__icon">
+                            <CiShoppingCart size={40} />
+                        </div>
+                    </Button>
+                )}
             </div>
         </Col>
     );

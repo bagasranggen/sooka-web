@@ -24,5 +24,6 @@ export const createProductListingData = (datum: any) => {
         images,
         slides,
         price: convertNumberToCurrency({ price: datum.price }),
+        isSold: datum['is_sold'],
     };
 };

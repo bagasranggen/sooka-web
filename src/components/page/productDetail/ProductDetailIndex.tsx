@@ -3,6 +3,7 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { GLOBAL_MESSAGE } from '@/libs/data';
 import { getWhatsappEncoded } from '@/libs/utils';
 
 import type { PictureItemProps } from '@/components/common/picture/Picture';
@@ -13,10 +14,19 @@ export type ProductDetailProps = {
     title?: string;
     description?: string;
     price: string;
+    isSold: boolean;
     slides: Array<PictureItemProps[]>;
 };
 
-const ProductDetailIndex = ({ title, description, price, slides }: ProductDetailProps): React.ReactElement => {
+const ProductDetailIndex = ({ title, description, price, isSold, slides }: ProductDetailProps): React.ReactElement => {
+    let productPrice = (
+        <>
+            <span>Rp</span>
+            {price}
+        </>
+    );
+    if (isSold) productPrice = <>{GLOBAL_MESSAGE.SOLD_OUT}</>;
+
     return (
         <section className="ts--margin py-8 product-detail">
             <Container>
@@ -33,22 +43,21 @@ const ProductDetailIndex = ({ title, description, price, slides }: ProductDetail
                         <div className="product-detail__content">
                             <div className="product-detail__title">
                                 <h1>{title}</h1>
-                                <h2>
-                                    <span>Rp</span>
-                                    {price}
-                                </h2>
+                                <h2>{productPrice}</h2>
                             </div>
                             {description && (
                                 <div className="product-detail__description">{ReactHtmlParser(description)}</div>
                             )}
-                            <ButtonGroup className="d-flex mt-3">
-                                <Button
-                                    variant="rounded"
-                                    type="anchor"
-                                    href={getWhatsappEncoded(title ?? '')}>
-                                    Order
-                                </Button>
-                            </ButtonGroup>
+                            {!isSold && (
+                                <ButtonGroup className="d-flex mt-3">
+                                    <Button
+                                        variant="rounded"
+                                        type="anchor"
+                                        href={getWhatsappEncoded(title ?? '')}>
+                                        Order
+                                    </Button>
+                                </ButtonGroup>
+                            )}
                         </div>
                     </Col>
                 </Row>
