@@ -37,13 +37,16 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
 
             <section className="my-10">
                 <Container>
-                    <div className="text-center">
-                        <h2 style={{ fontSize: '8rem', fontWeight: 200, marginBottom: '1rem' }}>Highlight</h2>
-                        <p style={{ fontSize: '2rem' }}>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci architecto doloribus
-                            obcaecati pariatur sint vel.
-                        </p>
-                    </div>
+                    <Heading
+                        variant="section"
+                        subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
+                        className="text-center"
+                        options={{
+                            headingTag: 'h2',
+                        }}>
+                        Highlight
+                    </Heading>
+
                     <div className="mt-10">
                         <Card
                             variant="rounded"

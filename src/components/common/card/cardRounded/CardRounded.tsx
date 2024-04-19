@@ -3,6 +3,7 @@ import React from 'react';
 import { CARD_VARIANTS } from '@/libs/handles';
 import { GLOBAL_MESSAGE } from '@/libs/data';
 import { getWhatsappEncoded, joinClassnameString } from '@/libs/utils';
+import { createAnimation } from '@/libs/factory';
 
 import { Col, Row } from 'react-bootstrap';
 import { CiShoppingCart } from 'react-icons/ci';
@@ -43,7 +44,9 @@ const CardRoundedItem = ({ name, href, images, price, isSold }: CardRoundedItemP
 
     return (
         <Col>
-            <div className="card card--rounded">
+            <div
+                className="card card--rounded"
+                {...createAnimation({ type: 'fade-in' })}>
                 <Button
                     variant="base"
                     type="anchor"

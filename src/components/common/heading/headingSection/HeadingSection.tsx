@@ -3,6 +3,7 @@ import React from 'react';
 import { HEADING_VARIANTS } from '@/libs/handles';
 import { joinClassnameString } from '@/libs/utils';
 import { ClassnameArrayProps } from '@/libs/@types';
+import { createAnimation } from '@/libs/factory';
 
 type HeadingTagProps = keyof Pick<React.JSX.IntrinsicElements, 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p'>;
 
@@ -35,8 +36,18 @@ const HeadingSection = ({ className, children, subTitle, options }: HeadingSecti
 
     return (
         <div className={headingClass}>
-            <Heading className={titleClass}>{children}</Heading>
-            {subTitle && <SubHeading className="heading__sub-title">{subTitle}</SubHeading>}
+            <Heading
+                className={titleClass}
+                {...createAnimation({ type: 'fade-in' })}>
+                {children}
+            </Heading>
+            {subTitle && (
+                <SubHeading
+                    className="heading__sub-title"
+                    {...createAnimation({ type: 'fade-in', delay: 0.075 })}>
+                    {subTitle}
+                </SubHeading>
+            )}
         </div>
     );
 };
