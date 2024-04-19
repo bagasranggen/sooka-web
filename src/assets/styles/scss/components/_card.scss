@@ -130,21 +130,16 @@
 				color: $sooka-dark;
 				padding: 2rem 2.5rem 1.5rem;
 
-				//padding-top: 2rem;
-				//padding-bottom: 1.5rem;
-
 				@include media-breakpoint-up(lg) {
 					padding: 3.5rem 2.5rem 2rem;
-					//padding-top: 3.5rem;
-					//padding-bottom: 2rem;
 				}
 			}
 
 			&__image {
-				img {
-					border-bottom-left-radius: var(--card-border-radius);
-					border-bottom-right-radius: var(--card-border-radius);
-				}
+				@extend %d-block, %overflow-hidden;
+
+				border-bottom-left-radius: var(--card-border-radius);
+				border-bottom-right-radius: var(--card-border-radius);
 			}
 
 			&__button {

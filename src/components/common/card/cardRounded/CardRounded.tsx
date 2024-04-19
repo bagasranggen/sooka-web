@@ -59,6 +59,7 @@ const CardRoundedItem = ({ name, href, images, price, isSold }: CardRoundedItemP
                     <Picture
                         className="card__image"
                         items={images}
+                        animation={{ type: 'parallax' }}
                     />
                 </Button>
 

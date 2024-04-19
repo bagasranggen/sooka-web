@@ -1,7 +1,8 @@
 import React from 'react';
 import { getImageProps, ImageProps } from 'next/image';
+
+import type { ImageParallaxAnimationProps, ImageZoomAnimationProps } from '@/libs/@types';
 import { createAnimation } from '@/libs/factory';
-import { AnimationProps, ImageZoomAnimationProps } from '@/libs/@types';
 
 export type PictureItemProps = {
     media?: number;
@@ -10,7 +11,7 @@ export type PictureItemProps = {
 export type PictureProps = {
     className?: string;
     items: PictureItemProps[];
-    animation?: ImageZoomAnimationProps;
+    animation?: ImageZoomAnimationProps | ImageParallaxAnimationProps;
 };
 
 const PictureItemSource = (item: PictureItemProps): React.ReactElement => {

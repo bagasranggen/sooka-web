@@ -13,16 +13,18 @@ export type BannerSectionProps = {
 };
 
 const BannerSection = ({ title, description }: BannerSectionProps): React.ReactElement => (
-    <section className="ts--margin ts--primary banner banner--section">
+    <section
+        className="ts--margin ts--primary banner banner--section"
+        {...createAnimation({ type: 'fade-in' })}>
         <Container>
             <div className="banner__title">
                 <h1
                     {...(!description ? { className: 'mb-0' } : {})}
-                    {...createAnimation({ type: 'fade-in' })}>
+                    {...createAnimation({ type: 'fade-in', delay: 0.1 })}>
                     {title}
                 </h1>
                 {description && (
-                    <div {...createAnimation({ type: 'fade-in', delay: 0.1 })}>{ReactHtmlParser(description)}</div>
+                    <div {...createAnimation({ type: 'fade-in', delay: 0.175 })}>{ReactHtmlParser(description)}</div>
                 )}
             </div>
         </Container>
