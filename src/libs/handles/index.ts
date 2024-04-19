@@ -4,6 +4,7 @@ export * from './animations';
 export * from './banner';
 export * from './button';
 export * from './card';
+export * from './heading';
 export * from './icon';
 export * from './input';
 export * from './list';

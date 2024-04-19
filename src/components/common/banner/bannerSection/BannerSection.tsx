@@ -22,11 +22,7 @@ const BannerSection = ({ title, description }: BannerSectionProps): React.ReactE
                     {title}
                 </h1>
                 {description && (
-                    <div
-                        className="mt-4"
-                        {...createAnimation({ type: 'fade-in', delay: 0.1 })}>
-                        {ReactHtmlParser(description)}
-                    </div>
+                    <div {...createAnimation({ type: 'fade-in', delay: 0.1 })}>{ReactHtmlParser(description)}</div>
                 )}
             </div>
         </Container>

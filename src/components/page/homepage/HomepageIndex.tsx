@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap';
 
 import Slider, { type SliderImageItemProps } from '@/components/common/slider/Slider';
 import Card, { CardRoundedItemProps } from '@/components/common/card/Card';
+import Heading from '@/components/common/heading/Heading';
 
 export type HomepageIndexProps = {
     entries: {
@@ -22,14 +23,15 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
 
             <section className="block block--secondary">
                 <Container>
-                    <h2 style={{ fontSize: '8rem', fontWeight: 200, marginBottom: '1rem' }}>Our Story</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda
-                        debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero
-                        maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis
-                        repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur
-                        provident voluptate!
-                    </p>
+                    <Heading
+                        variant="section"
+                        subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
+                        className="text-center"
+                        options={{
+                            headingTag: 'h2',
+                        }}>
+                        Our Story
+                    </Heading>
                 </Container>
             </section>
 
@@ -47,7 +49,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                             variant="rounded"
                             items={entries.highlight}
                             options={{
-                                columns: 'row-cols-1 row-cols-lg-3',
+                                columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
                                 gap: 'g-4',
                             }}
                         />

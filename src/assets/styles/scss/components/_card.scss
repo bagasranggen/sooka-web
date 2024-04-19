@@ -1,215 +1,226 @@
 .card {
-    &--image {
-        --bs-card-border-width: 0;
-        --bs-card-caption-padding-x: 3rem;
-        --bs-card-animation-duration: .2s;
+	&--image {
+		--bs-card-border-width: 0;
+		--bs-card-caption-padding-x: 3rem;
+		--bs-card-animation-duration: .2s;
 
-        h3 {
-            @extend %fw-700, %fs-12, %text-uppercase, %mb-0;
+		h3 {
+			@extend %fw-700, %fs-12, %text-uppercase, %mb-0;
 
-            letter-spacing: .15rem;
-        }
+			letter-spacing: .15rem;
+		}
 
-        h2 {
-            @extend %fw-200, %fs-24, %fs-lg-28, %mb-1, %mb-lg-0;
-        }
+		h2 {
+			@extend %fw-200, %fs-24, %fs-lg-28, %mb-1, %mb-lg-0;
+		}
 
-        .btn {
-            pointer-events: initial;
+		.btn {
+			pointer-events: initial;
 
-            @include media-breakpoint-up(lg) {
-                position: absolute;
-                left: var(--bs-card-caption-padding-x);
-                bottom: 0;
-                transform: translateY(130%);
+			@include media-breakpoint-up(lg) {
+				position: absolute;
+				left: var(--bs-card-caption-padding-x);
+				bottom: 0;
+				transform: translateY(130%);
 
-                @include make-transition(transform, var(--bs-card-animation-duration));
-            }
-        }
+				@include make-transition(transform, var(--bs-card-animation-duration));
+			}
+		}
 
-        .card {
-            &__caption {
-                padding-top: 1rem;
-                pointer-events: none;
+		.card {
+			&__caption {
+				padding-top: 1rem;
+				pointer-events: none;
 
-                @include media-breakpoint-up(lg) {
-                    overflow: hidden;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 80%;
-                    padding: 3rem var(--bs-card-caption-padding-x) 0;
-                    background-color: $sooka-light;
-                }
+				@include media-breakpoint-up(lg) {
+					overflow: hidden;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 80%;
+					padding: 3rem var(--bs-card-caption-padding-x) 0;
+					background-color: $sooka-light;
+				}
 
-                div {
-                    @extend %fs-14, %mb-lg-0;
+				div {
+					@extend %fs-14, %mb-lg-0;
 
-                    b {
-                        @extend %fs-10, %text-uppercase;
+					b {
+						@extend %fs-10, %text-uppercase;
 
-                        letter-spacing: .1rem;
-                    }
+						letter-spacing: .1rem;
+					}
 
-                    p {
-                        @extend %d-inline;
-                    }
-                }
-            }
-        }
+					p {
+						@extend %d-inline;
+					}
+				}
+			}
+		}
 
-        @include media-breakpoint-up(lg) {
-            .card {
-                &__caption {
-                    @include make-transition(padding, var(--bs-card-animation-duration))
-                }
-            }
+		@include media-breakpoint-up(lg) {
+			.card {
+				&__caption {
+					@include make-transition(padding, var(--bs-card-animation-duration))
+				}
+			}
 
-            @include hover() {
-                .card {
-                    &__caption {
-                        padding-bottom: 5rem;
-                    }
-                }
+			@include hover() {
+				.card {
+					&__caption {
+						padding-bottom: 5rem;
+					}
+				}
 
-                .btn {
-                    transform: none;
-                }
-            }
-        }
-    }
+				.btn {
+					transform: none;
+				}
+			}
+		}
+	}
 
-    &--rounded {
-        @extend %position-relative;
+	&--rounded {
+		@extend %position-relative;
 
-        --card-border-radius: 4rem;
-        --card-button-spacing: 2rem;
-        --card-button-border-radius: 4rem;
+		--card-border-radius: 4rem;
+		--card-button-spacing: 2rem;
+		--card-button-border-radius: 4rem;
 
-        @include media-breakpoint-up(lg) {
-            --card-border-radius: 6rem;
-            --card-button-spacing: 4rem;
-        }
+		@include media-breakpoint-up(lg) {
+			--card-border-radius: 6rem;
+			--card-button-spacing: 4rem;
+		}
 
-        border-radius: var(--card-border-radius);
-        background-color: $sooka-secondary;
-        border-width: 0;
+		border-radius: var(--card-border-radius);
+		background-color: $sooka-secondary;
+		border-width: 0;
+		height: 100%;
 
-        h2 {
-            @extend %fw-200, %fs-24, %fs-lg-30, %mb-0;
+		> a:first-child {
+			@extend %d-flex, %flex-column;
 
-            line-height: 1.2;
+			height: 100%;
+		}
 
-            @include media-breakpoint-up(lg) {
-                line-height: 1.3;
-            }
-        }
+		h2 {
+			@extend %fw-200, %fs-24, %fs-lg-30, %mb-0;
 
-        h3 {
-            @extend %fw-700, %fs-14, %text-uppercase, %mb-0;
+			line-height: 1.2;
 
-            letter-spacing: .15rem;
+			@include media-breakpoint-up(lg) {
+				line-height: 1.3;
+			}
+		}
 
-            span {
-                @extend %fs-10;
-            }
-        }
+		h3 {
+			@extend %fw-700, %fs-14, %text-uppercase, %mb-0;
 
-        .card {
-            &__title {
-                @extend %text-center;
+			letter-spacing: .15rem;
 
-                color: $sooka-dark;
-                padding-top: 2rem;
-                padding-bottom: 1.5rem;
+			span {
+				@extend %fs-10;
+			}
+		}
 
-                @include media-breakpoint-up(lg) {
-                    padding-top: 3.5rem;
-                    padding-bottom: 2rem;
-                }
-            }
+		.card {
+			&__title {
+				@extend %text-center, %d-flex, %flex-column, %justify-content-between;
 
-            &__image {
-                img {
-                    border-bottom-left-radius: var(--card-border-radius);
-                    border-bottom-right-radius: var(--card-border-radius);
-                }
-            }
+				flex-grow: 1;
+				color: $sooka-dark;
+				padding: 2rem 2.5rem 1.5rem;
 
-            &__button {
-                @extend %position-absolute, %d-flex, %align-items-center, %justify-content-between;
+				//padding-top: 2rem;
+				//padding-bottom: 1.5rem;
 
-                color: $sooka-dark;
-                background-color: $sooka-secondary;
+				@include media-breakpoint-up(lg) {
+					padding: 3.5rem 2.5rem 2rem;
+					//padding-top: 3.5rem;
+					//padding-bottom: 2rem;
+				}
+			}
 
-                bottom: 2rem;
-                border-radius: var(--card-button-border-radius);
-                left: var(--card-button-spacing);
-                width: calc(100% - (var(--card-button-spacing) * 2));
+			&__image {
+				img {
+					border-bottom-left-radius: var(--card-border-radius);
+					border-bottom-right-radius: var(--card-border-radius);
+				}
+			}
 
-                @include media-breakpoint-up(lg) {
-                    bottom: 3.5rem;
-                    background-color: transparent;
+			&__button {
+				@extend %position-absolute, %d-flex, %align-items-center, %justify-content-between;
 
-                    @include make-transition(background-color);
-                }
+				color: $sooka-dark;
+				background-color: $sooka-secondary;
 
-                .button {
-                    &__text {
-                        @extend %text-center;
+				bottom: 2rem;
+				border-radius: var(--card-button-border-radius);
+				left: var(--card-button-spacing);
+				width: calc(100% - (var(--card-button-spacing) * 2));
 
-                        flex-grow: 1;
-                        padding-left: 3rem;
-                        padding-right: 3rem;
+				@include media-breakpoint-up(lg) {
+					bottom: 3.5rem;
+					background-color: transparent;
 
-                        @include media-breakpoint-up(lg) {
-                            opacity: 0;
+					@include make-transition(background-color);
+				}
 
-                            @include make-transition(opacity);
-                        }
-                    }
+				.button {
+					&__text {
+						@extend %text-center;
 
-                    &__icon {
-                        padding: 1.25rem;
-                        background-color: $sooka-secondary;
-                        border-radius: 100%;
+						flex-grow: 1;
+						padding-left: 3rem;
+						padding-right: 3rem;
 
-                        @include media-breakpoint-up(lg) {
-                            padding: 1.5rem;
-                        }
+						@include media-breakpoint-up(lg) {
+							opacity: 0;
 
-                        @include media-breakpoint-down(lg) {
-                            padding-left: 0;
-                        }
+							@include make-transition(opacity);
+						}
+					}
 
-                        svg {
-                            @extend %position-relative;
+					&__icon {
+						padding: 1.25rem;
+						background-color: $sooka-secondary;
+						border-radius: 100%;
 
-                            left: -.15rem;
+						@include media-breakpoint-up(lg) {
+							padding: 1.5rem;
+						}
 
-                            @include media-breakpoint-down(lg) {
-                                height: 3rem;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+						@include media-breakpoint-down(lg) {
+							padding-left: 0;
+						}
 
-        @include media-breakpoint-up(lg) {
-            @include hover() {
-                .card {
-                    &__button {
-                        background-color: $sooka-secondary;
+						svg {
+							@extend %position-relative;
 
-                        .button {
-                            &__text {
-                                opacity: 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+							left: -.15rem;
+
+							@include media-breakpoint-down(lg) {
+								height: 3rem;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@include media-breakpoint-up(lg) {
+			@include hover() {
+				.card {
+					&__button {
+						background-color: $sooka-secondary;
+
+						.button {
+							&__text {
+								opacity: 1;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

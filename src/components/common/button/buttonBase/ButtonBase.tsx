@@ -44,7 +44,7 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
             );
 
         case 'anchor':
-            const { openNewTab, className, disabled, ...restAnchor } = props;
+            const { openNewTab, variant, type, className, disabled, ...restAnchor } = props;
 
             let anchorClass: string | string[] = className ? [className] : [];
             if (disabled) anchorClass.push('btn--disabled');
@@ -52,7 +52,7 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
 
             return (
                 <Link
-                    className={anchorClass}
+                    {...(anchorClass ? { className: anchorClass } : {})}
                     {...restAnchor}
                     {...(openNewTab ? { target: '_blank' } : {})}>
                     {props.children}
