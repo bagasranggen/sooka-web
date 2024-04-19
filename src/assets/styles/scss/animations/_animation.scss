@@ -45,5 +45,5 @@ picture[data-animation='image-zoom'] {
 }
 
 [data-animation='parallax'] {
-	@extend %overflow-hidden;
+	@extend %overflow-hidden, %d-block;
 }

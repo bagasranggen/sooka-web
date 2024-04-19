@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Col, Container, Row } from 'react-bootstrap';
 
+import { createAnimation } from '@/libs/factory';
+
 import Slider, { type SliderImageItemProps } from '@/components/common/slider/Slider';
 import Card, { CardRoundedItemProps } from '@/components/common/card/Card';
 import Heading from '@/components/common/heading/Heading';
@@ -29,23 +31,26 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                             className="order-last order-xl-first"
                             lg={10}
                             xl={5}>
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/42/800/900',
-                                        width: 800,
-                                        height: 900,
-                                        media: 1200,
-                                        alt: 'alt',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/42/1200/500',
-                                        width: 1200,
-                                        height: 500,
-                                        alt: 'alt',
-                                    },
-                                ]}
-                            />
+                            <div {...createAnimation({ type: 'fade-in' })}>
+                                <Picture
+                                    items={[
+                                        {
+                                            src: 'https://picsum.photos/id/42/800/900',
+                                            width: 800,
+                                            height: 900,
+                                            media: 1200,
+                                            alt: 'alt',
+                                        },
+                                        {
+                                            src: 'https://picsum.photos/id/42/1200/500',
+                                            width: 1200,
+                                            height: 500,
+                                            alt: 'alt',
+                                        },
+                                    ]}
+                                    animation={{ type: 'parallax' }}
+                                />
+                            </div>
                         </Col>
                         <Col xl={7}>
                             <Heading
@@ -58,13 +63,13 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                                 Our Story
                             </Heading>
 
-                            <p>
+                            <p {...createAnimation({ type: 'fade-in' })}>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet animi aspernatur beatae
                                 consectetur, cum deleniti dolores dolorum excepturi illo inventore iste iusto laboriosam
                                 maiores nemo provident sed sint veniam voluptates!
                             </p>
 
-                            <p>
+                            <p {...createAnimation({ type: 'fade-in' })}>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet deserunt, inventore?
                                 Accusantium asperiores consequatur consequuntur, distinctio eius error eveniet ex id
                                 minima minus, modi nam neque non qui saepe sunt vitae? Atque corporis deleniti ipsum
@@ -82,20 +87,25 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                         <Col
                             className="order-last order-xl-first"
                             md={10}>
-                            <Picture
-                                className="d-xl-block mt-xl-8"
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/42/1200/500',
-                                        width: 1200,
-                                        height: 500,
-                                        alt: 'alt',
-                                    },
-                                ]}
-                            />
+                            <div {...createAnimation({ type: 'fade-in' })}>
+                                <Picture
+                                    className="d-xl-block mt-xl-8"
+                                    items={[
+                                        {
+                                            src: 'https://picsum.photos/id/42/1200/500',
+                                            width: 1200,
+                                            height: 500,
+                                            alt: 'alt',
+                                        },
+                                    ]}
+                                    animation={{ type: 'parallax' }}
+                                />
+                            </div>
                         </Col>
                         <Col xs={12}>
-                            <p className="mt-3 mt-md-6 mt-xl-0">
+                            <p
+                                className="mt-3 mt-md-6 mt-xl-0"
+                                {...createAnimation({ type: 'fade-in' })}>
                                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. A amet aut beatae cum
                                 dignissimos ducimus error, exercitationem facere facilis impedit itaque iure, magni
                                 minus necessitatibus neque optio pariatur placeat provident qui rem repellat, sint sit
