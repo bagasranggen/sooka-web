@@ -87,7 +87,7 @@ const CardRounded = ({ items, options }: CardRoundedProps): React.ReactElement =
     if (!isEmpty && options?.columns) rowColumns.push(options.columns);
 
     let rowGap: string[] = [];
-    if (!options?.gap) rowGap.push('gy-4 gy-lg-6 gx-lg-8');
+    if (!options?.gap) rowGap.push('gy-4 gy-lg-6 gx-md-4 gx-lg-8');
     if (options?.gap) rowGap.push(options.gap);
 
     const rowClass = joinClassnameString([...rowColumns, ...rowGap]);
