@@ -1,4 +1,12 @@
 .product-detail {
+	@include media-breakpoint-down(lg) {
+		overflow: hidden;
+
+		.slider-wrapper {
+			overflow: unset;
+		}
+	}
+
 	&__content {
 		@extend %position-sticky;
 
@@ -30,7 +38,7 @@
 
 	&__image {
 		--product-detail-border-radius: 6rem;
-		
+
 		@include media-breakpoint-up(lg) {
 			--product-detail-border-radius: 10rem;
 		}
