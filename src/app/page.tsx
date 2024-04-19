@@ -4,8 +4,6 @@ import HomepageData from '@/components/page/homepage/HomepageData';
 const Home = async () => {
     const { carousel, highlight } = await HomepageData();
 
-    console.log(highlight);
-
     return <HomepageIndex entries={{ carousel, highlight }} />;
 };
 

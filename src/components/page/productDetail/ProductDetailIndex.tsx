@@ -3,7 +3,7 @@ import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { Col, Container, Row } from 'react-bootstrap';
 
-import { GLOBAL_MESSAGE } from '@/libs/data';
+import { GLOBAL_MESSAGE } from '@/libs/data/globalMessage';
 import { getWhatsappEncoded } from '@/libs/utils';
 
 import type { PictureItemProps } from '@/components/common/picture/Picture';
