@@ -7,8 +7,14 @@ import type { ButtonBaseProps } from '@/components/common/button/buttonBase/Butt
 import type { ButtonNavToggleProps } from '@/components/common/button/buttonNavToggle/ButtonNavToggle';
 import type { ButtonRippleProps } from '@/components/common/button/buttonRipple/ButtonRipple';
 import type { ButtonBlockProps } from '@/components/common/button/buttonBlock/ButtonBlock';
+import type { ButtonRoundedProps } from '@/components/common/button/buttonRounded/ButtonRounded';
 
-export type ButtonProps = ButtonBaseProps | ButtonNavToggleProps | ButtonRippleProps | ButtonBlockProps;
+export type ButtonProps =
+    | ButtonBaseProps
+    | ButtonNavToggleProps
+    | ButtonRippleProps
+    | ButtonRoundedProps
+    | ButtonBlockProps;
 
 export type ButtonWrapperProps = {
     className?: string;
@@ -27,4 +33,11 @@ const Button = (props: ButtonProps): React.ReactElement =>
     });
 
 export default Button;
+
 export * from './buttonGroup/ButtonGroup';
+
+export type * from '@/components/common/button/buttonBase/ButtonBase';
+export type * from '@/components/common/button/buttonNavToggle/ButtonNavToggle';
+export type * from '@/components/common/button/buttonRipple/ButtonRipple';
+export type * from '@/components/common/button/buttonBlock/ButtonBlock';
+export type * from '@/components/common/button/buttonRounded/ButtonRounded';

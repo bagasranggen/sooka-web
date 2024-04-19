@@ -1,9 +1,17 @@
 import React from 'react';
+import { joinClassnameString } from '@/libs/utils';
 
 type ButtonGroupProps = {
+    className?: string;
     children: React.ReactNode;
 };
 
-const ButtonGroup = ({ children }: ButtonGroupProps): React.ReactElement => <div className="btn-group">{children}</div>;
+const ButtonGroup = ({ className, children }: ButtonGroupProps): React.ReactElement => {
+    let btnClass: string | string[] = ['btn-group'];
+    if (className) btnClass.push(className);
+    btnClass = joinClassnameString(btnClass);
+
+    return <div className={btnClass}>{children}</div>;
+};
 
 export { ButtonGroup };

@@ -1,13 +1,15 @@
 import React from 'react';
-
 import Link from 'next/link';
+
 import type { LinkProps } from '@/libs/@types';
-import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles/';
+import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles';
+import { joinClassnameString } from '@/libs/utils';
 
 export type ButtonCommonProps = {
     children: React.ReactNode;
     className?: string;
     title?: string;
+    disabled?: boolean;
 };
 
 export type ButtonAnchorProps = {
@@ -42,10 +44,15 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
             );
 
         case 'anchor':
-            const { openNewTab, ...restAnchor } = props;
+            const { openNewTab, variant, type, className, disabled, ...restAnchor } = props;
+
+            let anchorClass: string | string[] = className ? [className] : [];
+            if (disabled) anchorClass.push('btn--disabled');
+            anchorClass = joinClassnameString(anchorClass);
 
             return (
                 <Link
+                    {...(anchorClass ? { className: anchorClass } : {})}
                     {...restAnchor}
                     {...(openNewTab ? { target: '_blank' } : {})}>
                     {props.children}

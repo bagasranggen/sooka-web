@@ -1,12 +1,21 @@
 import React from 'react';
 
-import { Container } from 'react-bootstrap';
-import Slider from '@/components/common/slider/Slider';
-import type { SliderImageProps } from '@/components/common/slider/sliderImage/SliderImage';
+import { Col, Container, Row } from 'react-bootstrap';
+
+import { createAnimation } from '@/libs/factory';
+
+import Slider, { type SliderImageItemProps } from '@/components/common/slider/Slider';
+import Card, { CardRoundedItemProps } from '@/components/common/card/Card';
+import Heading from '@/components/common/heading/Heading';
+import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
+
+import eet from '../../../assets/images/eet.jpeg';
+import pan from '../../../assets/images/pan.jpeg';
 
 export type HomepageIndexProps = {
     entries: {
-        carousel: SliderImageProps['items'];
+        carousel: SliderImageItemProps[];
+        highlight: CardRoundedItemProps[];
     };
 };
 
@@ -18,35 +27,82 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                 items={entries.carousel}
             />
 
-            <section className="mt-10">
+            <section className="block block--secondary">
                 <Container>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et facere hic id illum iste non
-                        reiciendis rem rerum sed voluptatem? Amet at corporis dolores earum error fugit sit. Accusamus
-                        adipisci culpa debitis dignissimos facere laborum, odit perferendis quia rem velit. Accusantium
-                        consequatur enim expedita ipsa, porro possimus praesentium sapiente tenetur. Alias beatae
-                        ducimus hic ipsum nulla pariatur unde! Deleniti dignissimos dolorem exercitationem itaque
-                        mollitia possimus quos rerum tempora tempore vel. Aliquam aliquid assumenda blanditiis
-                        cupiditate, dolore eaque eligendi eos illo in ipsum maxime molestias necessitatibus odit placeat
-                        quidem quis quo sequi! Amet corporis dolore ea est impedit inventore minima mollitia nam, nemo
-                        nobis perferendis repudiandae sed ullam veniam vero. Architecto beatae commodi debitis dolores
-                        eveniet excepturi facilis, fuga ipsum nam nisi numquam quibusdam quisquam quo ratione
-                        reiciendis, tempore totam. A adipisci alias aliquam animi aperiam assumenda consectetur cum
-                        dicta dolor, eos esse ex explicabo fuga harum ipsam ipsum labore libero magni minima
-                        necessitatibus nemo non nulla optio perferendis perspiciatis possimus quia quisquam ratione
-                        rerum sit sunt suscipit temporibus unde velit vitae voluptas voluptatibus! At culpa cum debitis
-                        doloribus eaque earum excepturi, fuga illum inventore ipsum nostrum officiis rem repudiandae
-                        ullam veniam voluptates voluptatibus. Aliquam, autem consectetur dolore dolorem doloremque,
-                        dolores enim error exercitationem fugiat hic impedit ipsa iste itaque iure magnam minima
-                        molestiae, nemo odit qui quidem ratione repellendus tempore tenetur unde vel vitae voluptas. Ab
-                        atque consequatur dolore pariatur provident qui recusandae sed similique vel velit? A blanditiis
-                        debitis delectus deleniti deserunt, dignissimos distinctio dolore, earum eligendi eveniet
-                        exercitationem illo illum impedit incidunt ipsa minima minus, nulla obcaecati omnis porro quia
-                        saepe sint tempora totam veniam vero voluptates voluptatibus? A amet earum eos et excepturi
-                        exercitationem maxime necessitatibus non numquam pariatur quae, quos reprehenderit sunt tenetur
-                        vel velit voluptatem. Itaque laborum, molestiae necessitatibus nemo quae repellendus repudiandae
-                        tempora vero?
-                    </p>
+                    <Row className="justify-content-center gy-3 gy-md-6 gx-md-6">
+                        <Col
+                            className="order-last order-xl-first"
+                            lg={10}
+                            xl={5}>
+                            <div {...createAnimation({ type: 'fade-in' })}>
+                                <Picture
+                                    items={[eet as PictureItemProps]}
+                                    animation={{ type: 'parallax' }}
+                                />
+                            </div>
+                        </Col>
+                        <Col xl={7}>
+                            <Heading
+                                variant="section"
+                                className="text-center"
+                                options={{
+                                    headingTag: 'h2',
+                                }}>
+                                Our Story
+                            </Heading>
+
+                            <p {...createAnimation({ type: 'fade-in' })}>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet animi aspernatur beatae
+                                consectetur, cum deleniti dolores dolorum excepturi illo inventore iste iusto laboriosam
+                                maiores nemo provident sed sint veniam voluptates!
+                            </p>
+
+                            <p {...createAnimation({ type: 'fade-in' })}>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet deserunt, inventore?
+                                Accusantium asperiores consequatur consequuntur, distinctio eius error eveniet ex id
+                                minima minus, modi nam neque non qui saepe sunt vitae? Atque corporis deleniti ipsum
+                                magni nobis ratione recusandae reprehenderit? Dolorem inventore libero placeat sapiente
+                                sequi tenetur voluptates? Assumenda at aut beatae commodi debitis dolor eligendi
+                                expedita hic, id illo impedit ipsum itaque laborum magni modi nam, non perspiciatis
+                                porro, quam quasi quia temporibus vitae voluptates. Blanditiis, eligendi error est
+                                facilis fugit ipsa ipsam iste, laborum nisi, omnis quae saepe sunt. Eius est ipsam
+                                molestiae necessitatibus numquam obcaecati quam rem.
+                            </p>
+
+                            <Picture
+                                className="d-xl-block mt-xl-4 "
+                                items={[pan as PictureItemProps]}
+                                animation={{ type: 'parallax' }}
+                            />
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+
+            <section className="my-10">
+                <Container>
+                    <Heading
+                        variant="section"
+                        subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
+                        className="text-center"
+                        options={{
+                            headingTag: 'h2',
+                            offset: 2,
+                            offsetAlign: 'center',
+                        }}>
+                        Highlight
+                    </Heading>
+
+                    <div className="mt-6 mt-md-10">
+                        <Card
+                            variant="rounded"
+                            items={entries.highlight}
+                            options={{
+                                columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
+                                gap: 'gy-4 gx-md-4',
+                            }}
+                        />
+                    </div>
                 </Container>
             </section>
         </>

@@ -1,51 +1,51 @@
 @mixin fontawesome-icon($icon, $fw: 400) {
-    content: unquote('"\\#{$icon}"');
-    font-weight: $fw;
-    font-family: "Font Awesome 5 Pro";
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    line-height: 1;
+	content: unquote('"\\#{$icon}"');
+	font-weight: $fw;
+	font-family: "Font Awesome 5 Pro";
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	line-height: 1;
 }
 
 @mixin make-font-families($breakpoints: $grid-breakpoints) {
-    @each $key, $value in $font-sets {
-        .ff-#{$key},
-        %ff-#{$key} {
-            font-family: $value;
-        }
-    }
+	@each $key, $value in $font-sets {
+		.ff-#{$key},
+		%ff-#{$key} {
+			font-family: $value;
+		}
+	}
 }
 
 @mixin make-font-sizes($breakpoints: $grid-breakpoints) {
-    @each $key, $value in $font-sizes-set {
-        @each $breakpoint in map-keys($breakpoints) {
-            $infix: breakpoint-infix($breakpoint, $breakpoints);
+	@each $breakpoint in map-keys($breakpoints) {
+		@each $key, $value in $font-sizes-set {
+			$infix: breakpoint-infix($breakpoint, $breakpoints);
 
-            .fs#{$infix}-#{$key},
-            %fs#{$infix}-#{$key} {
-                @include media-breakpoint-up($breakpoint) {
-                    font-size: $value !important;
-                }
-            }
-        }
-    }
+			.fs#{$infix}-#{$key},
+			%fs#{$infix}-#{$key} {
+				@include media-breakpoint-up($breakpoint) {
+					font-size: $value !important;
+				}
+			}
+		}
+	}
 }
 
 @mixin make-font-weights($breakpoints: $grid-breakpoints) {
-    @each $value in $font-weights-set {
-        @each $breakpoint in map-keys($breakpoints) {
-            $infix: breakpoint-infix($breakpoint, $breakpoints);
+	@each $breakpoint in map-keys($breakpoints) {
+		@include media-breakpoint-up($breakpoint) {
+			$infix: breakpoint-infix($breakpoint, $breakpoints);
 
-            .fw#{$infix}-#{$value},
-            %fw#{$infix}-#{$value} {
-                @include media-breakpoint-up($breakpoint) {
-                    font-weight: $value !important;
-                }
-            }
-        }
-    }
+			@each $value in $font-weights-set {
+				.fw#{$infix}-#{$value},
+				%fw#{$infix}-#{$value} {
+					font-weight: $value !important;
+				}
+			}
+		}
+	}
 }

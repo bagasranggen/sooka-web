@@ -103,8 +103,7 @@ const TableCategoriesForm = ({ setValue, prevValue, type }: TableCategoriesFormP
     useEffect(() => {
         if (type === 'edit' && prevValue && category) {
             const selectFromOnEdit = category.find(
-                (item: InputSelectItem) =>
-                    item.label === prevValue.label || item.label === prevValue['categories_label']
+                (item: InputSelectItem) => item.label === prevValue['categories_label']
             );
 
             setSelectFrom(selectFromOnEdit?.slug ? 'categories' : 'custom');

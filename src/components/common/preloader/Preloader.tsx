@@ -2,13 +2,16 @@ import React from 'react';
 
 import Icon from '@/components/common/icon/Icon';
 import { createAnimation } from '@/libs/factory';
+import type { PreloaderAnimationProps } from '@/libs/@types';
 
 export type PreloaderProps = {
     id?: string;
     isOpen: boolean;
+    children?: React.ReactNode;
+    options?: Pick<PreloaderAnimationProps, 'loop'>;
 };
 
-const Preloader = ({ id, isOpen }: PreloaderProps): React.ReactElement => {
+const Preloader = ({ id, isOpen, children, options }: PreloaderProps): React.ReactElement => {
     const preloaderIsOpen = isOpen ? ' preloader--is-open' : '';
     const preloaderClass = `preloader${preloaderIsOpen}`;
 
@@ -16,7 +19,10 @@ const Preloader = ({ id, isOpen }: PreloaderProps): React.ReactElement => {
         <div
             {...(id ? { id: id } : {})}
             className={preloaderClass}
-            {...createAnimation({ type: 'preloader' })}
+            {...createAnimation({
+                type: 'preloader',
+                ...(options?.loop ? { loop: options.loop } : {}),
+            })}
             suppressHydrationWarning={true}>
             <div
                 className="preloader__icon"
@@ -27,6 +33,7 @@ const Preloader = ({ id, isOpen }: PreloaderProps): React.ReactElement => {
                     color="light"
                 />
             </div>
+            {children ? <div className="preloader__text">{children}</div> : null}
         </div>
     );
 };

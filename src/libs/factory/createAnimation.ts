@@ -1,9 +1,15 @@
-import React from 'react';
-
-import type { AnimationProps, ImageZoomAnimationProps, Prettify } from '@/libs/@types';
+import {
+    AnimationProps,
+    ImageParallaxAnimationProps,
+    ImageZoomAnimationProps,
+    PreloaderAnimationProps,
+    Prettify,
+} from '@/libs/@types';
 import { COMMON_ANIMATIONS } from '@/libs/handles';
 
-type CreateAnimationProps = Prettify<AnimationProps | ImageZoomAnimationProps>;
+type CreateAnimationProps = Prettify<
+    AnimationProps | ImageZoomAnimationProps | ImageParallaxAnimationProps | PreloaderAnimationProps
+>;
 
 export const createAnimation = (props: CreateAnimationProps) => {
     switch (props.type) {
@@ -20,7 +26,14 @@ export const createAnimation = (props: CreateAnimationProps) => {
         //         ...props?.spacing ? { style: { '--spacing': `${props.spacing}px` } } : {},
         //     } as React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
 
+        case 'preloader':
+            return {
+                [COMMON_ANIMATIONS.ATTRIBUTES.TYPE]: props.type,
+                ...(props.loop ? { [COMMON_ANIMATIONS.ATTRIBUTES.LOOP]: props.loop } : {}),
+            };
+
         case 'image-zoom':
+        case 'parallax':
             return {
                 [COMMON_ANIMATIONS.ATTRIBUTES.TYPE]: props.type,
             };

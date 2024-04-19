@@ -79,7 +79,9 @@ export const RenderTableAdminData = ({ table, datum, index, isEdit }: RenderTabl
                 if (keys === 'images') dataPropsKey = 'data-images';
                 const dataProps = { [dataPropsKey]: datum?.[keys] ?? '' };
 
-                const dataRelationsProps = order?.relation ? { 'data-relation': datum?.[order.relation] } : {};
+                const dataRelationsProps = order?.relation
+                    ? { 'data-relation': order.relation, 'data-relation-value': datum?.[order.relation] }
+                    : {};
 
                 const tdShow = isEdit || order.isHidden ? 'd-none' : '';
                 const tdAlign = typeof datum[keys] === 'boolean' ? ' text-center' : '';

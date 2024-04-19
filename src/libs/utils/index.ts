@@ -1,3 +1,4 @@
+export * from './convertNumberToCurrency';
 export * from './getActivePath';
 export * from './getAnimationElement';
 export * from './getAnimationProps';

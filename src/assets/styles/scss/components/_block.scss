@@ -1,0 +1,7 @@
+.block {
+	@extend %py-7, %py-lg-10;
+	
+	&--secondary {
+		@extend %bg-secondary;
+	}
+}

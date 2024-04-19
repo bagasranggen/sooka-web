@@ -29,3 +29,4 @@ export type PageParamsProps = {
     searchParams?: { [key: string]: string | string[] | undefined };
 };
 export type WrapperProps = React.ExoticComponent<{ children?: React.ReactNode }>;
+export type ClassnameArrayProps = string | string[];

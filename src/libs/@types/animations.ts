@@ -2,6 +2,7 @@ import { COMMON_ANIMATIONS } from '@/libs/handles';
 
 export type ConfigBaseAnimationProps = {
     delay?: number;
+    loop?: boolean;
     events?: {
         onFinish?: () => void;
     };
@@ -21,14 +22,26 @@ export type AnimationButtonProps = (typeof COMMON_ANIMATIONS.BUTTON)[keyof typeo
 
 export type AnimationProps = {
     type:
-        | Exclude<AnimationTypeProps, (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM']>
+        | Exclude<
+              AnimationTypeProps,
+              (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM'] | (typeof COMMON_ANIMATIONS.TYPE)['PARALLAX']
+          >
         | AnimationButtonProps
-        | AnimationSectionProps;
+        | Exclude<AnimationSectionProps, (typeof COMMON_ANIMATIONS.SECTION)['PRELOADER']>;
     delay?: number;
 };
 
 export type ImageZoomAnimationProps = {
     type: (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM'];
+};
+
+export type ImageParallaxAnimationProps = {
+    type: (typeof COMMON_ANIMATIONS.TYPE)['PARALLAX'];
+};
+
+export type PreloaderAnimationProps = {
+    type: (typeof COMMON_ANIMATIONS.SECTION)['PRELOADER'];
+    loop?: boolean;
 };
 
 //

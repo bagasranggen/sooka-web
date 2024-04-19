@@ -36,9 +36,10 @@ const Navigation = ({ items }: NavigationProps): React.ReactElement => {
     const isCenter = yScroll > navbarHeight;
     const bgIsTransparent = isTransparent && !show && !isCenter;
 
-    const navbarIsOpenClass = show ? 'navbar--open' : '';
-    const navbarIsCenterClass = isCenter ? 'navbar--center' : '';
-    const navbarClass = joinClassnameString([navbarIsOpenClass, navbarIsCenterClass]);
+    const navbarIsOpenClass = show ? ['navbar--open'] : [];
+    const navbarIsCenterClass = isCenter ? ['navbar--center'] : [];
+    const navbarIsShowClass = isCenter && transform === 0 ? ['navbar--show'] : [];
+    const navbarClass = joinClassnameString([...navbarIsOpenClass, ...navbarIsCenterClass, ...navbarIsShowClass]);
 
     useLayoutEffect(() => {
         const movement = prevMouseWheel.current - mouseWheel;
