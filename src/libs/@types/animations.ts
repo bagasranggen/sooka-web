@@ -22,7 +22,10 @@ export type AnimationButtonProps = (typeof COMMON_ANIMATIONS.BUTTON)[keyof typeo
 
 export type AnimationProps = {
     type:
-        | Exclude<AnimationTypeProps, (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM']>
+        | Exclude<
+              AnimationTypeProps,
+              (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM'] | (typeof COMMON_ANIMATIONS.TYPE)['PARALLAX']
+          >
         | AnimationButtonProps
         | Exclude<AnimationSectionProps, (typeof COMMON_ANIMATIONS.SECTION)['PRELOADER']>;
     delay?: number;
@@ -30,6 +33,10 @@ export type AnimationProps = {
 
 export type ImageZoomAnimationProps = {
     type: (typeof COMMON_ANIMATIONS.TYPE)['IMAGE_ZOOM'];
+};
+
+export type ImageParallaxAnimationProps = {
+    type: (typeof COMMON_ANIMATIONS.TYPE)['PARALLAX'];
 };
 
 export type PreloaderAnimationProps = {

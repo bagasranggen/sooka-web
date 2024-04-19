@@ -1,15 +1,17 @@
 import React from 'react';
 import { getImageProps, ImageProps } from 'next/image';
+
+import type { ImageParallaxAnimationProps, ImageZoomAnimationProps } from '@/libs/@types';
 import { createAnimation } from '@/libs/factory';
-import { AnimationProps, ImageZoomAnimationProps } from '@/libs/@types';
 
 export type PictureItemProps = {
     media?: number;
 } & ImageProps;
 
 export type PictureProps = {
+    className?: string;
     items: PictureItemProps[];
-    animation?: ImageZoomAnimationProps;
+    animation?: ImageZoomAnimationProps | ImageParallaxAnimationProps;
 };
 
 const PictureItemSource = (item: PictureItemProps): React.ReactElement => {
@@ -39,9 +41,13 @@ const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
     );
 };
 
-const Picture = ({ items, animation }: PictureProps): React.ReactElement => {
+const Picture = ({ className, items, animation }: PictureProps): React.ReactElement => {
+    const pictureClass = className ?? '';
+
     return (
-        <picture {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
+        <picture
+            {...(className ? { className: pictureClass } : {})}
+            {...(animation?.type ? createAnimation({ type: animation.type }) : {})}>
             {items.map((item: PictureItemProps, i: number) => {
                 const Image = items.length - 1 === i ? PictureItemImg : PictureItemSource;
 

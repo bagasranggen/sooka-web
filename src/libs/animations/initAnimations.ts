@@ -1,6 +1,3 @@
-// import { useEffect } from 'react';
-// import { usePathname, useSearchParams } from 'next/navigation';
-
 import { COMMON_ANIMATIONS } from '@/libs/handles';
 import { registerAnimation } from '@/libs/animations/register';
 import { getAnimationProps } from '@/libs/utils';
@@ -9,10 +6,7 @@ import { gsap } from 'gsap';
 
 registerAnimation();
 
-export const Init = (selector?: string) => {
-    // const pathname = usePathname();
-
-    // useEffect(() => {
+export const initAnimations = (selector?: string) => {
     const context = gsap.context(() => {
         // Common Animation
         gsap.utils
@@ -26,5 +20,4 @@ export const Init = (selector?: string) => {
     });
 
     return () => context.revert();
-    // }, [selector, pathname]);
 };

@@ -17,7 +17,7 @@ export const preloaderAnimation = ({ element, config }: BaseAnimationProps) => {
 
     const animationEventsProps = isLooping ? { loop: isLooping } : { events: { onFinish: animationEndHandler } };
 
-    tl.add(gsap.effects.fade(icon))
-        .add(gsap.effects.wiggle(icon, animationEventsProps), '-=.015')
-        .add(gsap.effects.fade(text), '-=.35');
+    tl.add(gsap.effects.fade(icon)).add(gsap.effects.wiggle(icon, animationEventsProps), '-=.015');
+
+    if (text) tl.add(gsap.effects.fade(text), '-=.35');
 };

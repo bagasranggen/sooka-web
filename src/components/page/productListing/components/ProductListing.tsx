@@ -1,18 +1,17 @@
-'use client';
+// 'use client';
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import type { CardImageItemProps, CardImageProps } from '@/components/common/card/cardImage/CardImage';
 import type { FilterProductKeyProps, FilterProductProps } from '@/components/common/filter/filterProduct/FilterProduct';
 
 import Filter from '@/components/common/filter/Filter';
-import Card from '@/components/common/card/Card';
+import Card, { type CardRoundedItemProps } from '@/components/common/card/Card';
 
 export type ProductListingProps = {
     option: FilterProductKeyProps;
     filterItems: FilterProductProps['items'];
-    productItems: CardImageProps['items'];
+    productItems: CardRoundedItemProps[];
 };
 
 const ProductListing = ({ option, filterItems, productItems }: ProductListingProps): React.ReactElement => {
@@ -41,7 +40,7 @@ const ProductListing = ({ option, filterItems, productItems }: ProductListingPro
             {/*    />*/}
             {/*)}*/}
             <Card
-                variant="image"
+                variant="rounded"
                 items={productItems}
             />
         </>
