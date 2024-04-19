@@ -24,7 +24,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                 items={entries.carousel}
             />
 
-            <section className="block block--secondary">
+            <section className="block block--secondary ">
                 <Container>
                     <Row className="justify-content-center gy-3 gy-md-6 gx-md-6">
                         <Col
