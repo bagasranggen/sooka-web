@@ -6,7 +6,7 @@ import type { CreateArrayWithLengthX, NumericRange, ResponsiveClassProps } from 
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
 import Input from '@/components/common/input/Input';
-import type { InputFloatingProps, InputHookValue } from '@/components/common/input/inputFloating/InputFloating';
+import type { InputFloatingProps, InputHookValueProps } from '@/components/common/input/inputFloating/InputFloating';
 
 export type FormRenderItemProps = {
     size: ResponsiveClassProps;
