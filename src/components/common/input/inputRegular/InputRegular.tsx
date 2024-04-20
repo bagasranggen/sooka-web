@@ -2,6 +2,8 @@ import React from 'react';
 
 import { INPUT_TYPE_HANDLES, INPUT_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
+import { joinClassnameString } from '@/libs/utils';
+import type { ClassnameArrayProps } from '@/libs/@types';
 
 import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 import type { InputSwitchProps } from '@/components/common/input/inputShared/InputSwitch';
@@ -11,11 +13,12 @@ import type { InputSelectProps } from '@/components/common/input/inputShared/Inp
 export type InputRegularProps = {
     variant: typeof INPUT_VARIANTS.REGULAR;
     className?: string;
+    wrapperClassName?: string;
     label?: string;
     input: InputTextProps | InputSwitchProps | InputCkEditorProps | InputSelectProps;
 };
 
-const InputRegular = ({ input, label, className }: InputRegularProps): React.ReactElement => {
+const InputRegular = ({ input, label, className, wrapperClassName }: InputRegularProps): React.ReactElement => {
     const InputWrapper = label ? 'div' : React.Fragment;
 
     let inputIsHidden = false;
@@ -30,8 +33,13 @@ const InputRegular = ({ input, label, className }: InputRegularProps): React.Rea
             break;
     }
 
+    let wrapperClass: ClassnameArrayProps = [];
+    if (label) wrapperClass.push('input-group--regular');
+    if (label && wrapperClassName) wrapperClass.push(wrapperClassName);
+    wrapperClass = joinClassnameString(wrapperClass);
+
     return (
-        <InputWrapper {...(label ? { className: 'input-group--regular' } : {})}>
+        <InputWrapper {...(wrapperClass ? { className: wrapperClass } : {})}>
             {label && !inputIsHidden && <label htmlFor={input.id}>{label}</label>}
             {createDynamicElement({
                 handles: INPUT_TYPE_HANDLES,
