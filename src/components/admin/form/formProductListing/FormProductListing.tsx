@@ -1,9 +1,11 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import type { InputHookValueProps } from '@/libs/@types';
+import { supabaseClientAction } from '@/libs/fetcher';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
@@ -17,22 +19,39 @@ export type FormProductListingProps = {
 };
 
 const FormProductListing = ({ entries }: FormProductListingProps): React.ReactElement => {
+    const router = useRouter();
     const { data, categories } = entries;
 
     const {
         register,
         handleSubmit,
-        watch,
         setValue,
         formState: { errors },
         control,
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
-    const onSubmitHandler: SubmitHandler<InputHookValueProps> = (data: InputHookValueProps) => {
-        console.log('react-hook submit', data);
+    const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
+        const { imageThumbnailDesktop, imageThumbnailMobile, price, is_sold, ...restData } = formData;
+
+        const submitData = {
+            ...restData,
+            is_sold: !is_sold,
+            price: parseInt(price),
+            images: [imageThumbnailDesktop, imageThumbnailMobile],
+        };
+
+        await supabaseClientAction({
+            variant: 'update',
+            relation: 'productListing',
+            id: parseInt(data.id),
+            data: submitData,
+            onFinish: ({ error }) => {
+                if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+            },
+        });
     };
 
-    const gutterClass: string = 'gy-3 gx-1';
+    const gutterClass: string = 'gy-3 gx-1 mb-2';
 
     return (
         <>
@@ -43,7 +62,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                         <Input
                             variant="regular"
                             label="Name"
-                            input={{ id: 'name', type: 'text', value: data.name, hook: { register: register } }}
+                            input={{
+                                id: 'name',
+                                type: 'text',
+                                value: data.name,
+                                hook: { register: register },
+                            }}
                         />
                     </Col>
                     <Col lg={4}>
@@ -66,7 +90,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                         <Input
                             variant="regular"
                             label="Price"
-                            input={{ id: 'price', type: 'text', value: data.price, hook: { register: register } }}
+                            input={{
+                                id: 'price',
+                                type: 'text',
+                                value: data.price,
+                                hook: { register: register },
+                            }}
                         />
                     </Col>
                     <Col lg={2}>
@@ -77,7 +106,34 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                                 id: 'is_sold',
                                 type: 'switch',
                                 color: 'primary',
-                                isChecked: data['is_sold'],
+                                isChecked: !data['is_sold'],
+                                hook: { register: register },
+                            }}
+                        />
+                    </Col>
+                </Row>
+
+                <Row className={gutterClass}>
+                    <Col lg={6}>
+                        <Input
+                            variant="regular"
+                            label="Image Thumbnail Desktop"
+                            input={{
+                                id: 'imageThumbnailDesktop',
+                                type: 'text',
+                                value: data?.images?.[0],
+                                hook: { register: register },
+                            }}
+                        />
+                    </Col>
+                    <Col lg={6}>
+                        <Input
+                            variant="regular"
+                            label="Image Thumbnail Mobile"
+                            input={{
+                                id: 'imageThumbnailMobile',
+                                type: 'text',
+                                value: data?.images?.[1],
                                 hook: { register: register },
                             }}
                         />
