@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { SUPABASE_VARIANTS } from '@/libs/handles';
@@ -10,33 +10,54 @@ import { supabaseClientAction } from '@/libs/fetcher';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
-import { CiTrash } from 'react-icons/ci';
 
 import Input from '@/components/common/input/Input';
 import Button, { ButtonWrapper } from '@/components/common/button/Button';
+import ImagesGalleryField, {
+    type ImagesGalleryItemProps,
+} from '@/components/admin/form/formProductListing/components/ImagesGalleryFiels';
 
 export type FormProductListingProps = {
     variant: typeof SUPABASE_VARIANTS.PRODUCT_LISTING;
-    entries: any;
+    entries?: any;
 };
 
 const FormProductListing = ({ entries }: FormProductListingProps): React.ReactElement => {
     const router = useRouter();
     const { data, categories } = entries;
 
-    const [imageGallery, setImageGallery] = useState<number[]>([]);
+    const [imageGallery, setImageGallery] = useState<any[]>([]);
     const imageGalleryLimit = 3;
     const imageGalleryKeys = {
         desktop: 'imageGalleryDesktop',
         mobile: 'imageGalleryMobile',
     };
 
+    useEffect(() => {
+        if (data.gallery.length === 0) return;
+
+        let tempImageGallery: ImagesGalleryItemProps[] = [];
+        new Array(data.gallery.length / 2).fill(0).map((item: number, i: number) => {
+            let index = 0;
+            if (i > 0) index = i + 1;
+
+            const tempData = {
+                id: Date.now() + i,
+                desktop: data?.gallery?.[index],
+                mobile: data?.gallery?.[index + 1],
+            };
+
+            tempImageGallery.push(tempData);
+        });
+        setImageGallery(tempImageGallery);
+    }, [data]);
+
     const addImageGalleryHandler = (e: React.FormEvent<HTMLButtonElement>) => {
-        setImageGallery((prevState) => [...prevState, Date.now()]);
+        setImageGallery((prevState) => [...prevState, { id: Date.now(), desktop: '', mobile: '' }]);
     };
 
     const removeImageGalleryHandler = (e: React.FormEvent<HTMLButtonElement>, key: number) => {
-        const filtered = imageGallery.filter((item: number) => item !== key);
+        const filtered = imageGallery.filter((item: ImagesGalleryItemProps) => item.id !== key);
         setImageGallery(filtered);
     };
 
@@ -51,9 +72,9 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
         let gallery: string[] = [];
         let galleryKeys: string[] = [];
-        imageGallery.map((item: number) => {
-            galleryKeys.push(`${imageGalleryKeys.desktop}_${item}`);
-            galleryKeys.push(`${imageGalleryKeys.mobile}_${item}`);
+        imageGallery.map((item: ImagesGalleryItemProps) => {
+            galleryKeys.push(`${imageGalleryKeys.desktop}_${item.id}`);
+            galleryKeys.push(`${imageGalleryKeys.mobile}_${item.id}`);
         });
         galleryKeys.map((item: string) => {
             const { [item]: selected } = formData;
@@ -72,17 +93,15 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
             gallery,
         };
 
-        console.log(submitData);
-
-        // await supabaseClientAction({
-        //     variant: 'update',
-        //     relation: 'productListing',
-        //     id: parseInt(data.id),
-        //     data: submitData,
-        //     onFinish: ({ error }) => {
-        //         if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
-        //     },
-        // });
+        await supabaseClientAction({
+            variant: 'update',
+            relation: 'productListing',
+            id: parseInt(data.id),
+            data: submitData,
+            onFinish: ({ error }) => {
+                if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+            },
+        });
     };
 
     const gutterClass: string = 'gy-3 gx-1 mb-2';
@@ -99,8 +118,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                             input={{
                                 id: 'name',
                                 type: 'text',
-                                value: data.name,
-                                hook: { register: register },
+                                value: data?.name ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.name,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
@@ -112,8 +135,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                                 id: 'category',
                                 type: 'select',
                                 items: categories,
-                                value: data.category,
-                                hook: { register: register },
+                                value: data?.category ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.category,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
@@ -127,8 +154,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                             input={{
                                 id: 'price',
                                 type: 'text',
-                                value: data.price,
-                                hook: { register: register },
+                                value: data?.price ?? 0,
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.price,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
@@ -140,8 +171,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                                 id: 'is_sold',
                                 type: 'switch',
                                 color: 'primary',
-                                isChecked: !data['is_sold'],
-                                hook: { register: register },
+                                isChecked: !data?.['is_sold'] ?? true,
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.['is_sold'],
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
@@ -155,8 +190,12 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                             input={{
                                 id: 'imageThumbnailDesktop',
                                 type: 'text',
-                                value: data?.images?.[0],
-                                hook: { register: register },
+                                value: data?.images?.[0] ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.imageThumbnailDesktop,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
@@ -167,64 +206,22 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                             input={{
                                 id: 'imageThumbnailMobile',
                                 type: 'text',
-                                value: data?.images?.[1],
-                                hook: { register: register },
+                                value: data?.images?.[1] ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.imageThumbnailMobile,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
                     </Col>
                 </Row>
 
-                {imageGallery.map((item: number, i: number) => {
-                    const desktopId = `${imageGalleryKeys.desktop}_${item}`;
-                    const mobileId = `${imageGalleryKeys.desktop}_${item}`;
-
-                    return (
-                        <Row
-                            className={`${gutterClass} align-items-end`}
-                            key={i}>
-                            <Col>
-                                <Input
-                                    variant="regular"
-                                    label={'Image Gallery Desktop ' + item}
-                                    input={{
-                                        id: desktopId,
-                                        type: 'text',
-                                        // value: data?.images?.[0],
-                                        hook: { register: register, options: { required: true } },
-                                    }}
-                                    validation={{
-                                        isError: !!errors?.[desktopId],
-                                        message: GLOBAL_MESSAGE.ERROR_REQUIRED,
-                                    }}
-                                />
-                            </Col>
-                            <Col>
-                                <Input
-                                    variant="regular"
-                                    label="Image Gallery Mobile"
-                                    input={{
-                                        id: mobileId,
-                                        type: 'text',
-                                        // value: data?.images?.[1],
-                                        hook: { register: register, options: { required: true } },
-                                    }}
-                                    validation={{
-                                        isError: !!errors?.[mobileId],
-                                        message: GLOBAL_MESSAGE.ERROR_REQUIRED,
-                                    }}
-                                />
-                            </Col>
-                            <Col lg="auto">
-                                <Button
-                                    variant="outline"
-                                    type="button"
-                                    events={{ onClick: (e) => removeImageGalleryHandler(e, item) }}>
-                                    <CiTrash size={24} />
-                                </Button>
-                            </Col>
-                        </Row>
-                    );
-                })}
+                <ImagesGalleryField
+                    items={imageGallery}
+                    hooks={{ register, errors }}
+                    events={{ onClick: removeImageGalleryHandler }}
+                />
 
                 <Button
                     variant="outline"
@@ -241,7 +238,7 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                     input={{
                         id: 'description',
                         type: 'ck-editor',
-                        value: data.description,
+                        value: data?.description ?? '',
                         hook: { register: register, control: control, setValue: setValue },
                     }}
                 />
@@ -253,7 +250,7 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                     input={{
                         id: 'package',
                         type: 'ck-editor',
-                        value: data.package,
+                        value: data?.package ?? '',
                         hook: { register: register, control: control, setValue: setValue },
                     }}
                 />
@@ -265,7 +262,7 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                     input={{
                         id: 'ingredients',
                         type: 'ck-editor',
-                        value: data.ingredients,
+                        value: data?.ingredients ?? '',
                         hook: { register: register, control: control, setValue: setValue },
                     }}
                 />
