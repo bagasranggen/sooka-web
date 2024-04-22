@@ -16,10 +16,21 @@ export type InputRegularProps = {
     wrapperClassName?: string;
     label?: string;
     input: InputTextProps | InputSwitchProps | InputCkEditorProps | InputSelectProps;
+    validation?: {
+        isError?: boolean;
+        message?: string;
+    };
 };
 
-const InputRegular = ({ input, label, className, wrapperClassName }: InputRegularProps): React.ReactElement => {
-    const InputWrapper = label ? 'div' : React.Fragment;
+const InputRegular = ({
+    input,
+    label,
+    className,
+    wrapperClassName,
+    validation,
+}: InputRegularProps): React.ReactElement => {
+    const isInvalid = validation?.isError && validation.message;
+    const InputWrapper = label || isInvalid ? 'div' : React.Fragment;
 
     let inputIsHidden = false;
     switch (true) {
@@ -36,17 +47,21 @@ const InputRegular = ({ input, label, className, wrapperClassName }: InputRegula
     let wrapperClass: ClassnameArrayProps = [];
     if (label) wrapperClass.push('input-group--regular');
     if (label && wrapperClassName) wrapperClass.push(wrapperClassName);
+    if (isInvalid) wrapperClass.push('is-invalid');
     wrapperClass = joinClassnameString(wrapperClass);
 
     return (
-        <InputWrapper {...(wrapperClass ? { className: wrapperClass } : {})}>
-            {label && !inputIsHidden && <label htmlFor={input.id}>{label}</label>}
-            {createDynamicElement({
-                handles: INPUT_TYPE_HANDLES,
-                selector: input?.type ?? 'text',
-                props: { ...input, ...{ className: className } },
-            })}
-        </InputWrapper>
+        <>
+            <InputWrapper {...(wrapperClass ? { className: wrapperClass } : {})}>
+                {label && !inputIsHidden && <label htmlFor={input.id}>{label}</label>}
+                {createDynamicElement({
+                    handles: INPUT_TYPE_HANDLES,
+                    selector: input?.type ?? 'text',
+                    props: { ...input, ...{ className: className } },
+                })}
+            </InputWrapper>
+            {isInvalid && <div className="invalid-feedback">{validation?.message}</div>}
+        </>
     );
 };
 

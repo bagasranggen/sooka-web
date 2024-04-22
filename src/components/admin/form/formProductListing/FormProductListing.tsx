@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { SUPABASE_VARIANTS } from '@/libs/handles';
+import { GLOBAL_MESSAGE } from '@/libs/data';
 import type { InputHookValueProps } from '@/libs/@types';
 import { supabaseClientAction } from '@/libs/fetcher';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
+import { CiTrash } from 'react-icons/ci';
 
 import Input from '@/components/common/input/Input';
 import Button, { ButtonWrapper } from '@/components/common/button/Button';
@@ -22,6 +24,22 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
     const router = useRouter();
     const { data, categories } = entries;
 
+    const [imageGallery, setImageGallery] = useState<number[]>([]);
+    const imageGalleryLimit = 3;
+    const imageGalleryKeys = {
+        desktop: 'imageGalleryDesktop',
+        mobile: 'imageGalleryMobile',
+    };
+
+    const addImageGalleryHandler = (e: React.FormEvent<HTMLButtonElement>) => {
+        setImageGallery((prevState) => [...prevState, Date.now()]);
+    };
+
+    const removeImageGalleryHandler = (e: React.FormEvent<HTMLButtonElement>, key: number) => {
+        const filtered = imageGallery.filter((item: number) => item !== key);
+        setImageGallery(filtered);
+    };
+
     const {
         register,
         handleSubmit,
@@ -31,6 +49,19 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
+        let gallery: string[] = [];
+        let galleryKeys: string[] = [];
+        imageGallery.map((item: number) => {
+            galleryKeys.push(`${imageGalleryKeys.desktop}_${item}`);
+            galleryKeys.push(`${imageGalleryKeys.mobile}_${item}`);
+        });
+        galleryKeys.map((item: string) => {
+            const { [item]: selected } = formData;
+            delete formData[item];
+
+            gallery.push(selected);
+        });
+
         const { imageThumbnailDesktop, imageThumbnailMobile, price, is_sold, ...restData } = formData;
 
         const submitData = {
@@ -38,17 +69,20 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
             is_sold: !is_sold,
             price: parseInt(price),
             images: [imageThumbnailDesktop, imageThumbnailMobile],
+            gallery,
         };
 
-        await supabaseClientAction({
-            variant: 'update',
-            relation: 'productListing',
-            id: parseInt(data.id),
-            data: submitData,
-            onFinish: ({ error }) => {
-                if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
-            },
-        });
+        console.log(submitData);
+
+        // await supabaseClientAction({
+        //     variant: 'update',
+        //     relation: 'productListing',
+        //     id: parseInt(data.id),
+        //     data: submitData,
+        //     onFinish: ({ error }) => {
+        //         if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+        //     },
+        // });
     };
 
     const gutterClass: string = 'gy-3 gx-1 mb-2';
@@ -139,6 +173,66 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                         />
                     </Col>
                 </Row>
+
+                {imageGallery.map((item: number, i: number) => {
+                    const desktopId = `${imageGalleryKeys.desktop}_${item}`;
+                    const mobileId = `${imageGalleryKeys.desktop}_${item}`;
+
+                    return (
+                        <Row
+                            className={`${gutterClass} align-items-end`}
+                            key={i}>
+                            <Col>
+                                <Input
+                                    variant="regular"
+                                    label={'Image Gallery Desktop ' + item}
+                                    input={{
+                                        id: desktopId,
+                                        type: 'text',
+                                        // value: data?.images?.[0],
+                                        hook: { register: register, options: { required: true } },
+                                    }}
+                                    validation={{
+                                        isError: !!errors?.[desktopId],
+                                        message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                                    }}
+                                />
+                            </Col>
+                            <Col>
+                                <Input
+                                    variant="regular"
+                                    label="Image Gallery Mobile"
+                                    input={{
+                                        id: mobileId,
+                                        type: 'text',
+                                        // value: data?.images?.[1],
+                                        hook: { register: register, options: { required: true } },
+                                    }}
+                                    validation={{
+                                        isError: !!errors?.[mobileId],
+                                        message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                                    }}
+                                />
+                            </Col>
+                            <Col lg="auto">
+                                <Button
+                                    variant="outline"
+                                    type="button"
+                                    events={{ onClick: (e) => removeImageGalleryHandler(e, item) }}>
+                                    <CiTrash size={24} />
+                                </Button>
+                            </Col>
+                        </Row>
+                    );
+                })}
+
+                <Button
+                    variant="outline"
+                    type="button"
+                    events={{ onClick: addImageGalleryHandler }}
+                    disabled={imageGallery.length >= imageGalleryLimit}>
+                    Add
+                </Button>
 
                 <Input
                     variant="regular"

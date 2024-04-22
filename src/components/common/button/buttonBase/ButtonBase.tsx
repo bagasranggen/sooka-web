@@ -33,7 +33,11 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
         case 'submit':
         case 'reset':
             const { events, ...restButton } = props;
-            const eventsButton = events ?? {};
+
+            let eventsButton = {};
+            if (events?.onClick) {
+                eventsButton = { ...eventsButton, ...{ onClick: events.onClick } };
+            }
 
             return (
                 <button
