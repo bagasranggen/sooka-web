@@ -19,10 +19,11 @@ import ImagesGalleryField, {
 
 export type FormProductListingProps = {
     variant: typeof SUPABASE_VARIANTS.PRODUCT_LISTING;
+    type: 'add' | 'edit';
     entries?: any;
 };
 
-const FormProductListing = ({ entries }: FormProductListingProps): React.ReactElement => {
+const FormProductListing = ({ type, entries }: FormProductListingProps): React.ReactElement => {
     const router = useRouter();
     const { data, categories } = entries;
 
@@ -34,7 +35,7 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
     };
 
     useEffect(() => {
-        if (data.gallery.length === 0) return;
+        if (!data?.gallery || data?.gallery.length === 0) return;
 
         let tempImageGallery: ImagesGalleryItemProps[] = [];
         new Array(data.gallery.length / 2).fill(0).map((item: number, i: number) => {
@@ -108,7 +109,9 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
 
     return (
         <>
-            <h1>Edit {data.name}</h1>
+            <h1>
+                {type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}
+            </h1>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={gutterClass}>
                     <Col lg={8}>
@@ -134,7 +137,7 @@ const FormProductListing = ({ entries }: FormProductListingProps): React.ReactEl
                             input={{
                                 id: 'category',
                                 type: 'select',
-                                items: categories,
+                                items: [{ label: '-- Select Category --' }, ...categories],
                                 value: data?.category ?? '',
                                 hook: { register: register, options: { required: true } },
                             }}

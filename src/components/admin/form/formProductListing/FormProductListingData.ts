@@ -1,6 +1,6 @@
 import { supabaseServerAction } from '@/libs/fetcher';
 
-const formProductListingData = async (slug: string) => {
+const formProductListingData = async (slug?: string) => {
     const { data: products } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
     const { data: categories } = await supabaseServerAction({ variant: 'fetch', relation: 'categories' });
 

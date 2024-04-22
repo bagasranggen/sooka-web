@@ -1,21 +1,24 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 
+import { ADMIN_ENTRY_DATA_HANDLES } from '@/libs/handles';
 import { DynamicPageProps } from '@/libs/@types';
 
 import Form from '@/components/admin/form/Form';
-import FormProductListingData from '@/components/admin/form/formProductListing/FormProductListingData';
 
 export type PageProps = DynamicPageProps;
 
 const Page = async ({ params, searchParams }: PageProps): Promise<React.ReactElement> => {
-    const data = await FormProductListingData(searchParams?.slug as string);
+    const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES](
+        searchParams?.slug as string
+    );
 
     if (!data.data) notFound();
 
     return (
         <Form
             variant={params.slug as any}
+            type="edit"
             entries={data}
         />
     );
