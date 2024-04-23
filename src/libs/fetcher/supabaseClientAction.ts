@@ -81,7 +81,7 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                 .select()
                 .then((res) => {
                     console.log(res);
-                    props?.onFinish && props.onFinish();
+                    props?.onFinish && props.onFinish(res);
                 });
 
             break;

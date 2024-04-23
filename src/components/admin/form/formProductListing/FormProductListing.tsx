@@ -4,18 +4,20 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { SUPABASE_VARIANTS } from '@/libs/handles';
-import { GLOBAL_MESSAGE } from '@/libs/data';
+import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import type { InputHookValueProps } from '@/libs/@types';
 import { supabaseClientAction } from '@/libs/fetcher';
+import { joinClassnameString } from '@/libs/utils';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
+import slugify from 'react-slugify';
 
 import Input from '@/components/common/input/Input';
 import Button, { ButtonWrapper } from '@/components/common/button/Button';
 import ImagesGalleryField, {
     type ImagesGalleryItemProps,
-} from '@/components/admin/form/formProductListing/components/ImagesGalleryFiels';
+} from '@/components/admin/form/formProductListing/components/ImagesGalleryField';
 
 export type FormProductListingProps = {
     variant: typeof SUPABASE_VARIANTS.PRODUCT_LISTING;
@@ -25,7 +27,9 @@ export type FormProductListingProps = {
 
 const FormProductListing = ({ type, entries }: FormProductListingProps): React.ReactElement => {
     const router = useRouter();
-    const { data, categories } = entries;
+    const { data, order, categories } = entries;
+
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
     const [imageGallery, setImageGallery] = useState<any[]>([]);
     const imageGalleryLimit = 3;
@@ -94,18 +98,29 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
             gallery,
         };
 
-        await supabaseClientAction({
-            variant: 'update',
-            relation: 'productListing',
-            id: parseInt(data.id),
-            data: submitData,
-            onFinish: ({ error }) => {
-                if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
-            },
-        });
-    };
+        if (type === 'edit') {
+            await supabaseClientAction({
+                variant: 'update',
+                relation: 'productListing',
+                id: parseInt(data.id),
+                data: submitData,
+                onFinish: ({ error }) => {
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                },
+            });
+        }
 
-    const gutterClass: string = 'gy-3 gx-1 mb-2';
+        if (type === 'add') {
+            await supabaseClientAction({
+                variant: 'insert',
+                relation: 'productListing',
+                data: [{ ...submitData, slug: slugify(formData.name), order: order }],
+                onFinish: ({ error }) => {
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                },
+            });
+        }
+    };
 
     return (
         <>

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { GLOBAL_MESSAGE } from '@/libs/data';
+import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import type { InputHookRegisterProps } from '@/libs/@types';
+import { joinClassnameString } from '@/libs/utils';
 
 import type { FieldErrors } from 'react-hook-form';
 import { CiTrash } from 'react-icons/ci';
@@ -27,7 +28,7 @@ export type ImagesGalleryProps = {
 };
 
 const ImagesGalleryField = ({ items, hooks, events }: ImagesGalleryProps): React.ReactElement => {
-    const gutterClass: string = 'gy-3 gx-1 mb-2';
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
     const imageGalleryKeys = {
         desktop: 'imageGalleryDesktop',
         mobile: 'imageGalleryMobile',
