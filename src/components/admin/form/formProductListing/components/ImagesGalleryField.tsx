@@ -28,23 +28,19 @@ export type ImagesGalleryProps = {
 };
 
 const ImagesGalleryField = ({ items, hooks, events }: ImagesGalleryProps): React.ReactElement => {
-    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
-    const imageGalleryKeys = {
-        desktop: 'imageGalleryDesktop',
-        mobile: 'imageGalleryMobile',
-    };
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING, 'align-items-end']);
 
     if (items.length === 0) return <></>;
 
     return (
         <>
             {items.map((item: ImagesGalleryItemProps, i: number) => {
-                const desktopId = `${imageGalleryKeys.desktop}_${item.id}`;
-                const mobileId = `${imageGalleryKeys.mobile}_${item.id}`;
+                const desktopId = `${COMMON_ADMIN.KEY.GALLERY.DESKTOP}_${item.id}`;
+                const mobileId = `${COMMON_ADMIN.KEY.GALLERY.MOBILE}_${item.id}`;
 
                 return (
                     <Row
-                        className={`${gutterClass} align-items-end`}
+                        className={gutterClass}
                         key={i}>
                         <Col>
                             <Input

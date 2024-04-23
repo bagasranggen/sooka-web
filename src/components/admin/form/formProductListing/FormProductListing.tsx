@@ -33,10 +33,6 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
 
     const [imageGallery, setImageGallery] = useState<any[]>([]);
     const imageGalleryLimit = 3;
-    const imageGalleryKeys = {
-        desktop: 'imageGalleryDesktop',
-        mobile: 'imageGalleryMobile',
-    };
 
     useEffect(() => {
         if (!data?.gallery || data?.gallery.length === 0) return;
@@ -78,8 +74,8 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
         let gallery: string[] = [];
         let galleryKeys: string[] = [];
         imageGallery.map((item: ImagesGalleryItemProps) => {
-            galleryKeys.push(`${imageGalleryKeys.desktop}_${item.id}`);
-            galleryKeys.push(`${imageGalleryKeys.mobile}_${item.id}`);
+            galleryKeys.push(`${COMMON_ADMIN.KEY.GALLERY.DESKTOP}_${item.id}`);
+            galleryKeys.push(`${COMMON_ADMIN.KEY.GALLERY.MOBILE}_${item.id}`);
         });
         galleryKeys.map((item: string) => {
             const { [item]: selected } = formData;
