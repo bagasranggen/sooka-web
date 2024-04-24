@@ -13,5 +13,6 @@ export * from './getSpacingValue';
 export * from './getWhatsappEncoded';
 export * from './joinClassnameString';
 export * from './resizeFakerImage';
+export * from './sortArrayByNumber';
 export * from './truncateString';
 export * from './NavigationEvents';

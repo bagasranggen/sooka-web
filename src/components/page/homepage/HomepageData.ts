@@ -1,5 +1,6 @@
 import type { LinkProps } from '@/libs/@types';
 import { supabaseServerAction } from '@/libs/fetcher';
+import { sortArrayByNumber } from '@/libs/utils';
 import { createGoogleDriveImage, createProductListingData } from '@/libs/factory';
 
 import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
@@ -55,8 +56,19 @@ const getHomepageHighlight = async () => {
         },
     });
 
+    let highlightItemDataReorder: any[] = [];
+
+    // Reorder base on homepage highlight order
+    highlightIds.map((item: number, i: number) => {
+        const temp = highlightItemData?.find((datum: any) => datum.id === item);
+        temp.order = i;
+
+        highlightItemDataReorder.push(temp);
+    });
+    sortArrayByNumber({ items: highlightItemDataReorder, keys: 'order' });
+
     let highlight: CardRoundedItemProps[] = [];
-    highlightItemData?.map((datum: any) => {
+    highlightItemDataReorder?.map((datum: any) => {
         highlight.push(createProductListingData(datum));
     });
 
