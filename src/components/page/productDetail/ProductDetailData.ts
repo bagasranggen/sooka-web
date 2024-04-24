@@ -18,7 +18,10 @@ const getProduct = async (slug?: string) => {
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'productListing',
-        slug,
+        find: {
+            key: 'slug',
+            value: slug,
+        },
     });
 
     return { data };

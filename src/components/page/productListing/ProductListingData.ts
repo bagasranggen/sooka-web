@@ -10,7 +10,10 @@ const getPage = async (slug?: string): Promise<{ data: ProductListingIndexProps[
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'pages',
-        slug,
+        find: {
+            key: 'slug',
+            value: slug,
+        },
     });
 
     return {
