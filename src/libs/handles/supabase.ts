@@ -11,6 +11,7 @@ export const SUPABASE_VARIANTS = {
     CATEGORIES: 'categories',
     PAGES: 'pages',
     HOMEPAGE_CAROUSEL: 'homepageCarousel',
+    HOMEPAGE_HIGHLIGHT: 'homepageHighlight',
     PRODUCT_LISTING: 'productListing',
 } as const;
 
@@ -19,6 +20,7 @@ export const SUPABASE_HANDLES = {
     [SUPABASE_VARIANTS.CATEGORIES]: 'Categories',
     [SUPABASE_VARIANTS.PAGES]: 'Pages',
     [SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL]: 'Homepage Carousel',
+    [SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT]: 'Homepage Highlight',
     [SUPABASE_VARIANTS.PRODUCT_LISTING]: 'Product Listing',
 };
 

@@ -1,8 +1,9 @@
-import { supabaseServerAction } from '@/libs/fetcher';
-import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
 import type { LinkProps } from '@/libs/@types';
+import { supabaseServerAction } from '@/libs/fetcher';
 import { createGoogleDriveImage, createProductListingData } from '@/libs/factory';
-import { CardRoundedItemProps } from '@/components/common/card/cardRounded/CardRounded';
+
+import type { SliderImageItemProps } from '@/components/common/slider/sliderImage/SliderImage';
+import type { CardRoundedItemProps } from '@/components/common/card/cardRounded/CardRounded';
 
 const getHomepageCarousel = async () => {
     const { data: carouselItems } = await supabaseServerAction({
@@ -37,18 +38,27 @@ const getHomepageCarousel = async () => {
 };
 
 const getHomepageHighlight = async () => {
-    const { data } = await supabaseServerAction({
-        variant: 'fetch-limit',
+    const { data: highlightData } = await supabaseServerAction({
+        variant: 'fetch',
+        relation: 'homepageHighlight',
+    });
+
+    let highlightIds: number[] = [];
+    highlightData?.map((item: any) => highlightIds.push(item.product_id));
+
+    const { data: highlightItemData } = await supabaseServerAction({
+        variant: 'fetch-find',
         relation: 'productListing',
-        limit: 3,
+        find: {
+            key: 'id',
+            value: highlightIds,
+        },
     });
 
     let highlight: CardRoundedItemProps[] = [];
-    if (data && data.length > 0) {
-        data.map((datum: any) => {
-            highlight.push(createProductListingData(datum));
-        });
-    }
+    highlightItemData?.map((datum: any) => {
+        highlight.push(createProductListingData(datum));
+    });
 
     return { data: highlight };
 };
