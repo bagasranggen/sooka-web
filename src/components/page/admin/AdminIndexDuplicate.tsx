@@ -162,17 +162,51 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     </Button>
                 </div>
             </div>
-            <Table variant="admin-view" />
+            <Table
+                variant="admin"
+                id={tableId}
+                header={entries.table.header}
+                body={entries.table.body}
+                slug={entries.slug}
+                isOpenDetail={isOpenDetail}
+                isReorder={isReordering}
+                isEdit={isEditing}
+                isEditState={{
+                    prevValue: form,
+                    setValue: setForm,
+                }}
+                events={{
+                    onDelete: (id: number) => deleteDataHandler(id),
+                    onEdit: (index: number | undefined) => setIsEditing(index),
+                    onEditReorder: (index: number | undefined) => setIsReordering(index),
+                    onOpenDetail: (index: number | undefined) => setIsOpenDetail(index),
+                    onSubmit: submitUpdateFormHandler,
+                }}
+            />
 
             {typeof isEditing === 'undefined' && typeof isReordering === 'undefined' && (
                 <Button
                     variant="block"
-                    type="anchor"
-                    href={`add/${entries.slug}`}
-                    className="w-100 mt-3">
-                    ADD
-                    {/*{isAddingRow ? 'Cancel' : 'Add'}*/}
+                    type="button"
+                    className="w-100 mt-3"
+                    events={{ onClick: () => setIsAddingRow(!isAddingRow) }}>
+                    {isAddingRow ? 'Cancel' : 'Add'}
                 </Button>
+            )}
+
+            {isAddingRow && (
+                <div className="mt-3">
+                    <Table
+                        variant="admin-add"
+                        type={entries.slug}
+                        header={entries.table.header}
+                        stateData={{
+                            prevValue: form,
+                            setValue: setForm,
+                        }}
+                        events={{ onSubmit: submitFormHandler }}
+                    />
+                </div>
             )}
         </>
     );
