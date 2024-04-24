@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import type { InputHookValueProps } from '@/libs/@types';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
-import type { InputHookValueProps } from '@/libs/@types';
 import { supabaseClientAction } from '@/libs/fetcher';
 import { joinClassnameString } from '@/libs/utils';
 
@@ -31,27 +31,8 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
 
     const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
-    const [imageGallery, setImageGallery] = useState<any[]>([]);
+    const [imageGallery, setImageGallery] = useState<ImagesGalleryItemProps[]>(data.imageGallery);
     const imageGalleryLimit = 3;
-
-    useEffect(() => {
-        if (!data?.gallery || data?.gallery.length === 0) return;
-
-        let tempImageGallery: ImagesGalleryItemProps[] = [];
-        new Array(data.gallery.length / 2).fill(0).map((item: number, i: number) => {
-            let index = 0;
-            if (i > 0) index = i + 1;
-
-            const tempData = {
-                id: Date.now() + i,
-                desktop: data?.gallery?.[index],
-                mobile: data?.gallery?.[index + 1],
-            };
-
-            tempImageGallery.push(tempData);
-        });
-        setImageGallery(tempImageGallery);
-    }, [data]);
 
     const addImageGalleryHandler = (e: React.FormEvent<HTMLButtonElement>) => {
         setImageGallery((prevState) => [...prevState, { id: Date.now(), desktop: '', mobile: '' }]);
@@ -148,7 +129,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                             input={{
                                 id: 'category',
                                 type: 'select',
-                                items: [{ label: '-- Select Category --' }, ...categories],
+                                items: [{ label: '-- Select Category --', slug: '' }, ...categories],
                                 value: data?.category ?? '',
                                 hook: { register: register, options: { required: true } },
                             }}
@@ -233,17 +214,13 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
 
                 <ImagesGalleryField
                     items={imageGallery}
+                    limit={imageGalleryLimit}
                     hooks={{ register, errors }}
-                    events={{ onClick: removeImageGalleryHandler }}
+                    events={{
+                        onAddHandler: addImageGalleryHandler,
+                        onImageRemoveHandler: removeImageGalleryHandler,
+                    }}
                 />
-
-                <Button
-                    variant="outline"
-                    type="button"
-                    events={{ onClick: addImageGalleryHandler }}
-                    disabled={imageGallery.length >= imageGalleryLimit}>
-                    Add
-                </Button>
 
                 <Input
                     variant="regular"

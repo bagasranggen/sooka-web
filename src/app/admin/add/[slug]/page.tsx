@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import type { DynamicPageProps } from '@/libs/@types';
 import { ADMIN_ENTRY_DATA_HANDLES } from '@/libs/handles';
@@ -11,17 +11,11 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]();
 
     return (
-        <Suspense>
-            {/*<AdminAddIndex*/}
-            {/*    slug={params.slug as string}*/}
-            {/*    state={data}*/}
-            {/*/>*/}
-            <Form
-                variant={params.slug as any}
-                type="add"
-                entries={data}
-            />
-        </Suspense>
+        <Form
+            variant={params.slug as any}
+            type="add"
+            entries={data}
+        />
     );
 };
 
