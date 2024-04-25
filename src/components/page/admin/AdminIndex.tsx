@@ -15,8 +15,8 @@ import Button from '@/components/common/button/Button';
 export type AdminIndexProps = {
     entries: {
         slug: SupabaseVariantProps;
-        title: string;
-        table: Omit<TableAdminProps, 'variant' | 'slug' | 'id'>;
+        // title: string;
+        // table: Omit<TableAdminProps, 'variant' | 'slug' | 'id'>;
     };
 };
 
@@ -40,126 +40,124 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         });
     };
 
-    const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    // const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //
+    //     const form = e.target as unknown as HTMLElement;
+    //     const submitForm: any = getFormSubmitData(form);
+    //     const data = {
+    //         ...submitForm,
+    //         ...{ order: entries.table.body.length },
+    //     };
+    //
+    //     supabaseClientAction({
+    //         variant: 'insert',
+    //         relation: entries.slug,
+    //         data: [data],
+    //         onFinish: () => {
+    //             setIsAddingRow(false);
+    //             router.refresh();
+    //         },
+    //     });
+    // };
 
-        const form = e.target as unknown as HTMLElement;
-        const submitForm: any = getFormSubmitData(form);
-        const data = {
-            ...submitForm,
-            ...{ order: entries.table.body.length },
-        };
+    // const reorderArray = (arr: any[], from: number, to: number): any[] => {
+    //     const duplicateArr: any[] = [...arr];
+    //
+    //     duplicateArr.splice(to, 0, duplicateArr.splice(from, 1)[0]);
+    //
+    //     return duplicateArr;
+    // };
 
-        supabaseClientAction({
-            variant: 'insert',
-            relation: entries.slug,
-            data: [data],
-            onFinish: () => {
-                setIsAddingRow(false);
-                router.refresh();
-            },
-        });
-    };
+    // const submitUpdateOrderHandler = (arr: any[], from: number, to: number) => {
+    //     const reorderArr = reorderArray(arr, from, to);
+    //     const updateReorder = reorderArr.map((add: any, i: number) => {
+    //         return {
+    //             ...add,
+    //             ...{ order: i },
+    //         };
+    //     });
+    //
+    //     supabaseClientAction({
+    //         variant: 'delete-all',
+    //         relation: entries.slug,
+    //         onFinish: () => {
+    //             supabaseClientAction({
+    //                 variant: 'insert',
+    //                 relation: entries.slug,
+    //                 data: updateReorder,
+    //                 onFinish: () => {
+    //                     setIsReordering(undefined);
+    //                     router.refresh();
+    //                 },
+    //             });
+    //         },
+    //     });
+    // };
 
-    const reorderArray = (arr: any[], from: number, to: number): any[] => {
-        const duplicateArr: any[] = [...arr];
+    // const submitUpdateIndividualHandler = (data: unknown, id: number) => {
+    //     supabaseClientAction({
+    //         variant: 'update',
+    //         relation: entries.slug,
+    //         id: id,
+    //         data,
+    //         onFinish: () => {
+    //             setIsEditing(undefined);
+    //             router.refresh();
+    //         },
+    //     });
+    // };
+    //
+    // const submitUpdateFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //
+    //     const form = e.target as unknown as HTMLElement;
+    //     const submitForm: any = getFormSubmitData(form);
+    //     const id = (
+    //         form.querySelectorAll('tbody tr')[isEditing as number]?.querySelector('[data-id]') as Element
+    //     )?.getAttribute('data-id') as string;
+    //
+    //     if (id) {
+    //         submitUpdateIndividualHandler(submitForm, parseInt(id));
+    //     } else {
+    //         submitUpdateOrderHandler(entries.table.body, isReordering as number, parseInt(submitForm.order));
+    //     }
+    // };
+    //
+    // const userLogout = () => {
+    //     supabaseClientAction({
+    //         variant: 'user-logout',
+    //         onFinish: () => {
+    //             deleteCookie('user');
+    //             router.push('/');
+    //         },
+    //     });
+    // };
 
-        duplicateArr.splice(to, 0, duplicateArr.splice(from, 1)[0]);
-
-        return duplicateArr;
-    };
-
-    const submitUpdateOrderHandler = (arr: any[], from: number, to: number) => {
-        const reorderArr = reorderArray(arr, from, to);
-        const updateReorder = reorderArr.map((add: any, i: number) => {
-            return {
-                ...add,
-                ...{ order: i },
-            };
-        });
-
-        supabaseClientAction({
-            variant: 'delete-all',
-            relation: entries.slug,
-            onFinish: () => {
-                supabaseClientAction({
-                    variant: 'insert',
-                    relation: entries.slug,
-                    data: updateReorder,
-                    onFinish: () => {
-                        setIsReordering(undefined);
-                        router.refresh();
-                    },
-                });
-            },
-        });
-    };
-
-    const submitUpdateIndividualHandler = (data: unknown, id: number) => {
-        supabaseClientAction({
-            variant: 'update',
-            relation: entries.slug,
-            id: id,
-            data,
-            onFinish: () => {
-                setIsEditing(undefined);
-                router.refresh();
-            },
-        });
-    };
-
-    const submitUpdateFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const form = e.target as unknown as HTMLElement;
-        const submitForm: any = getFormSubmitData(form);
-        const id = (
-            form.querySelectorAll('tbody tr')[isEditing as number]?.querySelector('[data-id]') as Element
-        )?.getAttribute('data-id') as string;
-
-        if (id) {
-            submitUpdateIndividualHandler(submitForm, parseInt(id));
-        } else {
-            submitUpdateOrderHandler(entries.table.body, isReordering as number, parseInt(submitForm.order));
-        }
-    };
-
-    const userLogout = () => {
-        supabaseClientAction({
-            variant: 'user-logout',
-            onFinish: () => {
-                deleteCookie('user');
-                router.push('/');
-            },
-        });
-    };
-
-    useEffect(() => {
-        if (typeof document === undefined) return;
-
-        const data = getEditFormData({
-            slug: entries.slug,
-            tableId,
-            isEditing,
-            isReordering,
-        });
-
-        setForm(data);
-    }, [entries.slug, isEditing, isAddingRow, isReordering]);
+    // useEffect(() => {
+    //     if (typeof document === undefined) return;
+    //
+    //     const data = getEditFormData({
+    //         slug: entries.slug,
+    //         tableId,
+    //         isEditing,
+    //         isReordering,
+    //     });
+    //
+    //     setForm(data);
+    // }, [entries.slug, isEditing, isAddingRow, isReordering]);
 
     return (
         <>
             <div className="mb-5 row align-items-center">
-                <div className="col-md">
-                    <h1 className="mb-0">{entries.title}</h1>
-                </div>
+                <div className="col-md">{/*<h1 className="mb-0">{entries.title}</h1>*/}</div>
                 <div className="col-md-auto">
-                    <Button
-                        variant="outline"
-                        type="button"
-                        events={{ onClick: userLogout }}>
-                        Log out
-                    </Button>
+                    {/*<Button*/}
+                    {/*    variant="outline"*/}
+                    {/*    type="button"*/}
+                    {/*    events={{ onClick: userLogout }}>*/}
+                    {/*    Log out*/}
+                    {/*</Button>*/}
                 </div>
             </div>
             <Table variant="admin-view" />
