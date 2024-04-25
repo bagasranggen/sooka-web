@@ -11,12 +11,14 @@ import { deleteCookie } from 'cookies-next';
 import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
 import Table from '@/components/common/table/Table';
 import Button from '@/components/common/button/Button';
+import { TableAdminViewProps } from '@/components/common/table/tableAdminView/TableAdminView';
 
 export type AdminIndexProps = {
     entries: {
         slug: SupabaseVariantProps;
         // title: string;
         // table: Omit<TableAdminProps, 'variant' | 'slug' | 'id'>;
+        table: Pick<TableAdminViewProps, 'head' | 'body'>;
     };
 };
 
@@ -160,7 +162,11 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     {/*</Button>*/}
                 </div>
             </div>
-            <Table variant="admin-view" />
+            <Table
+                variant="admin-view"
+                head={entries.table.head}
+                body={entries.table.body}
+            />
 
             {typeof isEditing === 'undefined' && typeof isReordering === 'undefined' && (
                 <Button
@@ -169,7 +175,6 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     href={`add/${entries.slug}`}
                     className="w-100 mt-3">
                     ADD
-                    {/*{isAddingRow ? 'Cancel' : 'Add'}*/}
                 </Button>
             )}
         </>
