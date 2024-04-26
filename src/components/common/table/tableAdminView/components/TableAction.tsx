@@ -1,14 +1,14 @@
 import React from 'react';
 
 import type { SupabaseVariantProps } from '@/libs/fetcher';
+import type { InputHookValueProps } from '@/libs/@types';
 import { COMMON_REGEX } from '@/libs/data';
 
 import { CiCircleCheck, CiCircleRemove, CiEdit, CiLineHeight, CiTrash } from 'react-icons/ci';
+import { useForm } from 'react-hook-form';
 
 import Button, { ButtonGroup } from '@/components/common/button/Button';
 import Input from '@/components/common/input/Input';
-import type { InputHookRegisterProps } from '@/libs/@types';
-import { UseFormSetValue } from 'react-hook-form';
 
 export type TableAdminActionLinkProps = {
     page: SupabaseVariantProps;
@@ -25,50 +25,42 @@ export type TableAdminActionProps = {
         type?: string;
         isReordering?: boolean;
     };
-    hook: { setValue: UseFormSetValue<any> } & InputHookRegisterProps;
     events?: {
         onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
         onReorder?: (index: boolean | undefined) => void;
-        onDelete?: (index: number) => void;
     };
 };
 
-const TableAdminAction = ({ link, data, state, hook, events }: TableAdminActionProps) => {
-    const inputStyle = {
-        width: '40px',
-        ...(data.index % 2 ? { background: 'var(--bs-table-striped-bg)' } : {}),
-    } as React.CSSProperties;
+const TableAdminAction = ({ link, data, state, events }: TableAdminActionProps) => {
+    const { register, handleSubmit, setValue } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const typeInputId = 'type';
-
-    // console.log(state);
+    const inputStyle = {
+        width: '40px',
+        background: data.index % 2 ? 'var(--bs-body-bg)' : 'var(--bs-table-striped-bg)',
+    } as React.CSSProperties;
 
     return (
         <td className="text-center">
-            <form onSubmit={events?.onSubmit}>
+            <form onSubmit={events?.onSubmit ? handleSubmit(events?.onSubmit) : undefined}>
                 <Input
                     variant="regular"
                     input={{
                         id: typeInputId,
-                        // value: formatType,
-                        // isHidden: true,
-                        isDisabled: true,
-                        hook: { register: hook.register, options: { required: true } },
+                        isHidden: true,
+                        hook: { register: register },
                     }}
                 />
 
-                {state?.type === 'delete' && (
-                    <Input
-                        variant="regular"
-                        input={{
-                            id: 'productId',
-                            value: data.id,
-                            // isHidden: true,
-                            isDisabled: true,
-                            hook: { register: hook.register, options: { required: true } },
-                        }}
-                    />
-                )}
+                <Input
+                    variant="regular"
+                    input={{
+                        id: 'id',
+                        value: data.id,
+                        isHidden: true,
+                        hook: { register: register },
+                    }}
+                />
 
                 <ButtonGroup>
                     {state?.isReordering ? (
@@ -98,13 +90,23 @@ const TableAdminAction = ({ link, data, state, hook, events }: TableAdminActionP
                                 variant="regular"
                                 className="border-0 text-center"
                                 input={{
-                                    id: 'order',
-                                    value: data.index,
-                                    // value: isEditState?.prevValue?.order ?? '',
-                                    // setValue: isEditState?.setValue,
-                                    // prevValue: isEditState?.prevValue,
-                                    pattern: COMMON_REGEX.NUMBER_VALIDATION,
+                                    id: 'orderFrom',
                                     type: 'number',
+                                    value: data.index,
+                                    pattern: COMMON_REGEX.NUMBER_VALIDATION,
+                                    hook: { register: register },
+                                    isHidden: true,
+                                }}
+                            />
+                            <Input
+                                variant="regular"
+                                className="border-0 text-center"
+                                input={{
+                                    id: 'orderTo',
+                                    type: 'number',
+                                    value: data.index + 1,
+                                    pattern: COMMON_REGEX.NUMBER_VALIDATION,
+                                    hook: { register: register },
                                 }}
                             />
                         </div>
@@ -117,7 +119,7 @@ const TableAdminAction = ({ link, data, state, hook, events }: TableAdminActionP
                             events={{
                                 onClick: () => {
                                     events?.onReorder && events.onReorder(true);
-                                    hook?.setValue('type', 'reorder');
+                                    setValue('type', 'reorder');
                                 },
                             }}>
                             <CiLineHeight size={24} />
@@ -126,28 +128,21 @@ const TableAdminAction = ({ link, data, state, hook, events }: TableAdminActionP
 
                     <Button
                         variant="base"
-                        type="submit"
+                        type={state?.isReordering ? 'button' : 'submit'}
                         className="btn btn-outline-danger"
                         title="cancel"
                         events={{
                             onClick: () => {
-                                // Event Delete Data
-                                // if (!isEdit && !isReorder && !isOpenDetail) {
-                                // events?.onDelete && events.onDelete(datum.id);
-                                // }
-
                                 if (state?.isReordering && events?.onReorder) {
-                                    // hook.setValue(typeInputId, '');
+                                    setValue(typeInputId, '');
                                     events.onReorder(undefined);
                                 }
 
-                                if (!state?.isReordering && events?.onDelete) {
-                                    hook.setValue(typeInputId, 'delete');
-                                    events.onDelete(data.id);
+                                if (!state?.isReordering) {
+                                    setValue(typeInputId, 'delete');
                                 }
                             },
                         }}>
-                        {/*<CiTrash size={20} />*/}
                         {state?.isReordering ? <CiCircleRemove size={24} /> : <CiTrash size={20} />}
                     </Button>
                 </ButtonGroup>

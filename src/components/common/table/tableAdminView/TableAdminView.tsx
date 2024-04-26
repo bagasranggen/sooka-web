@@ -32,3 +32,7 @@ const TableAdminView = ({ head, body, actions }: TableAdminViewProps): React.Rea
 };
 
 export default TableAdminView;
+
+export type * from '@/components/common/table/tableAdminView/components/TableHead';
+export type * from '@/components/common/table/tableAdminView/components/TableBody';
+export type * from '@/components/common/table/tableAdminView/components/TableAction';

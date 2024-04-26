@@ -17,3 +17,7 @@ const Table = (props: TableProps): React.ReactElement =>
     });
 
 export default Table;
+
+export type * from '@/components/common/table/tableAdmin/TableAdmin';
+export type * from '@/components/common/table/tableAdminAdd/TableAdminAdd';
+export type * from '@/components/common/table/tableAdminView/TableAdminView';

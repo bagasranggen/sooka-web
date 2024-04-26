@@ -16,7 +16,7 @@ import TableAdminAction, {
 export type TableAdminBodyProps = {
     entries: any;
     items: TableAdminHeadItemProps[];
-    actions: Pick<TableAdminActionProps, 'state' | 'events' | 'hook'> & {
+    actions: Pick<TableAdminActionProps, 'state' | 'events'> & {
         link: Pick<TableAdminActionLinkProps, 'page'>;
     };
 };
@@ -77,7 +77,7 @@ const TableAdminBody = ({ entries, items, actions }: TableAdminBodyProps) => {
                 const actionsProps = {
                     ...actions,
                     data: {
-                        index: i + 1,
+                        index: i,
                         id: entry.id,
                     },
                     link: {

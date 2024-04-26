@@ -32,7 +32,7 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
         case 'button':
         case 'submit':
         case 'reset':
-            const { events, ...restButton } = props;
+            const { events, variant: buttonVariant, ...restButton } = props;
 
             let eventsButton = {};
             if (events?.onClick) {
@@ -48,7 +48,7 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
             );
 
         case 'anchor':
-            const { openNewTab, variant, type, className, disabled, ...restAnchor } = props;
+            const { openNewTab, variant: anchorVariant, type, className, disabled, ...restAnchor } = props;
 
             let anchorClass: string | string[] = className ? [className] : [];
             if (disabled) anchorClass.push('btn--disabled');

@@ -24,21 +24,14 @@ export const generateMetadata = ({ params }: PageProps) => {
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as SupabaseVariantProps;
-    const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]();
+    const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]('', 'view');
     const header = SUPABASE_HEADER_HANDLES[slug].filter((header: SupabaseHeaderProps) => !header?.isDetail);
-
-    // const { data } = await supabaseServerAction({
-    //     variant: 'fetch',
-    //     relation: slug,
-    // });
-
-    console.log(data);
 
     return (
         <AdminIndex
             entries={{
                 slug,
-                // data: data.data,
+                data: data.data,
                 title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
                 table: {
                     head: header,

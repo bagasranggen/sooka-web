@@ -1,16 +1,16 @@
 import { supabaseServerAction } from '@/libs/fetcher';
 import type { ImagesGalleryItemProps } from '@/components/admin/form/formProductListing/components/ImagesGalleryField';
 
-const formProductListingData = async (slug?: string) => {
+const formProductListingData = async (slug?: string, variant?: 'view' | 'add' | 'edit') => {
     const { data: products } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
     const { data: categories } = await supabaseServerAction({ variant: 'fetch', relation: 'categories' });
 
     let data: any = products;
+    let imageGallery: ImagesGalleryItemProps[] = [];
 
     if (slug) {
         data = products?.find((datum: any) => datum.slug === slug);
 
-        let imageGallery: ImagesGalleryItemProps[] = [];
         if (data?.gallery || data?.gallery.length > 0) {
             new Array(data.gallery.length / 2).fill(0).map((item: number, i: number) => {
                 let index = 0;
@@ -24,8 +24,11 @@ const formProductListingData = async (slug?: string) => {
 
                 imageGallery.push(tempData);
             });
-            data = { ...data, imageGallery };
         }
+    }
+
+    if (variant !== 'view') {
+        data = { ...data, imageGallery };
     }
 
     return {

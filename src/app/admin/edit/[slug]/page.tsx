@@ -9,9 +9,8 @@ import Form from '@/components/admin/form/Form';
 export type PageProps = DynamicPageProps;
 
 const Page = async ({ params, searchParams }: PageProps): Promise<React.ReactElement> => {
-    const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES](
-        searchParams?.slug as string
-    );
+    const slug = params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES;
+    const data = await ADMIN_ENTRY_DATA_HANDLES[slug](searchParams?.slug as string, 'edit');
 
     if (!data.data) notFound();
 

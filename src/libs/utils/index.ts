@@ -12,6 +12,7 @@ export * from './getResponsiveClass';
 export * from './getSpacingValue';
 export * from './getWhatsappEncoded';
 export * from './joinClassnameString';
+export * from './reorderArray';
 export * from './resizeFakerImage';
 export * from './sortArrayByNumber';
 export * from './truncateString';

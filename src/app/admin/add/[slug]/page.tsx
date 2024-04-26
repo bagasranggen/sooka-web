@@ -8,7 +8,7 @@ import Form from '@/components/admin/form/Form';
 export type PageProps = DynamicPageProps;
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
-    const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]();
+    const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]('', 'add');
 
     return (
         <Form
