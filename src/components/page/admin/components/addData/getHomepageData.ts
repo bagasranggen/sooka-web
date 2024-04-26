@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
 export const getHomepageData = async () => {
     const { data: categories } = await supabaseServerAction({

@@ -4,9 +4,11 @@ import formProductListing from '@/components/admin/form/formProductListing/FormP
 
 import { default as productListing } from '@/components/admin/form/formProductListing/FormProductListingData';
 import { default as homepageHighlight } from '@/components/admin/form/formHomepageHighlight/FormHomepageHighlightData';
+import { default as homepageCarousel } from '@/components/admin/form/formHomepageCarousel/FormHomepageCarouselData';
 
 export const ADMIN_ENTRY_VARIANTS = {
     HOMEPAGE: 'homepage',
+    HOMEPAGE_CAROUSEL: 'homepageCarousel',
     HOMEPAGE_HIGHLIGHT: 'homepageHighlight',
     PRODUCT_LISTING: 'productListing',
 } as const;
@@ -17,6 +19,7 @@ export const ADMIN_ENTRY_HANDLES = {
 
 export const ADMIN_ENTRY_DATA_HANDLES = {
     productListing,
+    homepageCarousel,
     homepageHighlight,
 };
 

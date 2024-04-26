@@ -26,6 +26,8 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]('', 'view');
     const header = SUPABASE_HEADER_HANDLES[slug].filter((header: SupabaseHeaderProps) => !header?.isDetail);
 
+    console.log(data);
+
     return (
         <AdminIndex
             entries={{

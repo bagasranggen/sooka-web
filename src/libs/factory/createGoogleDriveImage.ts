@@ -8,7 +8,7 @@ export type GoogleDriveImage = {
 };
 
 export const createGoogleDriveImage = ({ alt, imageSizes, imageSources }: GoogleDriveImage) => {
-    const sizes = IMAGES_SIZE_HANDLES[imageSizes];
+    const sizes = IMAGES_SIZE_HANDLES?.[imageSizes];
 
     return imageSources.map((image: string, i: number) => ({
         src: getGoogleDriveImage(image),

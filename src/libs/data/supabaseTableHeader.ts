@@ -72,14 +72,12 @@ export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
 
 export const SUPABASE_HEADER_HOMEPAGE_CAROUSEL: SupabaseHeaderProps[] = [
     ...SUPABASE_COMMON({ size: '30%' }).TITLE,
-    ...SUPABASE_COMMON({ size: '10%', relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
     {
-        slug: 'categories_slug',
-        label: 'Categories Slug',
+        slug: 'uri',
+        label: 'Link',
         editType: 'text',
-        isHidden: true,
+        size: '30%',
     },
-    ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
     ...SUPABASE_COMMON({ size: '30%' }).IMAGES,
 ];

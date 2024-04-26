@@ -1,95 +1,244 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
+import type { InputHookValueProps } from '@/libs/@types';
+import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
+import { joinClassnameString } from '@/libs/utils';
+import { supabaseClientAction } from '@/libs/fetcher';
 
-import Button from '@/components/common/button/Button';
-import FormHomepageCarouselItem, { FormHomepageCarouselItemProps } from './FormHomepageCarouselItem';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Col, Row } from 'react-bootstrap';
+
+import Input, { InputSelectItem } from '@/components/common/input/Input';
+import Button, { ButtonWrapper } from '@/components/common/button/Button';
 
 export type FormHomepageCarouselProps = {
     variant: typeof SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL;
-} & Pick<FormHomepageCarouselItemProps, 'state'>;
-
-const initData = {
-    title: '',
-    is_show: true,
-    selectFrom: '',
-    selectCategory: '',
-    href: '',
-    target: false,
-    imageDesktop: '',
-    imageMobile: '',
+    type: 'add' | 'edit';
+    entries?: any;
 };
 
-const FormHomepageCarousel = ({ state }: FormHomepageCarouselProps): React.ReactElement => {
-    const [formData, setFormData] = useState<any[]>(state.carousels);
+const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): React.ReactElement => {
+    const router = useRouter();
+    const { data, order, urlOptions, selectedFrom } = entries;
 
-    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
-        let data: any[] = [];
-        formData.map((item: any) => {
-            const { imageDesktop, imageMobile, ...rest } = item;
+    const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
+        const { imageDesktop, imageMobile, ...restData } = formData;
 
-            let tempData: any = {};
+        const submitData = {
+            ...restData,
+            images: [imageDesktop, imageMobile],
+        };
 
-            tempData = rest;
-            tempData.images = [imageDesktop, imageMobile];
+        if (type === 'edit') {
+            await supabaseClientAction({
+                variant: 'update',
+                relation: 'homepageCarousel',
+                id: parseInt(data.id),
+                data: submitData,
+                onFinish: ({ error }) => {
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                },
+            });
+        }
 
-            data.push(tempData);
-        });
-
-        console.log(SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL, data);
+        if (type === 'add') {
+            await supabaseClientAction({
+                variant: 'insert',
+                relation: 'homepageCarousel',
+                data: [{ ...submitData, order: order }],
+                onFinish: ({ error }) => {
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                },
+            });
+        }
     };
 
-    const addItemHandler = () => {
-        setFormData([...formData, initData]);
-    };
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
-    const deleteItemHandler = (index: number) => {
-        const duplicateData = [...formData];
-        duplicateData.splice(index, 1);
+    const [selectFrom, setSelectFrom] = useState<any>(selectedFrom ?? '');
+    const selectFromOptions: InputSelectItem[] = [
+        { label: '-- Select From --', slug: '' },
+        { label: 'Categories', slug: 'categories' },
+        { label: 'Products', slug: 'products' },
+        { label: 'Custom', slug: 'custom' },
+    ];
+    const options: InputSelectItem[] = selectFrom ? urlOptions[selectFrom] : [];
 
-        setFormData(duplicateData);
-    };
-
-    // useEffect(() => {
-    //     console.log(formData);
-    // }, [formData]);
+    let urlInput = <></>;
+    if (selectFrom === 'categories' || selectFrom === 'products') {
+        urlInput = (
+            <Input
+                variant="regular"
+                label={selectFrom}
+                input={{
+                    id: 'uri',
+                    type: 'select',
+                    items: options,
+                    value: data?.uri ?? '',
+                    hook: { register: register, options: { required: true } },
+                }}
+                validation={{
+                    isError: !!errors?.uri,
+                    message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                }}
+            />
+        );
+    }
+    if (selectFrom === 'custom') {
+        urlInput = (
+            <Input
+                variant="regular"
+                label={selectFrom}
+                input={{
+                    id: 'uri',
+                    type: 'text',
+                    value: data?.uri ?? '',
+                    hook: { register: register, options: { required: true } },
+                }}
+                validation={{
+                    isError: !!errors?.uri,
+                    message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                }}
+            />
+        );
+    }
 
     return (
-        <form
-            id={SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}
-            onSubmit={submitHandler}>
-            <Button
-                variant="base"
-                type="submit"
-                className="d-none">
-                SUBMIT
-            </Button>
+        <>
+            <h1>{/*{type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}*/}</h1>
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
+                <Row className={gutterClass}>
+                    <Col lg={8}>
+                        <Input
+                            variant="regular"
+                            label="Name"
+                            input={{
+                                id: 'title',
+                                type: 'text',
+                                value: data?.title ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.title,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={'auto'}>
+                        <Input
+                            variant="regular"
+                            label="Is Show"
+                            input={{
+                                id: 'is_show',
+                                type: 'switch',
+                                color: 'primary',
+                                // align: 'left',
+                                isChecked: data?.is_sold ?? true,
+                                hook: { register: register },
+                            }}
+                            validation={{
+                                isError: !!errors?.['is_sold'],
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={'auto'}>
+                        <Input
+                            variant="regular"
+                            label="Open New Tab"
+                            input={{
+                                id: 'target',
+                                type: 'switch',
+                                color: 'primary',
+                                // align: 'left',
+                                isChecked: data?.target ?? false,
+                                hook: { register: register },
+                            }}
+                            validation={{
+                                isError: !!errors?.['is_sold'],
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                </Row>
 
-            {formData.map((item: any, i: number) => (
-                <FormHomepageCarouselItem
-                    key={i}
-                    state={state.categories}
-                    value={formData[i]}
-                    setValue={setFormData}
-                    prevValue={formData}
-                    index={i}
-                    isLast={i === formData.length - 1}
-                    events={{ onDelete: deleteItemHandler }}
-                />
-            ))}
+                <Row className={gutterClass}>
+                    <Col lg={3}>
+                        <Input
+                            variant="regular"
+                            label="Category"
+                            input={{
+                                id: 'selectFrom',
+                                type: 'select',
+                                items: selectFromOptions,
+                                value: selectFrom,
+                                setValue: setSelectFrom,
+                                // hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.category,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={4}>{urlInput}</Col>
+                </Row>
 
-            <Button
-                variant="outline"
-                type="button"
-                className="mt-3 w-100"
-                events={{ onClick: addItemHandler }}>
-                ADD NEW CAROUSEL
-            </Button>
-        </form>
+                <Row className={gutterClass}>
+                    <Col lg={6}>
+                        <Input
+                            variant="regular"
+                            label="Image Desktop"
+                            input={{
+                                id: 'imageDesktop',
+                                type: 'text',
+                                value: data?.images?.[0] ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.imageDesktop,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={6}>
+                        <Input
+                            variant="regular"
+                            label="Image Mobile"
+                            input={{
+                                id: 'imageMobile',
+                                type: 'text',
+                                value: data?.images?.[1] ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.imageMobile,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                </Row>
+
+                <ButtonWrapper className="mt-3 d-block text-end">
+                    <Button
+                        variant="outline"
+                        type="submit"
+                        className="flex-grow-0">
+                        Submit
+                    </Button>
+                </ButtonWrapper>
+            </form>
+        </>
     );
 };
 

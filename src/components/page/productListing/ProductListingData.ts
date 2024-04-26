@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { createProductListingData, ProductListingDataProps } from '@/libs/factory';
 
 import type { ProductListingIndexProps } from '@/components/page/productListing/ProductListingIndex';

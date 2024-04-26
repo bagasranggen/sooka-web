@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { createProductListingData } from '@/libs/factory';
 
 import slugify from 'react-slugify';

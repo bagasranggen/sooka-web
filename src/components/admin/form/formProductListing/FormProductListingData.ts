@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import type { ImagesGalleryItemProps } from '@/components/admin/form/formProductListing/components/ImagesGalleryField';
 
 const formProductListingData = async (slug?: string, variant?: 'view' | 'add' | 'edit') => {

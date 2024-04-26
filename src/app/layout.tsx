@@ -11,7 +11,7 @@ import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
 
 import type { NavigationItemProps } from '@/libs/@types';
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { Providers, reduxStore } from '@/store/redux';
 
 import Navigation from '@/components/layout/navigation/Navigation';

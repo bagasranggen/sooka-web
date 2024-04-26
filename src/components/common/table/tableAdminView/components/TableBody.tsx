@@ -5,6 +5,7 @@ import { joinClassnameString, truncateString } from '@/libs/utils';
 
 import { CiCircleCheck, CiCircleRemove } from 'react-icons/ci';
 import ReactHtmlParser from 'react-html-parser';
+import slugify from 'react-slugify';
 
 import Button from '@/components/common/button/Button';
 import type { TableAdminHeadItemProps } from '@/components/common/table/tableAdminView/components/TableHead';
@@ -42,14 +43,14 @@ const RenderBooleanData = ({ check }: { check: boolean }) => {
 const RenderImagesData = ({ items }: { items: string[] }) => {
     return (
         <ul>
-            {items.map((item: string, i: number) => (
+            {items?.map((item: string, i: number) => (
                 <li key={i}>
                     <Button
                         variant="base"
                         type="anchor"
                         href={item}
                         openNewTab>
-                        {truncateString(item, { start: 32, end: 61 })}
+                        {truncateString(item, { start: 32, end: 58 })}
                     </Button>
                 </li>
             ))}
@@ -74,6 +75,10 @@ const TableAdminBody = ({ entries, items, actions }: TableAdminBodyProps) => {
     return (
         <tbody>
             {entries?.map((entry: any, i: number) => {
+                let slug = '';
+                if (entry?.title) slug = slugify(entry.title);
+                if (entry?.slug) slug = entry.slug;
+
                 const actionsProps = {
                     ...actions,
                     data: {
@@ -82,7 +87,7 @@ const TableAdminBody = ({ entries, items, actions }: TableAdminBodyProps) => {
                     },
                     link: {
                         page: actions.link.page,
-                        slug: entry?.slug ?? '',
+                        slug: slug,
                     },
                 };
 

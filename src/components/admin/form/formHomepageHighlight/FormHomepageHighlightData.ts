@@ -1,6 +1,6 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
-const formHomepageHighlightData = async (slug?: string) => {
+const formHomepageHighlightData = async (slug?: string, variant?: 'view' | 'add' | 'edit') => {
     const { data: products } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
     const { data: highlights } = await supabaseServerAction({ variant: 'fetch', relation: 'homepageHighlight' });
 
@@ -11,7 +11,7 @@ const formHomepageHighlightData = async (slug?: string) => {
         data = products?.find((datum: any) => datum.slug === slug);
     }
 
-    if (!slug) {
+    if (variant !== 'edit') {
         const temp: any[] = [];
 
         highlights?.map((item: any) => {
