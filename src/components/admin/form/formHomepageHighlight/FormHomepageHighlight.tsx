@@ -27,12 +27,8 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
     const {
         register,
         handleSubmit,
-        setValue,
         formState: { errors },
-        control,
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
-
-    // console.log(entries);
 
     const productSelectOptions = products
         ? products?.map((item: any) => ({
@@ -42,8 +38,6 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
         : [];
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
-        console.log('form submit', formData);
-
         if (isNaN(parseInt(formData.product_id))) return;
 
         const submitData = {
@@ -58,7 +52,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 id: parseInt(data.id),
                 data: submitData,
                 onFinish: ({ error }) => {
-                    // if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
                 },
             });
         }
@@ -69,7 +63,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 relation: 'homepageHighlight',
                 data: [submitData],
                 onFinish: ({ error }) => {
-                    // if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
                 },
             });
         }
@@ -85,11 +79,10 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                     <Col lg={6}>
                         <Input
                             variant="regular"
-                            // label="Category"
                             input={{
                                 id: 'product_id',
                                 type: 'select',
-                                items: [{ label: '-- Select Product Item --' }, ...productSelectOptions],
+                                items: [{ label: '-- Select Product Item --', slug: '' }, ...productSelectOptions],
                                 value: data?.id ?? '',
                                 hook: { register: register, options: { required: true } },
                             }}

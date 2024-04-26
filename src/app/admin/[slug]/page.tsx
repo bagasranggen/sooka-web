@@ -4,7 +4,6 @@ import type { DynamicPageProps } from '@/libs/@types';
 import type { SupabaseVariantProps } from '@/libs/fetcher';
 import type { SupabaseHeaderProps } from '@/libs/data';
 import { ADMIN_ENTRY_DATA_HANDLES, SUPABASE_HANDLES, SUPABASE_HEADER_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
-import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
 import AdminIndex from '@/components/page/admin/AdminIndex';
 
@@ -35,7 +34,7 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
                 title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
                 table: {
                     head: header,
-                    body: data.data,
+                    body: data?.dataView ?? data.data,
                     link: {
                         page: slug,
                     },

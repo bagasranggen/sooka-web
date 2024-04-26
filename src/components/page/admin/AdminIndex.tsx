@@ -27,8 +27,6 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
     const [isReordering, setIsReordering] = useState<undefined | boolean>(undefined);
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = (data: InputHookValueProps) => {
-        console.log(data);
-
         switch (data.type) {
             case 'reorder':
                 console.log('reorder');

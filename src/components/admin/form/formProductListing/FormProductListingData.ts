@@ -33,7 +33,8 @@ const formProductListingData = async (slug?: string, variant?: 'view' | 'add' | 
 
     return {
         order: products?.length,
-        data: data,
+        data,
+        dataView: undefined,
         categories,
     };
 };

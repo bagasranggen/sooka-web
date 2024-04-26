@@ -1,8 +1,8 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 
+import type { DynamicPageProps } from '@/libs/@types';
 import { ADMIN_ENTRY_DATA_HANDLES } from '@/libs/handles';
-import { DynamicPageProps } from '@/libs/@types';
 
 import Form from '@/components/admin/form/Form';
 

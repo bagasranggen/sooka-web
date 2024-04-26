@@ -167,7 +167,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                                 type: 'switch',
                                 color: 'primary',
                                 isChecked: !data?.['is_sold'] ?? true,
-                                hook: { register: register, options: { required: true } },
+                                hook: { register: register },
                             }}
                             validation={{
                                 isError: !!errors?.['is_sold'],
