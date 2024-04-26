@@ -24,8 +24,7 @@ const formProductListingData = async (slug?: string) => {
 
                 imageGallery.push(tempData);
             });
-
-            data = { ...data, ...imageGallery };
+            data = { ...data, imageGallery };
         }
     }
 

@@ -38,10 +38,14 @@ const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
         <AdminIndex
             entries={{
                 slug,
-                // title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
+                // data: data.data,
+                title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
                 table: {
                     head: header,
                     body: data.data,
+                    link: {
+                        page: slug,
+                    },
                 },
             }}
         />

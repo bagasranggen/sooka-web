@@ -6,6 +6,7 @@ export type SupabaseHeaderProps = {
     size?: string;
     align?: 'left' | 'center' | 'right';
     editType?: typeof INPUT_TYPE.TEXT | typeof INPUT_TYPE.SWITCH;
+    isInverted?: boolean;
     isDetail?: boolean;
     isHidden?: boolean;
 } & Pick<SupabaseCommonProps, 'relation'>;
@@ -88,27 +89,21 @@ export const SUPABASE_HEADER_PRODUCT_LISTING: SupabaseHeaderProps[] = [
         slug: 'name',
         label: 'Name',
         editType: 'text',
-        size: '35%',
+        size: '30%',
     },
     {
         slug: 'category',
         label: 'Category',
         editType: 'text',
-        size: '12%',
+        size: '10%',
     },
     {
-        slug: 'ingredients',
-        label: 'Ingredients',
+        slug: 'is_sold',
+        label: 'Availability',
+        isInverted: true,
         editType: 'text',
-        size: '30%',
-        isDetail: true,
-    },
-    {
-        slug: 'package',
-        label: 'Package',
-        editType: 'text',
-        size: '30%',
-        isDetail: true,
+        align: 'center',
+        size: '15%',
     },
     ...SUPABASE_COMMON({ size: '35%' }).IMAGES,
 ];
