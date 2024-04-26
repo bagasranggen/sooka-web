@@ -2,12 +2,14 @@ import { HOMEPAGE_ENTRY } from '@/libs/data/adminEntryType';
 
 import formProductListing from '@/components/admin/form/formProductListing/FormProductListing';
 
-import { default as productListing } from '@/components/admin/form/formProductListing/FormProductListingData';
+import { default as categories } from '@/components/admin/form/formCategories/FormCategoriesData';
 import { default as homepageHighlight } from '@/components/admin/form/formHomepageHighlight/FormHomepageHighlightData';
 import { default as homepageCarousel } from '@/components/admin/form/formHomepageCarousel/FormHomepageCarouselData';
+import { default as productListing } from '@/components/admin/form/formProductListing/FormProductListingData';
 
 export const ADMIN_ENTRY_VARIANTS = {
     HOMEPAGE: 'homepage',
+    CATEGORIES: 'categories',
     HOMEPAGE_CAROUSEL: 'homepageCarousel',
     HOMEPAGE_HIGHLIGHT: 'homepageHighlight',
     PRODUCT_LISTING: 'productListing',
@@ -18,9 +20,10 @@ export const ADMIN_ENTRY_HANDLES = {
 };
 
 export const ADMIN_ENTRY_DATA_HANDLES = {
-    productListing,
+    categories,
     homepageCarousel,
     homepageHighlight,
+    productListing,
 };
 
 export const ADMIN_ENTRY_EDIT_HANDLES = {
