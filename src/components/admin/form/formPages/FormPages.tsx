@@ -1,78 +1,165 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
+import type { InputHookValueProps } from '@/libs/@types';
+import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
-import { getFormSubmitData } from '@/libs/utils';
+import { joinClassnameString } from '@/libs/utils';
+import { supabaseClientAction } from '@/libs/fetcher';
 
+import { Col, Row } from 'react-bootstrap';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import slugify from 'react-slugify';
 
-import Input from '@/components/common/input/Input';
-import Button from '@/components/common/button/Button';
+import Input, { InputSelectItem } from '@/components/common/input/Input';
+import Button, { ButtonWrapper } from '@/components/common/button/Button';
+import FormTitle, { type FormTitleProps } from '@/components/admin/form/components/FormTitle';
+import FormSelectUri from '@/components/admin/form/components/FormSelectUri';
 
 export type FormPagesProps = {
     variant: typeof SUPABASE_VARIANTS.PAGES;
+    type: FormTitleProps['variant'];
+    entries?: any;
 };
 
-const FormPages = ({}: FormPagesProps): React.ReactElement => {
-    const [formData, setFormData] = useState<any>({});
+const FormPages = ({ type, entries }: FormPagesProps): React.ReactElement => {
+    const router = useRouter();
+    const { data, order, urlOptions, selectedFrom } = entries;
 
-    const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
-        const submitData = getFormSubmitData(e.target as HTMLElement);
+    const {
+        setValue,
+        control,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
-        console.log(SUPABASE_VARIANTS.PAGES, submitData);
+    const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
+        let submitData: any = {
+            short_description: formData.short_description,
+        };
+
+        if (selectFrom && selectFrom === 'custom') {
+            submitData.title = formData.title;
+            submitData.slug = slugify(formData.title);
+        }
+        if (selectFrom && selectFrom !== 'custom') {
+            submitData.slug = formData.slug;
+
+            if (type === 'add') {
+                submitData.title = data.find((datum: any) => datum.slug === formData.slug).title;
+            }
+
+            if (type === 'edit') {
+                submitData.title = data.title;
+            }
+        }
+
+        if (type === 'add') {
+            submitData.order = order;
+        }
+
+        if (type === 'edit') {
+            await supabaseClientAction({
+                variant: 'update',
+                relation: 'pages',
+                id: parseInt(data.id),
+                data: submitData,
+                onFinish: ({ error }) => {
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.PAGES}`);
+                        router.refresh();
+                    }
+                },
+            });
+        }
+
+        if (type === 'add') {
+            await supabaseClientAction({
+                variant: 'insert',
+                relation: 'pages',
+                data: [submitData],
+                onFinish: ({ error }) => {
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.PAGES}`);
+                        router.refresh();
+                    }
+                },
+            });
+        }
     };
 
-    return (
-        <form
-            id={SUPABASE_VARIANTS.PAGES}
-            onSubmit={submitHandler}>
-            <Button
-                variant="base"
-                type="submit"
-                className="d-none">
-                SUBMIT
-            </Button>
+    const [selectFrom, setSelectFrom] = useState<any>(selectedFrom ?? '');
+    const selectFromOptions: InputSelectItem[] = [
+        { label: '-- Select From --', slug: '' },
+        { label: 'Categories', slug: 'categories' },
+        { label: 'Products', slug: 'products' },
+        { label: 'Custom', slug: 'custom' },
+    ];
+    const options: InputSelectItem[] = selectFrom ? urlOptions[selectFrom] : [];
 
-            <div className="row gx-2 gy-3">
-                <div className="col-md-8">
-                    <Input
-                        variant="regular"
-                        label="Title"
-                        input={{
-                            id: 'title',
-                            value: formData?.title ?? '',
-                            setValue: setFormData,
-                            prevValue: formData,
-                        }}
-                    />
-                </div>
-                <div className="col-md-4">
-                    <Input
-                        variant="regular"
-                        label="slug"
-                        input={{
-                            id: 'slug',
-                            value: formData?.title ? slugify(formData.title) : '',
-                            isDisabled: true,
-                        }}
-                    />
-                </div>
-                <div className="col-12">
-                    <Input
-                        variant="regular"
-                        label="Short Description"
-                        input={{
-                            id: 'short_description',
-                            type: 'ck-editor',
-                            value: formData?.['short_description'] ?? '',
-                        }}
-                    />
-                </div>
-            </div>
-        </form>
+    return (
+        <>
+            <FormTitle variant={type}>{data?.title ?? 'New Pages'}</FormTitle>
+            <form onSubmit={handleSubmit(onSubmitHandler)}>
+                <Row className={gutterClass}>
+                    <Col lg={3}>
+                        <Input
+                            variant="regular"
+                            label="Category"
+                            input={{
+                                id: 'selectFrom',
+                                type: 'select',
+                                items: selectFromOptions,
+                                value: selectFrom,
+                                setValue: setSelectFrom,
+                            }}
+                            validation={{
+                                isError: !!errors?.category,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={4}>
+                        <FormSelectUri
+                            data={data}
+                            id={{
+                                select: 'slug',
+                                text: 'title',
+                            }}
+                            selectFrom={selectFrom}
+                            options={options}
+                            hook={{ register, errors }}
+                        />
+                    </Col>
+                </Row>
+
+                <Input
+                    variant="regular"
+                    label="Description"
+                    wrapperClassName="mt-2"
+                    input={{
+                        id: 'short_description',
+                        type: 'ck-editor',
+                        value: data?.short_description ?? '',
+                        hook: { register: register, control: control, setValue: setValue },
+                    }}
+                />
+
+                <ButtonWrapper className="mt-3 d-block text-end">
+                    <Button
+                        variant="outline"
+                        type="submit"
+                        className="flex-grow-0">
+                        Submit
+                    </Button>
+                </ButtonWrapper>
+            </form>
+        </>
     );
 };
 

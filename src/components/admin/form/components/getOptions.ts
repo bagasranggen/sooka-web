@@ -12,23 +12,26 @@ export type GetOptionsItemProps = {
 
 export type GetOptionsProps = {
     items: GetOptionsItemProps[];
+    valueType?: 'uri' | 'slug';
 };
 
 export type OptionsReturnProps = Record<string, InputSelectItem[]>;
 
-export const getOptions = ({ items }: GetOptionsProps): OptionsReturnProps => {
+export const getOptions = ({ items, valueType }: GetOptionsProps): OptionsReturnProps => {
     const urlOptions: Record<string, InputSelectItem[]> = {};
+    let type = '/';
+    if (valueType === 'slug') type = '';
 
     items.map((item: GetOptionsItemProps) => {
         urlOptions[item.slug] = [{ label: item.label, slug: '' }];
         item.data.map((datum: any) => {
             let slug = '';
             if (typeof item.keys.slug === 'string') {
-                slug = '/' + datum[item.keys.slug];
+                slug = `${type}${datum[item.keys.slug]}`;
             }
             if (typeof item.keys.slug === 'object') {
                 item.keys.slug.map((key: string) => {
-                    slug += `/${datum[key]}`;
+                    slug += `${type}${datum[key]}`;
                 });
             }
 

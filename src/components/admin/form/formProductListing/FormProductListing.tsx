@@ -18,10 +18,11 @@ import Button, { ButtonWrapper } from '@/components/common/button/Button';
 import ImagesGalleryField, {
     type ImagesGalleryItemProps,
 } from '@/components/admin/form/formProductListing/components/ImagesGalleryField';
+import FormTitle, { type FormTitleProps } from '@/components/admin/form/components/FormTitle';
 
 export type FormProductListingProps = {
     variant: typeof SUPABASE_VARIANTS.PRODUCT_LISTING;
-    type: 'add' | 'edit';
+    type: FormTitleProps['variant'];
     entries?: any;
 };
 
@@ -82,7 +83,10 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                 id: parseInt(data.id),
                 data: submitData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -93,7 +97,10 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                 relation: 'productListing',
                 data: [{ ...submitData, slug: slugify(formData.name), order: order }],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -101,9 +108,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
 
     return (
         <>
-            <h1>
-                {type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}
-            </h1>
+            <FormTitle variant={type}>{data?.name ?? 'New Product Listing'}</FormTitle>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={gutterClass}>
                     <Col lg={8}>

@@ -43,7 +43,10 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 id: parseInt(data.id),
                 data: formData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -54,7 +57,10 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 relation: 'navigation',
                 data: [{ ...formData, order: order }],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
+                        router.refresh();
+                    }
                 },
             });
         }

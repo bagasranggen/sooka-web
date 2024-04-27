@@ -96,7 +96,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         <>
             <div className="mb-5 row align-items-center">
                 <div className="col-md">
-                    <h1 className="mb-0">{entries.title}</h1>
+                    <h1 className="fw-300 mb-0">{entries.title}</h1>
                 </div>
                 <div className="col-md-auto">
                     <Button

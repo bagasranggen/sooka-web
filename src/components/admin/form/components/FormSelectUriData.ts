@@ -1,24 +1,36 @@
 import { supabaseServerAction } from '@/libs/fetcher';
-import { checkOptions, getOptions } from '@/components/admin/form/components/getOptions';
+import { checkOptions, getOptions, GetOptionsProps } from '@/components/admin/form/components/getOptions';
 import type { AdminDataProps } from '@/libs/@types';
 
-const formSelectUriData = async ({ slug, variant, uri }: AdminDataProps & { uri?: string }) => {
+const formSelectUriData = async ({
+    slug,
+    variant,
+    uri,
+    valueType,
+}: AdminDataProps & Pick<GetOptionsProps, 'valueType'> & { uri?: string }) => {
     const { data: categories } = await supabaseServerAction({ variant: 'fetch', relation: 'categories' });
     const { data: productListing } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
 
     const urlOptions: any = getOptions({
+        valueType: valueType ?? 'uri',
         items: [
             {
                 data: categories ?? [],
                 slug: 'categories',
                 label: '-- Select From Categories --',
-                keys: { label: 'label', slug: 'slug' },
+                keys: {
+                    label: 'label',
+                    slug: 'slug',
+                },
             },
             {
                 data: productListing ?? [],
                 slug: 'products',
                 label: '-- Select From Products --',
-                keys: { label: 'name', slug: ['category', 'slug'] },
+                keys: {
+                    label: 'name',
+                    slug: valueType === 'slug' ? 'slug' : ['category', 'slug'],
+                },
             },
         ],
     });

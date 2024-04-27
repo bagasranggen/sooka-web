@@ -11,14 +11,15 @@ import { joinClassnameString } from '@/libs/utils';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
+import slugify from 'react-slugify';
 
 import Input from '@/components/common/input/Input';
 import Button from '@/components/common/button/Button';
-import slugify from 'react-slugify';
+import FormTitle, { type FormTitleProps } from '@/components/admin/form/components/FormTitle';
 
 export type FormCategoriesProps = {
     variant: typeof SUPABASE_VARIANTS.CATEGORIES;
-    type: 'add' | 'edit';
+    type: FormTitleProps['variant'];
     entries?: any;
 };
 
@@ -47,7 +48,10 @@ const FormCategories = ({ type, entries }: FormCategoriesProps) => {
                 id: parseInt(data.id),
                 data: submitData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.CATEGORIES}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.CATEGORIES}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -58,7 +62,10 @@ const FormCategories = ({ type, entries }: FormCategoriesProps) => {
                 relation: 'categories',
                 data: [{ ...submitData, order: order }],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.CATEGORIES}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.CATEGORIES}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -66,7 +73,7 @@ const FormCategories = ({ type, entries }: FormCategoriesProps) => {
 
     return (
         <>
-            <h1>{/*{type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}*/}</h1>
+            <FormTitle variant={type}>{data?.label ?? 'New Category'}</FormTitle>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={gutterClass}>
                     <Col lg={5}>

@@ -15,10 +15,11 @@ import { Col, Row } from 'react-bootstrap';
 import Input, { InputSelectItem } from '@/components/common/input/Input';
 import Button, { ButtonWrapper } from '@/components/common/button/Button';
 import FormSelectUri from '@/components/admin/form/components/FormSelectUri';
+import FormTitle, { type FormTitleProps } from '@/components/admin/form/components/FormTitle';
 
 export type FormHomepageCarouselProps = {
     variant: typeof SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL;
-    type: 'add' | 'edit';
+    type: FormTitleProps['variant'];
     entries?: any;
 };
 
@@ -47,7 +48,10 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                 id: parseInt(data.id),
                 data: submitData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -58,7 +62,10 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                 relation: 'homepageCarousel',
                 data: [{ ...submitData, order: order }],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -77,7 +84,7 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
 
     return (
         <>
-            <h1>{/*{type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}*/}</h1>
+            <FormTitle variant={type}>{data?.title ?? 'New Carousel Item'}</FormTitle>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={gutterClass}>
                     <Col lg={8}>

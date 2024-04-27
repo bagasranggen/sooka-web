@@ -13,10 +13,11 @@ import { Col, Row } from 'react-bootstrap';
 
 import Button from '@/components/common/button/Button';
 import Input from '@/components/common/input/Input';
+import FormTitle, { type FormTitleProps } from '@/components/admin/form/components/FormTitle';
 
 export type FormHomepageHighlightProps = {
     variant: typeof SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT;
-    type: 'add' | 'edit';
+    type: FormTitleProps['variant'];
     entries?: any;
 };
 
@@ -52,7 +53,10 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 id: parseInt(data.id),
                 data: submitData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -63,7 +67,10 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 relation: 'homepageHighlight',
                 data: [submitData],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                    if (!error) {
+                        router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
+                        router.refresh();
+                    }
                 },
             });
         }
@@ -71,9 +78,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
 
     return (
         <>
-            <h1>
-                {type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Homepage Highlight'}
-            </h1>
+            <FormTitle variant={type}>{data?.name ?? 'New Highlight Item'}</FormTitle>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={COMMON_ADMIN.GUTTER}>
                     <Col lg={6}>

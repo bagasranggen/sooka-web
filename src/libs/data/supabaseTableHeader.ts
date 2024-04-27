@@ -67,8 +67,8 @@ export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [
 ];
 
 export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [
-    ...SUPABASE_COMMON({ size: '16%' }).SLUG,
     ...SUPABASE_COMMON({ size: '20%' }).TITLE,
+    ...SUPABASE_COMMON({ size: '16%' }).SLUG,
     {
         slug: 'short_description',
         label: 'Short Description',
