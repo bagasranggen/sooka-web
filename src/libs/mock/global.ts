@@ -10,8 +10,8 @@ Saya ingin pesan *${product}*, apakah masih tersedia?`;
 };
 
 export const FOOTER_ADDRESS = {
-    ADDRESS: '8655 S BLACKSTONE AVENUE, CHICAGO, IL',
-    OPEN_HOUR: 'FRIDAY - SUNDAY, 9 AM-5 PM',
+    ADDRESS: 'Sleman, Daerah Istimewa Yogyakarta',
+    OPEN_HOUR: 'Open Daily, 9 AM - 4 PM',
 };
 
 export const FOOTER_SOCIAL_MEDIA = [

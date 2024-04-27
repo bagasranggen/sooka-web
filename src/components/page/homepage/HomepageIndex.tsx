@@ -36,6 +36,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                             xl={5}>
                             <div {...createAnimation({ type: 'fade-in' })}>
                                 <Picture
+                                    className="d-none d-lg-block"
                                     items={[eet as PictureItemProps]}
                                     animation={{ type: 'parallax' }}
                                 />
@@ -52,25 +53,30 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                             </Heading>
 
                             <p {...createAnimation({ type: 'fade-in' })}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet animi aspernatur beatae
-                                consectetur, cum deleniti dolores dolorum excepturi illo inventore iste iusto laboriosam
-                                maiores nemo provident sed sint veniam voluptates!
+                                Hi! Welcome to Sooka Baked Goods. We offer an incredible range of cakes that suit any of
+                                your celebrations. As a home baker, I have spent years baking, and love to make
+                                delicious cakes for my family and friends. Nothing compares to the scent of fresh-baked
+                                cakes or banana bread that came from my kitchen and can be enjoyed with people I love.
                             </p>
 
                             <p {...createAnimation({ type: 'fade-in' })}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet deserunt, inventore?
-                                Accusantium asperiores consequatur consequuntur, distinctio eius error eveniet ex id
-                                minima minus, modi nam neque non qui saepe sunt vitae? Atque corporis deleniti ipsum
-                                magni nobis ratione recusandae reprehenderit? Dolorem inventore libero placeat sapiente
-                                sequi tenetur voluptates? Assumenda at aut beatae commodi debitis dolor eligendi
-                                expedita hic, id illo impedit ipsum itaque laborum magni modi nam, non perspiciatis
-                                porro, quam quasi quia temporibus vitae voluptates. Blanditiis, eligendi error est
-                                facilis fugit ipsa ipsam iste, laborum nisi, omnis quae saepe sunt. Eius est ipsam
-                                molestiae necessitatibus numquam obcaecati quam rem.
+                                I love baking cakes, cookies, and desserts. There’s something truly magical about
+                                transforming simple ingredients into mouth-watering delights.
+                            </p>
+
+                            <p {...createAnimation({ type: 'fade-in' })}>
+                                When you order from our bakery you become a friend and part of our growing family
+                                &#9829;
                             </p>
 
                             <Picture
-                                className="d-xl-block mt-xl-4 "
+                                className="d-block d-lg-none"
+                                items={[eet as PictureItemProps]}
+                                animation={{ type: 'parallax' }}
+                            />
+
+                            <Picture
+                                className="d-xl-block mt-4"
                                 items={[pan as PictureItemProps]}
                                 animation={{ type: 'parallax' }}
                             />
@@ -79,32 +85,34 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                 </Container>
             </section>
 
-            <section className="my-10">
-                <Container>
-                    <Heading
-                        variant="section"
-                        subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
-                        className="text-center"
-                        options={{
-                            headingTag: 'h2',
-                            offset: 2,
-                            offsetAlign: 'center',
-                        }}>
-                        Highlight
-                    </Heading>
-
-                    <div className="mt-6 mt-md-10">
-                        <Card
-                            variant="rounded"
-                            items={entries.highlight}
+            {entries.highlight.length > 0 && (
+                <section className="my-10">
+                    <Container>
+                        <Heading
+                            variant="section"
+                            subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
+                            className="text-center"
                             options={{
-                                columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
-                                gap: 'gy-4 gx-md-4',
-                            }}
-                        />
-                    </div>
-                </Container>
-            </section>
+                                headingTag: 'h2',
+                                offset: 2,
+                                offsetAlign: 'center',
+                            }}>
+                            Highlight
+                        </Heading>
+
+                        <div className="mt-6 mt-md-10">
+                            <Card
+                                variant="rounded"
+                                items={entries.highlight}
+                                options={{
+                                    columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
+                                    gap: 'gy-4 gx-md-4',
+                                }}
+                            />
+                        </div>
+                    </Container>
+                </section>
+            )}
         </>
     );
 };
