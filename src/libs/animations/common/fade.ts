@@ -1,7 +1,10 @@
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { BaseAnimationProps } from '@/libs/@types';
 import { getFadeOffset, getSpacingValue } from '@/libs/utils';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const baseFadeInAnimation = ({ element, config }: BaseAnimationProps) => {
     const options = {

@@ -3,8 +3,7 @@ import React from 'react';
 import type { DynamicPageProps } from '@/libs/@types';
 import type { SupabaseVariantProps } from '@/libs/fetcher';
 import type { SupabaseHeaderProps } from '@/libs/data';
-import { SUPABASE_HANDLES, SUPABASE_HEADER_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
-import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
+import { ADMIN_ENTRY_DATA_HANDLES, SUPABASE_HANDLES, SUPABASE_HEADER_HANDLES, SUPABASE_VARIANTS } from '@/libs/handles';
 
 import AdminIndex from '@/components/page/admin/AdminIndex';
 
@@ -24,21 +23,21 @@ export const generateMetadata = ({ params }: PageProps) => {
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as SupabaseVariantProps;
+    const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]({ variant: 'view' });
     const header = SUPABASE_HEADER_HANDLES[slug].filter((header: SupabaseHeaderProps) => !header?.isDetail);
-
-    const { data } = await supabaseServerAction({
-        variant: 'fetch',
-        relation: slug,
-    });
 
     return (
         <AdminIndex
             entries={{
                 slug,
+                data: data.data,
                 title: SUPABASE_HANDLES[slug as keyof typeof SUPABASE_HANDLES],
                 table: {
-                    header,
-                    body: data,
+                    head: header,
+                    body: data?.dataView ?? data.data,
+                    link: {
+                        page: slug,
+                    },
                 },
             }}
         />

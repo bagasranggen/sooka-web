@@ -1,13 +1,15 @@
 import React from 'react';
-
 import Link from 'next/link';
+
 import type { LinkProps } from '@/libs/@types';
-import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles/';
+import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles';
+import { joinClassnameString } from '@/libs/utils';
 
 export type ButtonCommonProps = {
     children: React.ReactNode;
     className?: string;
     title?: string;
+    disabled?: boolean;
 };
 
 export type ButtonAnchorProps = {
@@ -30,8 +32,12 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
         case 'button':
         case 'submit':
         case 'reset':
-            const { events, ...restButton } = props;
-            const eventsButton = events ?? {};
+            const { events, variant: buttonVariant, ...restButton } = props;
+
+            let eventsButton = {};
+            if (events?.onClick) {
+                eventsButton = { ...eventsButton, ...{ onClick: events.onClick } };
+            }
 
             return (
                 <button
@@ -42,10 +48,15 @@ const ButtonBase = (props: ButtonBaseProps): React.ReactElement => {
             );
 
         case 'anchor':
-            const { openNewTab, ...restAnchor } = props;
+            const { openNewTab, variant: anchorVariant, type, className, disabled, ...restAnchor } = props;
+
+            let anchorClass: string | string[] = className ? [className] : [];
+            if (disabled) anchorClass.push('btn--disabled');
+            anchorClass = joinClassnameString(anchorClass);
 
             return (
                 <Link
+                    {...(anchorClass ? { className: anchorClass } : {})}
                     {...restAnchor}
                     {...(openNewTab ? { target: '_blank' } : {})}>
                     {props.children}

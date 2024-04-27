@@ -1,3 +1,4 @@
+export * from './convertNumberToCurrency';
 export * from './getActivePath';
 export * from './getAnimationElement';
 export * from './getAnimationProps';
@@ -11,6 +12,8 @@ export * from './getResponsiveClass';
 export * from './getSpacingValue';
 export * from './getWhatsappEncoded';
 export * from './joinClassnameString';
+export * from './reorderArray';
 export * from './resizeFakerImage';
+export * from './sortArrayByNumber';
 export * from './truncateString';
 export * from './NavigationEvents';

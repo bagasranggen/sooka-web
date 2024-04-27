@@ -1,12 +1,11 @@
 import React from 'react';
 
 import { getResponsiveClass, joinClassnameString } from '@/libs/utils';
-import type { CreateArrayWithLengthX, NumericRange, ResponsiveClassProps } from '@/libs/@types';
+import type { CreateArrayWithLengthX, InputHookValueProps, NumericRange, ResponsiveClassProps } from '@/libs/@types';
 
 import type { FieldErrors, UseFormRegister } from 'react-hook-form';
 
-import Input from '@/components/common/input/Input';
-import type { InputFloatingProps, InputHookValue } from '@/components/common/input/inputFloating/InputFloating';
+import Input, { type InputFloatingProps } from '@/components/common/input/Input';
 
 export type FormRenderItemProps = {
     size: ResponsiveClassProps;
@@ -19,8 +18,8 @@ export type FormRenderItemProps = {
 export type FormRenderProps = {
     spacing: NumericRange<CreateArrayWithLengthX<0>, 15>;
     hook: {
-        register: UseFormRegister<InputHookValue>;
-        errors: FieldErrors<InputHookValue>;
+        register: UseFormRegister<InputHookValueProps>;
+        errors: FieldErrors<InputHookValueProps>;
     };
     items: Array<{
         children: FormRenderItemProps[];

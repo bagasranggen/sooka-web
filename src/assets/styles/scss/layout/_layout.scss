@@ -7,12 +7,17 @@
 			&:before {
 				@extend %position-absolute;
 
-				content: '';
 				left: 0;
 				width: 100%;
 				height: var(--bs-navbar-height);
 				background-color: $sooka-primary;
 				pointer-events: none;
+			}
+		}
+
+		&:not([style]) {
+			&.ts--primary {
+				content: '';
 			}
 		}
 	}

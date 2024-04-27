@@ -1,35 +1,23 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import type { DynamicPageProps } from '@/libs/@types';
-import { supabaseServerAction } from '@/libs/fetcher';
+import { ADMIN_ENTRY_DATA_HANDLES } from '@/libs/handles';
 
-import AdminAddIndex from '@/components/page/admin/AdminAddIndex';
-import { getHomepageData } from '@/components/page/admin/components/addData';
-
-const getData = async () => {
-    const { data: categories } = await supabaseServerAction({
-        variant: 'fetch',
-        relation: 'categories',
-    });
-
-    return { categories };
-};
+import Form from '@/components/admin/form/Form';
 
 export type PageProps = DynamicPageProps;
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
-    // const data = await getData();
-    const data = await getHomepageData();
-
-    // console.log(params, data);
+    const data = await ADMIN_ENTRY_DATA_HANDLES[params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]({
+        variant: 'add',
+    });
 
     return (
-        <Suspense>
-            <AdminAddIndex
-                slug={params.slug as string}
-                state={data}
-            />
-        </Suspense>
+        <Form
+            variant={params.slug as any}
+            type="add"
+            entries={data}
+        />
     );
 };
 

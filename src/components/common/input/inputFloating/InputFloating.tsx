@@ -1,18 +1,16 @@
 import React from 'react';
 
-import type { InputCommonProps, InputTypeProps, TextareaTypeProps } from '@/libs/@types';
+import type { InputCommonProps, InputHookValueProps, InputTypeProps, TextareaTypeProps } from '@/libs/@types';
 import { INPUT_VARIANTS } from '@/libs/handles';
 import { joinClassnameString } from '@/libs/utils';
 
 import { UseFormRegister } from 'react-hook-form';
 
-export type InputHookValue = { [key: string]: string | number } | any;
-
 export type InputFloatingProps = {
     variant: typeof INPUT_VARIANTS.FLOATING;
     className?: string;
     hook?: {
-        register: UseFormRegister<InputHookValue>;
+        register: UseFormRegister<InputHookValueProps>;
     };
     input: {
         label: string;

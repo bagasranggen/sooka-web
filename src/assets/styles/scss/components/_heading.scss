@@ -1,0 +1,13 @@
+.heading {
+	&--section {
+		.heading {
+			&__title {
+				@extend %fw-200, %fs-50, %fs-md-80;
+			}
+
+			&__sub-title {
+
+			}
+		}
+	}
+}

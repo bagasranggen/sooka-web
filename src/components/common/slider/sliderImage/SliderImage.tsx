@@ -9,7 +9,7 @@ import { getBackgroundImage } from '@/libs/utils';
 import { getImageProps, ImageProps } from 'next/image';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -26,12 +26,13 @@ export type SliderImageProps = {
 const SliderImage = ({ items }: SliderImageProps): React.ReactElement => (
     <Swiper
         navigation={true}
-        modules={[Navigation]}
+        modules={[Navigation, Autoplay]}
         autoplay={{
             delay: 2500,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
         }}
+        loop={true}
         speed={900}
         className="slider-image">
         {items.map((item: SliderImageItemProps, i: number) => {

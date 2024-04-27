@@ -2,6 +2,7 @@ import { SUPABASE_VARIANTS } from '@/libs/handles/supabase';
 
 import TableAdmin from '@/components/common/table/tableAdmin/TableAdmin';
 import TableAdminAdd from '@/components/common/table/tableAdminAdd/TableAdminAdd';
+import TableAdminView from '@/components/common/table/tableAdminView/TableAdminView';
 
 import TableNavigationForm from '@/components/common/table/sharedTable/TableNavigationForm';
 import TableCategoriesForm from '@/components/common/table/sharedTable/TableCategoriesForm';
@@ -12,11 +13,13 @@ import TableHomepageCarouselForm from '@/components/common/table/sharedTable/Tab
 export const TABLE_VARIANTS = {
     ADMIN: 'admin',
     ADMIN_ADD: 'admin-add',
+    ADMIN_VIEW: 'admin-view',
 } as const;
 
 export const TABLE_HANDLES = {
     [TABLE_VARIANTS.ADMIN]: TableAdmin,
     [TABLE_VARIANTS.ADMIN_ADD]: TableAdminAdd,
+    [TABLE_VARIANTS.ADMIN_VIEW]: TableAdminView,
 };
 
 export const TABLE_FORM_HANDLES = {

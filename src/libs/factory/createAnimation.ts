@@ -1,9 +1,15 @@
-import React from 'react';
-
-import type { AnimationProps, ImageZoomAnimationProps, PreloaderAnimationProps, Prettify } from '@/libs/@types';
+import {
+    AnimationProps,
+    ImageParallaxAnimationProps,
+    ImageZoomAnimationProps,
+    PreloaderAnimationProps,
+    Prettify,
+} from '@/libs/@types';
 import { COMMON_ANIMATIONS } from '@/libs/handles';
 
-type CreateAnimationProps = Prettify<AnimationProps | ImageZoomAnimationProps | PreloaderAnimationProps>;
+type CreateAnimationProps = Prettify<
+    AnimationProps | ImageZoomAnimationProps | ImageParallaxAnimationProps | PreloaderAnimationProps
+>;
 
 export const createAnimation = (props: CreateAnimationProps) => {
     switch (props.type) {
@@ -27,6 +33,7 @@ export const createAnimation = (props: CreateAnimationProps) => {
             };
 
         case 'image-zoom':
+        case 'parallax':
             return {
                 [COMMON_ANIMATIONS.ATTRIBUTES.TYPE]: props.type,
             };

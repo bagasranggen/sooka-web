@@ -1,40 +1,76 @@
 .slider {
-    &-image {
-        --swiper-navigation-color: #{$white};
-        --swiper-navigation-sides-offset: 30px;
-        --swiper-wrapper-transition-timing-function: cubic-bezier(.66, .19, .63, .68);
+	&-wrapper {
+		overflow: hidden;
 
-        .swiper {
-            &-slide {
-                height: 60vh;
-                background-size: cover;
-                background-position: center;
-                background-image: var(--background-sm);
+		&--nested {
+			margin-left: calc(-0.5 * var(--bs-gutter-x));
+			margin-right: calc(-0.5 * var(--bs-gutter-x));
 
-                @include media-breakpoint-up(lg) {
-                    background-image: var(--background-lg);
-                    height: 100vh;
-                }
-            }
+			> .swiper {
+				padding-left: calc(0.5 * var(--bs-gutter-x));
+				padding-right: calc(0.5 * var(--bs-gutter-x));
+			}
+		}
+	}
 
-            &-button {
-                &-prev,
-                &-next {
-                    @include media-breakpoint-up(lg) {
-                        @include hover() {
-                            transform: scale(1.2);
-                        }
+	&-image {
+		--swiper-navigation-color: #{$white};
+		--swiper-navigation-sides-offset: 30px;
+		--swiper-wrapper-transition-timing-function: cubic-bezier(.66, .19, .63, .68);
 
-                        @include make-transition(transform);
-                    }
-                }
-            }
-        }
+		.swiper {
+			&-slide {
+				height: 60vh;
+				background-size: cover;
+				background-position: center;
+				background-image: var(--background-sm);
 
-        &__item {
-            @extend %d-block;
+				@include media-breakpoint-up(lg) {
+					background-image: var(--background-lg);
+					height: 100vh;
+				}
+			}
 
-            height: 100%;
-        }
-    }
+			&-button {
+				&-prev,
+				&-next {
+					@include media-breakpoint-up(lg) {
+						@include hover() {
+							transform: scale(1.2);
+						}
+
+						@include make-transition(transform);
+					}
+				}
+			}
+		}
+
+		&__item {
+			@extend %d-block;
+
+			height: 100%;
+		}
+	}
+
+	&-vertical {
+		overflow: visible !important;
+
+		.swiper {
+			&-slide {
+				&:first-child {
+					img {
+						border-top-left-radius: var(--product-detail-border-radius, 0);
+						border-bottom-left-radius: var(--product-detail-border-radius, 0);
+					}
+				}
+
+				&:last-child {
+					img {
+						border-top-right-radius: var(--product-detail-border-radius, 0);
+						border-bottom-right-radius: var(--product-detail-border-radius, 0);
+					}
+				}
+			}
+		}
+	}
 }

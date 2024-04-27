@@ -6,10 +6,19 @@ export type SupabaseFetchActionProps = {
     relation: SupabaseVariantProps;
 };
 
+export type SupabaseFetchLimitActionProps = {
+    variant: 'fetch-limit';
+    relation: SupabaseVariantProps;
+    limit: number;
+};
+
 export type SupabaseFetchFindActionProps = {
     variant: 'fetch-find';
     relation: SupabaseVariantProps;
-    slug: string;
+    find?: {
+        key: string;
+        value: string | string[] | number | number[];
+    };
 };
 
 export type SupabaseFetchFilterActionProps = {
@@ -23,6 +32,7 @@ export type SupabaseFetchFilterActionProps = {
 
 export type SupabaseServerActionProps =
     | SupabaseFetchActionProps
+    | SupabaseFetchLimitActionProps
     | SupabaseFetchFindActionProps
     | SupabaseFetchFilterActionProps;
 
@@ -38,8 +48,27 @@ export const supabaseServerAction = async (props: SupabaseServerActionProps): Pr
 
             return { data: fetchData };
 
+        case 'fetch-limit':
+            const { data: fetchLimitData } = await supabase
+                .from(props.relation)
+                .select()
+                .order('order', { ascending: true })
+                .limit(props.limit);
+
+            return { data: fetchLimitData };
+
         case 'fetch-find':
-            const { data: fetchFindData } = await supabase.from(props.relation).select('*').eq('slug', props.slug);
+            let key = 'slug';
+            let value: string | string[] | number | number[] = [];
+
+            if (props?.find?.key) key = props.find.key;
+
+            if (props?.find?.value) {
+                if (Array.isArray(props.find.value)) value = props.find.value;
+                if (!Array.isArray(props.find.value)) value = [props.find.value as string];
+            }
+
+            const { data: fetchFindData } = await supabase.from(props.relation).select('*').in(key, value);
 
             return { data: fetchFindData };
 
