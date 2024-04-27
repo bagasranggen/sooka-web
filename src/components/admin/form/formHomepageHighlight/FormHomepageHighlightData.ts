@@ -1,6 +1,7 @@
+import type { AdminDataProps } from '@/libs/@types';
 import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
-const formHomepageHighlightData = async (slug?: string, variant?: 'view' | 'add' | 'edit') => {
+const formHomepageHighlightData = async ({ slug, variant }: AdminDataProps) => {
     const { data: products } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
     const { data: highlights } = await supabaseServerAction({ variant: 'fetch', relation: 'homepageHighlight' });
 

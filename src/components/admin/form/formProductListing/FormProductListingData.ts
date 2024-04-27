@@ -1,7 +1,8 @@
-import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
+import type { AdminDataProps } from '@/libs/@types';
 import type { ImagesGalleryItemProps } from '@/components/admin/form/formProductListing/components/ImagesGalleryField';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 
-const formProductListingData = async (slug?: string, variant?: 'view' | 'add' | 'edit') => {
+const formProductListingData = async ({ slug, variant }: AdminDataProps) => {
     const { data: products } = await supabaseServerAction({ variant: 'fetch', relation: 'productListing' });
     const { data: categories } = await supabaseServerAction({ variant: 'fetch', relation: 'categories' });
 

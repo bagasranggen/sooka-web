@@ -23,7 +23,7 @@ export const generateMetadata = ({ params }: PageProps) => {
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as SupabaseVariantProps;
-    const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]('', 'view');
+    const data = await ADMIN_ENTRY_DATA_HANDLES[slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES]({ variant: 'view' });
     const header = SUPABASE_HEADER_HANDLES[slug].filter((header: SupabaseHeaderProps) => !header?.isDetail);
 
     console.log(data);

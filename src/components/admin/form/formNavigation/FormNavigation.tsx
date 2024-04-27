@@ -4,27 +4,30 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { InputHookValueProps } from '@/libs/@types';
-import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
+import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { joinClassnameString } from '@/libs/utils';
 import { supabaseClientAction } from '@/libs/fetcher';
 
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import Input, { InputSelectItem } from '@/components/common/input/Input';
-import Button, { ButtonWrapper } from '@/components/common/button/Button';
+import FormTitle, { FormTitleProps } from '@/components/admin/form/components/FormTitle';
 import FormSelectUri from '@/components/admin/form/components/FormSelectUri';
+import Button, { ButtonWrapper } from '@/components/common/button/Button';
 
-export type FormHomepageCarouselProps = {
-    variant: typeof SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL;
-    type: 'add' | 'edit';
+export type FormNavigationProps = {
+    variant: typeof SUPABASE_VARIANTS.NAVIGATION;
+    type: FormTitleProps['variant'];
     entries?: any;
 };
 
-const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): React.ReactElement => {
+const FormNavigation = ({ type, entries }: FormNavigationProps) => {
     const router = useRouter();
     const { data, order, urlOptions, selectedFrom } = entries;
+
+    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
     const {
         register,
@@ -33,21 +36,14 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
-        const { imageDesktop, imageMobile, ...restData } = formData;
-
-        const submitData = {
-            ...restData,
-            images: [imageDesktop, imageMobile],
-        };
-
         if (type === 'edit') {
             await supabaseClientAction({
                 variant: 'update',
-                relation: 'homepageCarousel',
+                relation: 'navigation',
                 id: parseInt(data.id),
-                data: submitData,
+                data: formData,
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                 },
             });
         }
@@ -55,16 +51,14 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
         if (type === 'add') {
             await supabaseClientAction({
                 variant: 'insert',
-                relation: 'homepageCarousel',
-                data: [{ ...submitData, order: order }],
+                relation: 'navigation',
+                data: [{ ...formData, order: order }],
                 onFinish: ({ error }) => {
-                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
+                    if (!error) router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                 },
             });
         }
     };
-
-    const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
     const [selectFrom, setSelectFrom] = useState<any>(selectedFrom ?? '');
     const selectFromOptions: InputSelectItem[] = [
@@ -77,7 +71,7 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
 
     return (
         <>
-            <h1>{/*{type === 'add' ? 'Add' : 'Edit'} {data?.name ?? 'New Product Listing'}*/}</h1>
+            <FormTitle variant={type}>{data?.title ?? 'New Navigation'}</FormTitle>
             <form onSubmit={handleSubmit(onSubmitHandler)}>
                 <Row className={gutterClass}>
                     <Col lg={8}>
@@ -85,13 +79,13 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                             variant="regular"
                             label="Name"
                             input={{
-                                id: 'title',
+                                id: 'label',
                                 type: 'text',
-                                value: data?.title ?? '',
+                                value: data?.label ?? '',
                                 hook: { register: register, options: { required: true } },
                             }}
                             validation={{
-                                isError: !!errors?.title,
+                                isError: !!errors?.label,
                                 message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
@@ -105,11 +99,11 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                                 type: 'switch',
                                 color: 'primary',
                                 // align: 'left',
-                                isChecked: data?.is_sold ?? true,
+                                isChecked: data?.is_show ?? true,
                                 hook: { register: register },
                             }}
                             validation={{
-                                isError: !!errors?.['is_sold'],
+                                isError: !!errors?.['is_show'],
                                 message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />
@@ -163,41 +157,6 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                     </Col>
                 </Row>
 
-                <Row className={gutterClass}>
-                    <Col lg={6}>
-                        <Input
-                            variant="regular"
-                            label="Image Desktop"
-                            input={{
-                                id: 'imageDesktop',
-                                type: 'text',
-                                value: data?.images?.[0] ?? '',
-                                hook: { register: register, options: { required: true } },
-                            }}
-                            validation={{
-                                isError: !!errors?.imageDesktop,
-                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
-                            }}
-                        />
-                    </Col>
-                    <Col lg={6}>
-                        <Input
-                            variant="regular"
-                            label="Image Mobile"
-                            input={{
-                                id: 'imageMobile',
-                                type: 'text',
-                                value: data?.images?.[1] ?? '',
-                                hook: { register: register, options: { required: true } },
-                            }}
-                            validation={{
-                                isError: !!errors?.imageMobile,
-                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
-                            }}
-                        />
-                    </Col>
-                </Row>
-
                 <ButtonWrapper className="mt-3 d-block text-end">
                     <Button
                         variant="outline"
@@ -211,4 +170,4 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
     );
 };
 
-export default FormHomepageCarousel;
+export default FormNavigation;

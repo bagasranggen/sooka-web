@@ -38,25 +38,32 @@ export const SUPABASE_COMMON = ({
     LINK: [{ slug: 'href', label: 'Link', editType: 'text', ...(size ? { size: size } : {}) }],
     IMAGES: [{ slug: 'images', label: 'Images', editType: 'text', ...(size ? { size: size } : {}) }],
     TITLE: [{ slug: 'title', label: 'Title', editType: 'text', ...(size ? { size: size } : {}) }],
-    LABEL: [{ slug: 'label', label: 'Label', editType: 'text', ...(relation ? { relation: relation } : {}) }],
+    LABEL: [
+        {
+            slug: 'label',
+            label: 'Label',
+            editType: 'text',
+            ...(relation ? { relation: relation } : {}),
+            ...(size ? { size: size } : {}),
+        },
+    ],
 });
 
 export const SUPABASE_HEADER_NAVIGATION: SupabaseHeaderProps[] = [
-    ...SUPABASE_COMMON({ relation: 'categories_label' }).LABEL,
+    ...SUPABASE_COMMON({ size: '30%' }).LABEL,
     {
-        slug: 'categories_label',
-        label: 'Categories Label',
+        slug: 'uri',
+        label: 'Link',
         editType: 'text',
-        isHidden: true,
+        size: '30%',
     },
-    ...SUPABASE_COMMON({ relation: 'categories_slug', aliasLabel: 'Link' }).SLUG,
     ...SUPABASE_COMMON({}).TARGET,
     ...SUPABASE_COMMON({}).IS_SHOW,
 ];
 
 export const SUPABASE_HEADER_CATEGORIES: SupabaseHeaderProps[] = [
-    ...SUPABASE_COMMON({}).LABEL,
-    ...SUPABASE_COMMON({}).SLUG,
+    ...SUPABASE_COMMON({ size: '45%' }).LABEL,
+    ...SUPABASE_COMMON({ size: '45%' }).SLUG,
 ];
 
 export const SUPABASE_HEADER_PAGES: SupabaseHeaderProps[] = [

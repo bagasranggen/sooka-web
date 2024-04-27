@@ -37,8 +37,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
     const navigation = data?.map(
         (datum): NavigationItemProps => ({
-            label: datum?.['categories_label'] ?? datum?.label,
-            href: `/${datum?.['categories_slug'] ?? datum.slug}`,
+            label: datum?.label,
+            href: datum?.uri,
             target: datum?.target ? '_blank' : undefined,
         })
     );

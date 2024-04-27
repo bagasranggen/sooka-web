@@ -80,7 +80,7 @@ const InputSelect = ({
                 className={selectClass}
                 {...inputStateChangeProps}>
                 {label ? <option>{label}</option> : null}
-                {items.map((item: InputSelectItem, i: number) => (
+                {items?.map((item: InputSelectItem, i: number) => (
                     <option
                         key={i}
                         value={item.slug}>
