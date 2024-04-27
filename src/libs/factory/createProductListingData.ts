@@ -12,7 +12,27 @@ export const createProductListingData = (datum: any) => {
         alt: datum.name,
     });
 
-    const slides = [images, images, images];
+    let imageGallery: any[] = [];
+    if (datum?.gallery && datum.gallery.length > 0) {
+        const gallery = datum.gallery;
+
+        Array(gallery.length / 2)
+            .fill(0)
+            .map((item: any, i: number) => {
+                let index = 0;
+                if (i > 0) index = i + 1;
+
+                imageGallery.push(
+                    createGoogleDriveImage({
+                        imageSources: [gallery[index], gallery[index + 1]],
+                        imageSizes: 'product-listing',
+                        alt: datum.name,
+                    })
+                );
+            });
+    }
+
+    const slides = [images, ...imageGallery];
 
     return {
         name: datum.name,

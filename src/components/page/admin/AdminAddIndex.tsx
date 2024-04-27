@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import { ADMIN_ENTRY_HANDLES } from '@/libs/handles';
-
 import Tab from '@/components/common/tab/Tab';
 import Button from '@/components/common/button/Button';
 
@@ -29,11 +27,11 @@ const AdminAddIndex = ({ slug, state }: AdminAddIndexProps): React.ReactElement 
         <>
             <h1>ADD</h1>
 
-            <Tab
-                id="admin-add-form"
-                className="mt-3"
-                items={ADMIN_ENTRY_HANDLES[slug as keyof typeof ADMIN_ENTRY_HANDLES](state)}
-            />
+            {/*<Tab*/}
+            {/*    id="admin-add-form"*/}
+            {/*    className="mt-3"*/}
+            {/*    items={ADMIN_ENTRY_HANDLES[slug as keyof typeof ADMIN_ENTRY_HANDLES](state)}*/}
+            {/*/>*/}
 
             <Button
                 variant="outline"

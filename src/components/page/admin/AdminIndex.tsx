@@ -1,33 +1,43 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import type { InputHookValueProps } from '@/libs/@types';
 import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
-import { getEditFormData, getFormSubmitData } from '@/libs/utils';
+import { reorderArray } from '@/libs/utils';
 
 import { deleteCookie } from 'cookies-next';
+import { SubmitHandler } from 'react-hook-form';
 
-import type { TableAdminProps } from '@/components/common/table/tableAdmin/TableAdmin';
-import Table from '@/components/common/table/Table';
+import Table, { type TableAdminViewProps, type TableAdminActionLinkProps } from '@/components/common/table/Table';
 import Button from '@/components/common/button/Button';
 
 export type AdminIndexProps = {
     entries: {
         slug: SupabaseVariantProps;
+        data: any;
         title: string;
-        table: Omit<TableAdminProps, 'variant' | 'slug' | 'id'>;
+        table: Pick<TableAdminViewProps, 'head' | 'body'> & { link: Pick<TableAdminActionLinkProps, 'page'> };
     };
 };
 
 const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
     const router = useRouter();
-    const [isAddingRow, setIsAddingRow] = useState<boolean>(false);
-    const [isEditing, setIsEditing] = useState<undefined | number>(undefined);
-    const [isReordering, setIsReordering] = useState<undefined | number>(undefined);
-    const [isOpenDetail, setIsOpenDetail] = useState<undefined | number>(undefined);
-    const [form, setForm] = useState<any>({});
-    const tableId = 'cms-simple';
+    const [isReordering, setIsReordering] = useState<undefined | boolean>(undefined);
+
+    const onSubmitHandler: SubmitHandler<InputHookValueProps> = (data: InputHookValueProps) => {
+        switch (data.type) {
+            case 'reorder':
+                console.log('reorder');
+                updateOrderHandler(entries.data, parseInt(data.orderFrom), parseInt(data.orderTo) - 1);
+                break;
+
+            case 'delete':
+                deleteDataHandler(parseInt(data.id));
+                break;
+        }
+    };
 
     const deleteDataHandler = (id: number) => {
         supabaseClientAction({
@@ -40,37 +50,18 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         });
     };
 
-    const submitFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const form = e.target as unknown as HTMLElement;
-        const submitForm: any = getFormSubmitData(form);
-        const data = {
-            ...submitForm,
-            ...{ order: entries.table.body.length },
-        };
-
+    const updateIndividualHandler = (data: unknown, id: number, callback?: () => void) => {
         supabaseClientAction({
-            variant: 'insert',
+            variant: 'update',
             relation: entries.slug,
-            data: [data],
-            onFinish: () => {
-                setIsAddingRow(false);
-                router.refresh();
-            },
+            id,
+            data,
+            onFinish: callback,
         });
     };
 
-    const reorderArray = (arr: any[], from: number, to: number): any[] => {
-        const duplicateArr: any[] = [...arr];
-
-        duplicateArr.splice(to, 0, duplicateArr.splice(from, 1)[0]);
-
-        return duplicateArr;
-    };
-
-    const submitUpdateOrderHandler = (arr: any[], from: number, to: number) => {
-        const reorderArr = reorderArray(arr, from, to);
+    const updateOrderHandler = (arr: any[], from: number, to: number) => {
+        const reorderArr = reorderArray({ data: arr, from, to });
         const updateReorder = reorderArr.map((add: any, i: number) => {
             return {
                 ...add,
@@ -78,50 +69,17 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             };
         });
 
-        supabaseClientAction({
-            variant: 'delete-all',
-            relation: entries.slug,
-            onFinish: () => {
-                supabaseClientAction({
-                    variant: 'insert',
-                    relation: entries.slug,
-                    data: updateReorder,
-                    onFinish: () => {
-                        setIsReordering(undefined);
-                        router.refresh();
-                    },
-                });
-            },
+        updateReorder.map((item: any, i: number) => {
+            let onFinish = undefined;
+            if (i === updateReorder.length - 1) {
+                onFinish = () => {
+                    setIsReordering(undefined);
+                    router.refresh();
+                };
+            }
+
+            updateIndividualHandler(item, item.id, onFinish);
         });
-    };
-
-    const submitUpdateIndividualHandler = (data: unknown, id: number) => {
-        supabaseClientAction({
-            variant: 'update',
-            relation: entries.slug,
-            id: id,
-            data,
-            onFinish: () => {
-                setIsEditing(undefined);
-                router.refresh();
-            },
-        });
-    };
-
-    const submitUpdateFormHandler = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const form = e.target as unknown as HTMLElement;
-        const submitForm: any = getFormSubmitData(form);
-        const id = (
-            form.querySelectorAll('tbody tr')[isEditing as number]?.querySelector('[data-id]') as Element
-        )?.getAttribute('data-id') as string;
-
-        if (id) {
-            submitUpdateIndividualHandler(submitForm, parseInt(id));
-        } else {
-            submitUpdateOrderHandler(entries.table.body, isReordering as number, parseInt(submitForm.order));
-        }
     };
 
     const userLogout = () => {
@@ -134,24 +92,11 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
         });
     };
 
-    useEffect(() => {
-        if (typeof document === undefined) return;
-
-        const data = getEditFormData({
-            slug: entries.slug,
-            tableId,
-            isEditing,
-            isReordering,
-        });
-
-        setForm(data);
-    }, [entries.slug, isEditing, isAddingRow, isReordering]);
-
     return (
         <>
             <div className="mb-5 row align-items-center">
                 <div className="col-md">
-                    <h1 className="mb-0">{entries.title}</h1>
+                    <h1 className="fw-300 mb-0">{entries.title}</h1>
                 </div>
                 <div className="col-md-auto">
                     <Button
@@ -162,51 +107,31 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     </Button>
                 </div>
             </div>
+
             <Table
-                variant="admin"
-                id={tableId}
-                header={entries.table.header}
+                variant="admin-view"
+                head={entries.table.head}
                 body={entries.table.body}
-                slug={entries.slug}
-                isOpenDetail={isOpenDetail}
-                isReorder={isReordering}
-                isEdit={isEditing}
-                isEditState={{
-                    prevValue: form,
-                    setValue: setForm,
-                }}
-                events={{
-                    onDelete: (id: number) => deleteDataHandler(id),
-                    onEdit: (index: number | undefined) => setIsEditing(index),
-                    onEditReorder: (index: number | undefined) => setIsReordering(index),
-                    onOpenDetail: (index: number | undefined) => setIsOpenDetail(index),
-                    onSubmit: submitUpdateFormHandler,
+                actions={{
+                    state: {
+                        isReordering: isReordering,
+                    },
+                    link: { page: entries.table.link.page },
+                    events: {
+                        onSubmit: onSubmitHandler,
+                        onReorder: (isReorder) => setIsReordering(isReorder),
+                    },
                 }}
             />
 
-            {typeof isEditing === 'undefined' && typeof isReordering === 'undefined' && (
+            {typeof isReordering === 'undefined' && (
                 <Button
                     variant="block"
-                    type="button"
-                    className="w-100 mt-3"
-                    events={{ onClick: () => setIsAddingRow(!isAddingRow) }}>
-                    {isAddingRow ? 'Cancel' : 'Add'}
+                    type="anchor"
+                    href={`/admin/add/${entries.slug}`}
+                    className="w-100 mt-3">
+                    ADD
                 </Button>
-            )}
-
-            {isAddingRow && (
-                <div className="mt-3">
-                    <Table
-                        variant="admin-add"
-                        type={entries.slug}
-                        header={entries.table.header}
-                        stateData={{
-                            prevValue: form,
-                            setValue: setForm,
-                        }}
-                        events={{ onSubmit: submitFormHandler }}
-                    />
-                </div>
             )}
         </>
     );

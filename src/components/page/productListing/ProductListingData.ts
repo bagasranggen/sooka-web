@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { createProductListingData, ProductListingDataProps } from '@/libs/factory';
 
 import type { ProductListingIndexProps } from '@/components/page/productListing/ProductListingIndex';
@@ -10,7 +10,10 @@ const getPage = async (slug?: string): Promise<{ data: ProductListingIndexProps[
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'pages',
-        slug,
+        find: {
+            key: 'slug',
+            value: slug,
+        },
     });
 
     return {
@@ -19,23 +22,43 @@ const getPage = async (slug?: string): Promise<{ data: ProductListingIndexProps[
 };
 
 const getProductListing = async (slug?: string) => {
-    if (!slug) return { data: null };
-
-    const { data } = await supabaseServerAction({
-        variant: 'fetch-filter',
-        relation: 'productListing',
-        filter: {
-            key: 'category',
-            slug,
-        },
-    });
-
     let productListing: ProductListingDataProps[] = [];
-    if (data && data?.length > 0) {
-        data.map((datum: ProductListingDataProps) => {
+
+    if (!slug) {
+        const { data } = await supabaseServerAction({
+            variant: 'fetch',
+            relation: 'productListing',
+            // filter: {
+            //     key: 'category',
+            //     slug,
+            // },
+        });
+
+        data?.map((datum: ProductListingDataProps) => {
             productListing.push(createProductListingData(datum));
         });
+
+        // return { data };
     }
+
+    if (slug) {
+        const { data } = await supabaseServerAction({
+            variant: 'fetch-filter',
+            relation: 'productListing',
+            filter: {
+                key: 'category',
+                slug,
+            },
+        });
+
+        // if (data && data?.length > 0) {
+        data?.map((datum: ProductListingDataProps) => {
+            productListing.push(createProductListingData(datum));
+        });
+        // }
+    }
+
+    // let productListing: ProductListingDataProps[] = [];
 
     return { data: productListing };
 };

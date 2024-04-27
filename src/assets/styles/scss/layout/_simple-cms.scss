@@ -20,6 +20,7 @@
 				top: calc(var(--bs-navbar-height) * -1);
 				right: 0;
 				height: calc(100% + (var(--bs-navbar-height) * 2));
+				min-height: clamp(75vh, calc(100% + (var(--bs-navbar-height) * 2)), 80vh);
 				width: 50vw;
 			}
 		}

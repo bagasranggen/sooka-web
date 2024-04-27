@@ -1,4 +1,4 @@
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { createProductListingData } from '@/libs/factory';
 
 import slugify from 'react-slugify';
@@ -18,7 +18,10 @@ const getProduct = async (slug?: string) => {
     const { data } = await supabaseServerAction({
         variant: 'fetch-find',
         relation: 'productListing',
-        slug,
+        find: {
+            key: 'slug',
+            value: slug,
+        },
     });
 
     return { data };

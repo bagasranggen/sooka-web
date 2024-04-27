@@ -2,6 +2,8 @@ import React from 'react';
 
 import { INPUT_TYPE_HANDLES, INPUT_VARIANTS } from '@/libs/handles';
 import { createDynamicElement } from '@/libs/factory';
+import { joinClassnameString } from '@/libs/utils';
+import type { ClassnameArrayProps } from '@/libs/@types';
 
 import type { InputTextProps } from '@/components/common/input/inputShared/InputText';
 import type { InputSwitchProps } from '@/components/common/input/inputShared/InputSwitch';
@@ -11,12 +13,24 @@ import type { InputSelectProps } from '@/components/common/input/inputShared/Inp
 export type InputRegularProps = {
     variant: typeof INPUT_VARIANTS.REGULAR;
     className?: string;
+    wrapperClassName?: string;
     label?: string;
     input: InputTextProps | InputSwitchProps | InputCkEditorProps | InputSelectProps;
+    validation?: {
+        isError?: boolean;
+        message?: string;
+    };
 };
 
-const InputRegular = ({ input, label, className }: InputRegularProps): React.ReactElement => {
-    const InputWrapper = label ? 'div' : React.Fragment;
+const InputRegular = ({
+    input,
+    label,
+    className,
+    wrapperClassName,
+    validation,
+}: InputRegularProps): React.ReactElement => {
+    const isInvalid = validation?.isError && validation.message;
+    const InputWrapper = label || isInvalid ? 'div' : React.Fragment;
 
     let inputIsHidden = false;
     switch (true) {
@@ -30,15 +44,24 @@ const InputRegular = ({ input, label, className }: InputRegularProps): React.Rea
             break;
     }
 
+    let wrapperClass: ClassnameArrayProps = [];
+    if (label) wrapperClass.push('input-group--regular');
+    if (label && wrapperClassName) wrapperClass.push(wrapperClassName);
+    if (isInvalid) wrapperClass.push('is-invalid');
+    wrapperClass = joinClassnameString(wrapperClass);
+
     return (
-        <InputWrapper {...(label ? { className: 'input-group--regular' } : {})}>
-            {label && !inputIsHidden && <label htmlFor={input.id}>{label}</label>}
-            {createDynamicElement({
-                handles: INPUT_TYPE_HANDLES,
-                selector: input?.type ?? 'text',
-                props: { ...input, ...{ className: className } },
-            })}
-        </InputWrapper>
+        <>
+            <InputWrapper {...(wrapperClass ? { className: wrapperClass } : {})}>
+                {label && !inputIsHidden && <label htmlFor={input.id}>{label}</label>}
+                {createDynamicElement({
+                    handles: INPUT_TYPE_HANDLES,
+                    selector: input?.type ?? 'text',
+                    props: { ...input, ...{ className: className } },
+                })}
+            </InputWrapper>
+            {isInvalid && <div className="invalid-feedback">{validation?.message}</div>}
+        </>
     );
 };
 

@@ -11,7 +11,7 @@ import '../assets/styles/scss/bootstrap.scss';
 import '../assets/styles/scss/main.scss';
 
 import type { NavigationItemProps } from '@/libs/@types';
-import { supabaseServerAction } from '@/libs/fetcher';
+import { supabaseServerAction } from '@/libs/fetcher/supabaseServerAction';
 import { Providers, reduxStore } from '@/store/redux';
 
 import Navigation from '@/components/layout/navigation/Navigation';
@@ -37,8 +37,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
 
     const navigation = data?.map(
         (datum): NavigationItemProps => ({
-            label: datum?.['categories_label'] ?? datum?.label,
-            href: `/${datum?.['categories_slug'] ?? datum.slug}`,
+            label: datum?.label,
+            href: datum?.uri,
             target: datum?.target ? '_blank' : undefined,
         })
     );
