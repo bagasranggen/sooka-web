@@ -52,22 +52,25 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                                 Our Story
                             </Heading>
 
-                            <p {...createAnimation({ type: 'fade-in' })}>
-                                Hi! Welcome to Sooka Baked Goods. We offer an incredible range of cakes that suit any of
-                                your celebrations. As a home baker, I have spent years baking, and love to make
-                                delicious cakes for my family and friends. Nothing compares to the scent of fresh-baked
-                                cakes or banana bread that came from my kitchen and can be enjoyed with people I love.
-                            </p>
+                            <div {...createAnimation({ type: 'fade-in' })}>
+                                <p>
+                                    Hi! Welcome to Sooka Baked Goods. We offer an incredible range of cakes that suit
+                                    any of your celebrations. As a home baker, I have spent years baking, and love to
+                                    make delicious cakes for my family and friends. Nothing compares to the scent of
+                                    fresh-baked cakes or banana bread that came from my kitchen and can be enjoyed with
+                                    people I love.
+                                </p>
 
-                            <p {...createAnimation({ type: 'fade-in' })}>
-                                I love baking cakes, cookies, and desserts. There’s something truly magical about
-                                transforming simple ingredients into mouth-watering delights.
-                            </p>
+                                <p>
+                                    I love baking cakes, cookies, and desserts. There’s something truly magical about
+                                    transforming simple ingredients into mouth-watering delights.
+                                </p>
 
-                            <p {...createAnimation({ type: 'fade-in' })}>
-                                When you order from our bakery you become a friend and part of our growing family
-                                &#9829;
-                            </p>
+                                <p>
+                                    When you order from our bakery you become a friend and part of our growing family
+                                    &#9829;
+                                </p>
+                            </div>
 
                             <Picture
                                 className="d-block d-lg-none"
