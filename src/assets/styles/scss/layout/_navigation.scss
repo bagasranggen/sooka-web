@@ -72,4 +72,10 @@
             @extend %navbar-active;
         }
     }
+
+    > .container {
+        @include media-breakpoint-down(lg) {
+            flex-direction: row-reverse;
+        }
+    }
 }
