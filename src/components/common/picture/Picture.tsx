@@ -28,8 +28,10 @@ const PictureItemSource = (item: PictureItemProps): React.ReactElement => {
 
 const PictureItemImg = (item: PictureItemProps): React.ReactElement => {
     const { props: image } = getImageProps(item);
+    const { blurWidth, blurHeight, ...restImage } = image as unknown as any;
+
     const props: any = {
-        ...image,
+        ...restImage,
         className: 'img-fluid',
     };
 
