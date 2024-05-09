@@ -9,6 +9,8 @@ import { getWhatsappEncoded } from '@/libs/utils';
 import type { PictureItemProps } from '@/components/common/picture/Picture';
 import Button, { ButtonGroup } from '@/components/common/button/Button';
 import Slider from '@/components/common/slider/Slider';
+import Rate from '@/components/common/rate/Rate';
+import ProductDetailSection from '@/components/page/productDetail/components/ProductDetailSection';
 
 export type ProductDetailProps = {
     title?: string;
@@ -30,7 +32,7 @@ const ProductDetailIndex = ({ title, description, price, isSold, slides }: Produ
     return (
         <section className="ts--margin py-8 product-detail">
             <Container>
-                <Row className="justify-content-between gy-4">
+                <Row className="justify-content-between gy-4 gx-lg-6 gx-xl-0">
                     <Col lg={6}>
                         <div className="product-detail__image">
                             <Slider
@@ -39,16 +41,55 @@ const ProductDetailIndex = ({ title, description, price, isSold, slides }: Produ
                             />
                         </div>
                     </Col>
-                    <Col lg={5}>
+                    <Col
+                        lg={6}
+                        xl={5}>
                         <div className="product-detail__content">
                             <div className="product-detail__title">
                                 <h1>{title}</h1>
-                                <h2>{productPrice}</h2>
+                                <h2 className={`mt-5${isSold ? ' is-sold' : ''}`}>{productPrice}</h2>
                             </div>
+
                             {description && (
-                                <div className="product-detail__description">{ReactHtmlParser(description)}</div>
+                                <ProductDetailSection
+                                    className="mt-5"
+                                    title="Product Description">
+                                    <div className="product-detail__description">{ReactHtmlParser(description)}</div>
+                                </ProductDetailSection>
                             )}
-                            <ButtonGroup className="d-flex mt-3">
+
+                            <ProductDetailSection
+                                className="mt-5"
+                                title="Product Detail">
+                                <div className="product-detail__details">
+                                    <h4>Dimension</h4>
+                                    <p>16cm x 16cm</p>
+                                </div>
+
+                                <div className="product-detail__details">
+                                    <h4>Flavour</h4>
+                                    <Rate
+                                        variant="meter"
+                                        value={30}
+                                        start="Fresh"
+                                        end="Creamy"
+                                    />
+                                    <Rate
+                                        variant="meter"
+                                        value={60}
+                                        start="Custardy"
+                                        end="Spongy"
+                                    />
+                                    <Rate
+                                        variant="meter"
+                                        value={70}
+                                        start="Tangy"
+                                        end="Sweet"
+                                    />
+                                </div>
+                            </ProductDetailSection>
+
+                            <ButtonGroup className="d-flex mt-5">
                                 <Button
                                     variant="rounded"
                                     type="anchor"
