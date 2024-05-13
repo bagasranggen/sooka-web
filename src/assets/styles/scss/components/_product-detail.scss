@@ -47,7 +47,7 @@
 
     &__section {
         h3 {
-            @extend %fw-200, %fs-40;
+            @extend %fw-400, %fw-lg-200, %fs-28, %fs-lg-40;
 
             line-height: 1;
         }

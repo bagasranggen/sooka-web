@@ -227,6 +227,76 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                     }}
                 />
 
+                <div className="input-group--regular">
+                    <label>Details</label>
+                </div>
+                <Row className={`${gutterClass.replace('gy-3', 'gy-1')} align-items-baseline`}>
+                    <Col xs={12}>
+                        <Input
+                            variant="regular"
+                            label="Dimension"
+                            input={{
+                                id: 'dimension',
+                                type: 'text',
+                                value: data?.dimension ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.dimension,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <Input
+                            variant="regular"
+                            label="Flavour 1 (Fresh - Creamy)"
+                            input={{
+                                id: 'flavour_1',
+                                type: 'text',
+                                value: data?.flavour_1 ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.flavour_1,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <Input
+                            variant="regular"
+                            label="Flavour 2 (Custardy - Spongy)"
+                            input={{
+                                id: 'flavour_2',
+                                type: 'text',
+                                value: data?.flavour_2 ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.flavour_2,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col md={4}>
+                        <Input
+                            variant="regular"
+                            label="Flavour 3 (Tangy - Sweet)"
+                            input={{
+                                id: 'flavour_3',
+                                type: 'text',
+                                value: data?.flavour_3 ?? '',
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.flavour_3,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                </Row>
+
                 <Input
                     variant="regular"
                     label="Description"
