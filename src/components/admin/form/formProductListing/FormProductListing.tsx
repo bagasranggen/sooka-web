@@ -30,8 +30,6 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
     const router = useRouter();
     const { data, order, categories } = entries;
 
-    console.log(entries);
-
     const gutterClass: string = joinClassnameString([COMMON_ADMIN.GUTTER, COMMON_ADMIN.SPACING]);
 
     const [imageGallery, setImageGallery] = useState<ImagesGalleryItemProps[]>(data.imageGallery);
