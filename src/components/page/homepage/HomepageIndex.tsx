@@ -3,11 +3,13 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { createAnimation } from '@/libs/factory';
+import { HOW_TO_ORDER } from '@/libs/mock';
 
 import Slider, { type SliderImageItemProps } from '@/components/common/slider/Slider';
 import Card, { CardRoundedItemProps } from '@/components/common/card/Card';
 import Heading from '@/components/common/heading/Heading';
 import Picture, { PictureItemProps } from '@/components/common/picture/Picture';
+import List from '@/components/common/list/List';
 
 import eet from '../../../assets/images/eet.jpeg';
 import pan from '../../../assets/images/pan.jpeg';
@@ -36,6 +38,7 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                             xl={5}>
                             <div {...createAnimation({ type: 'fade-in' })}>
                                 <Picture
+                                    className="d-none d-lg-block"
                                     items={[eet as PictureItemProps]}
                                     animation={{ type: 'parallax' }}
                                 />
@@ -51,26 +54,39 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                                 Our Story
                             </Heading>
 
-                            <p {...createAnimation({ type: 'fade-in' })}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet animi aspernatur beatae
-                                consectetur, cum deleniti dolores dolorum excepturi illo inventore iste iusto laboriosam
-                                maiores nemo provident sed sint veniam voluptates!
-                            </p>
+                            <div {...createAnimation({ type: 'fade-in' })}>
+                                <p>
+                                    Hi! Welcome to Sooka Baked Goods.
+                                    <br />
+                                    We offer an incredible range of cakes for your special occasions.
+                                </p>
 
-                            <p {...createAnimation({ type: 'fade-in' })}>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet deserunt, inventore?
-                                Accusantium asperiores consequatur consequuntur, distinctio eius error eveniet ex id
-                                minima minus, modi nam neque non qui saepe sunt vitae? Atque corporis deleniti ipsum
-                                magni nobis ratione recusandae reprehenderit? Dolorem inventore libero placeat sapiente
-                                sequi tenetur voluptates? Assumenda at aut beatae commodi debitis dolor eligendi
-                                expedita hic, id illo impedit ipsum itaque laborum magni modi nam, non perspiciatis
-                                porro, quam quasi quia temporibus vitae voluptates. Blanditiis, eligendi error est
-                                facilis fugit ipsa ipsam iste, laborum nisi, omnis quae saepe sunt. Eius est ipsam
-                                molestiae necessitatibus numquam obcaecati quam rem.
-                            </p>
+                                <p>
+                                    The idea of Sooka began back in 2017, when I was randomly baking after a really
+                                    loooong day.
+                                    <br />
+                                    Let me tell you, it felt <strong>magical</strong>.
+                                </p>
+
+                                <p>
+                                    As a home baker, I have spent years transforming simple ingredients to
+                                    mouth-watering delights for my loved ones.
+                                    <br />
+                                    They said, nothing compares to the scent of fresh-baked cakes or banana bread that
+                                    came from my kitchen.
+                                </p>
+
+                                <p>Order now from our bakery and be a part of our growing family!</p>
+                            </div>
 
                             <Picture
-                                className="d-xl-block mt-xl-4 "
+                                className="d-block d-lg-none mt-3"
+                                items={[eet as PictureItemProps]}
+                                animation={{ type: 'parallax' }}
+                            />
+
+                            <Picture
+                                className="d-xl-block mt-3 mt-xl-6"
                                 items={[pan as PictureItemProps]}
                                 animation={{ type: 'parallax' }}
                             />
@@ -79,32 +95,54 @@ const HomepageIndex = ({ entries }: HomepageIndexProps): React.ReactElement => {
                 </Container>
             </section>
 
-            <section className="my-10">
+            <section className="py-10">
                 <Container>
                     <Heading
                         variant="section"
-                        subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
                         className="text-center"
                         options={{
                             headingTag: 'h2',
                             offset: 2,
                             offsetAlign: 'center',
                         }}>
-                        Highlight
+                        First Time Ordering?
                     </Heading>
 
-                    <div className="mt-6 mt-md-10">
-                        <Card
-                            variant="rounded"
-                            items={entries.highlight}
-                            options={{
-                                columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
-                                gap: 'gy-4 gx-md-4',
-                            }}
-                        />
-                    </div>
+                    <List
+                        variant="point"
+                        items={HOW_TO_ORDER}
+                    />
                 </Container>
             </section>
+
+            {entries.highlight.length > 0 && (
+                <section className="my-10">
+                    <Container>
+                        <Heading
+                            variant="section"
+                            subTitle="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aperiam asperiores assumenda debitis dignissimos eius exercitationem facilis fuga ipsam labore laboriosam laborum libero maiores minima minus molestiae nam natus nesciunt omnis praesentium quia quos reiciendis repellat saepe sint, unde, veritatis. Aliquid at ducimus eius esse excepturi iusto pariatur provident voluptate!"
+                            className="text-center"
+                            options={{
+                                headingTag: 'h2',
+                                offset: 2,
+                                offsetAlign: 'center',
+                            }}>
+                            Highlight
+                        </Heading>
+
+                        <div className="mt-6 mt-md-10">
+                            <Card
+                                variant="rounded"
+                                items={entries.highlight}
+                                options={{
+                                    columns: 'row-cols-1 row-cols-md-2 row-cols-xl-3',
+                                    gap: 'gy-4 gx-md-4',
+                                }}
+                            />
+                        </div>
+                    </Container>
+                </section>
+            )}
         </>
     );
 };

@@ -10,6 +10,7 @@ export * from './input';
 export * from './list';
 export * from './googleSpreadsheet';
 export * from './offcanvas';
+export * from './rate';
 export * from './slider';
 export * from './supabase';
 export * from './table';
