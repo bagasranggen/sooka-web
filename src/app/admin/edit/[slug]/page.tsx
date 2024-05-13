@@ -26,3 +26,4 @@ const Page = async ({ params, searchParams }: PageProps): Promise<React.ReactEle
 export default Page;
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
