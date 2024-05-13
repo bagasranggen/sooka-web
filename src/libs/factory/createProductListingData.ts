@@ -45,5 +45,25 @@ export const createProductListingData = (datum: any) => {
         slides,
         price: convertNumberToCurrency({ price: datum.price }),
         isSold: datum['is_sold'],
+        details: {
+            dimension: datum.dimension,
+            flavours: [
+                {
+                    start: 'Fresh',
+                    end: 'Creamy',
+                    value: datum.flavour_1,
+                },
+                {
+                    start: 'Custardy',
+                    end: 'Spongy',
+                    value: datum.flavour_2,
+                },
+                {
+                    start: 'Tangy',
+                    end: 'Sweet',
+                    value: datum.flavour_3,
+                },
+            ],
+        },
     };
 };

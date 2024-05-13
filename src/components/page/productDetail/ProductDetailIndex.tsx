@@ -9,8 +9,10 @@ import { getWhatsappEncoded } from '@/libs/utils';
 import type { PictureItemProps } from '@/components/common/picture/Picture';
 import Button, { ButtonGroup } from '@/components/common/button/Button';
 import Slider from '@/components/common/slider/Slider';
-import Rate from '@/components/common/rate/Rate';
+import Rate, { RateMeterProps } from '@/components/common/rate/Rate';
 import ProductDetailSection from '@/components/page/productDetail/components/ProductDetailSection';
+
+type ProductDetailFlavourProps = Pick<RateMeterProps, 'start' | 'end' | 'value'>;
 
 export type ProductDetailProps = {
     title?: string;
@@ -18,9 +20,20 @@ export type ProductDetailProps = {
     price: string;
     isSold: boolean;
     slides: Array<PictureItemProps[]>;
+    details: {
+        dimension: string;
+        flavours: ProductDetailFlavourProps[];
+    };
 };
 
-const ProductDetailIndex = ({ title, description, price, isSold, slides }: ProductDetailProps): React.ReactElement => {
+const ProductDetailIndex = ({
+    title,
+    description,
+    price,
+    isSold,
+    slides,
+    details,
+}: ProductDetailProps): React.ReactElement => {
     let productPrice = (
         <>
             <span>Rp</span>
@@ -47,12 +60,12 @@ const ProductDetailIndex = ({ title, description, price, isSold, slides }: Produ
                         <div className="product-detail__content">
                             <div className="product-detail__title">
                                 <h1>{title}</h1>
-                                <h2 className={`mt-5${isSold ? ' is-sold' : ''}`}>{productPrice}</h2>
+                                <h2 className={`mt-3 mt-lg-5${isSold ? ' is-sold' : ''}`}>{productPrice}</h2>
                             </div>
 
                             {description && (
                                 <ProductDetailSection
-                                    className="mt-5"
+                                    className="mt-3 mt-lg-5"
                                     title="Product Description">
                                     <div className="product-detail__description">{ReactHtmlParser(description)}</div>
                                 </ProductDetailSection>
@@ -63,29 +76,20 @@ const ProductDetailIndex = ({ title, description, price, isSold, slides }: Produ
                                 title="Product Detail">
                                 <div className="product-detail__details">
                                     <h4>Dimension</h4>
-                                    <p>16cm x 16cm</p>
+                                    <p>{details.dimension}</p>
                                 </div>
 
                                 <div className="product-detail__details">
                                     <h4>Flavour</h4>
-                                    <Rate
-                                        variant="meter"
-                                        value={30}
-                                        start="Fresh"
-                                        end="Creamy"
-                                    />
-                                    <Rate
-                                        variant="meter"
-                                        value={60}
-                                        start="Custardy"
-                                        end="Spongy"
-                                    />
-                                    <Rate
-                                        variant="meter"
-                                        value={70}
-                                        start="Tangy"
-                                        end="Sweet"
-                                    />
+                                    {details.flavours.map((item: ProductDetailFlavourProps, i: number) => (
+                                        <Rate
+                                            key={i}
+                                            variant="meter"
+                                            value={item.value}
+                                            start={item.start}
+                                            end={item.end}
+                                        />
+                                    ))}
                                 </div>
                             </ProductDetailSection>
 
