@@ -10,7 +10,9 @@ export type PageProps = DynamicPageProps;
 
 const Page = async ({ params, searchParams }: PageProps): Promise<React.ReactElement> => {
     const slug = params.slug as keyof typeof ADMIN_ENTRY_DATA_HANDLES;
-    const data = await ADMIN_ENTRY_DATA_HANDLES[slug]({ slug: searchParams?.slug as string, variant: 'edit' });
+    const data = await ADMIN_ENTRY_DATA_HANDLES[slug]({ slug: params?.detail as string, variant: 'edit' });
+
+    console.log(params);
 
     if (!data.data) notFound();
 
