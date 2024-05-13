@@ -10,7 +10,7 @@
     &__content {
         @extend %position-sticky;
 
-        top: 5rem;
+        top: 3rem;
 
         @include make-transition(top, .3s);
     }
