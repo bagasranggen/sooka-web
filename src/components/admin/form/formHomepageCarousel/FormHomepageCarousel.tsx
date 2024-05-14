@@ -7,7 +7,7 @@ import type { InputHookValueProps } from '@/libs/@types';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { joinClassnameString } from '@/libs/utils';
-import { supabaseClientAction } from '@/libs/fetcher';
+import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
@@ -49,6 +49,7 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                 data: submitData,
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
                         router.refresh();
                     }
@@ -63,6 +64,7 @@ const FormHomepageCarousel = ({ type, entries }: FormHomepageCarouselProps): Rea
                 data: [{ ...submitData, order: order }],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_CAROUSEL}`);
                         router.refresh();
                     }
