@@ -44,7 +44,7 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 data: formData,
                 onFinish: async ({ error }) => {
                     if (!error) {
-                        fetchAction({ variant: 'revalidate', path: '/', type: 'layout' });
+                        fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                         router.refresh();
                     }
@@ -59,7 +59,7 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 data: [{ ...formData, order: order }],
                 onFinish: ({ error }) => {
                     if (!error) {
-                        fetchAction({ variant: 'revalidate', path: '/', type: 'layout' });
+                        fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                         router.refresh();
                     }
