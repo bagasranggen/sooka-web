@@ -13,8 +13,6 @@ export const fetchAction = async (props: FetchActionProps) => {
         case 'revalidate':
             url += `revalidate?path=${props.path}`;
             if (props.type) url += `&type=${props.type}`;
-
-            // fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/revalidate`);
             break;
     }
 
