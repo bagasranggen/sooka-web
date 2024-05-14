@@ -59,6 +59,7 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 data: [{ ...formData, order: order }],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: '/', type: 'layout' });
                         router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                         router.refresh();
                     }
