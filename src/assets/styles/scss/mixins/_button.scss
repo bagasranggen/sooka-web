@@ -116,6 +116,12 @@
 		pointer-events: none;
 	}
 
+	&:disabled {
+		color: var(--btn-ripple-color);
+		background-color: var(--btn-ripple-bg);
+		border-color: var(--btn-ripple-border-color);
+	}
+
 	@include media-breakpoint-up(lg) {
 		@include hover() {
 			color: var(--btn-ripple-color-hover);
