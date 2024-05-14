@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import type { InputHookValueProps } from '@/libs/@types';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
-import { supabaseClientAction } from '@/libs/fetcher';
+import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 import { joinClassnameString } from '@/libs/utils';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -48,7 +48,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
         register,
         handleSubmit,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
         control,
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
@@ -76,6 +76,8 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
             gallery,
         };
 
+        const revalidatePath = [{ url: '/[slug]' }, { url: `/[slug]/[detail]` }];
+
         if (type === 'edit') {
             await supabaseClientAction({
                 variant: 'update',
@@ -84,6 +86,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                 data: submitData,
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: revalidatePath });
                         router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
                         router.refresh();
                     }
@@ -98,6 +101,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                 data: [{ ...submitData, slug: slugify(formData.name), order: order }],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: revalidatePath });
                         router.push(`/admin/${SUPABASE_VARIANTS.PRODUCT_LISTING}`);
                         router.refresh();
                     }
@@ -337,8 +341,11 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                     <Button
                         variant="outline"
                         type="submit"
-                        className="flex-grow-0">
-                        Submit
+                        className="flex-grow-0"
+                        disabled={isSubmitting || isSubmitSuccessful}>
+                        {isSubmitting || isSubmitSuccessful
+                            ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
+                            : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                     </Button>
                 </ButtonWrapper>
             </form>

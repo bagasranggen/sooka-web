@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import type { InputHookValueProps } from '@/libs/@types';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
-import { supabaseClientAction } from '@/libs/fetcher';
+import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Col, Row } from 'react-bootstrap';
@@ -28,7 +28,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const productSelectOptions = products
@@ -54,6 +54,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 data: submitData,
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
                         router.refresh();
                     }
@@ -68,6 +69,7 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                 data: [submitData],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.HOMEPAGE_HIGHLIGHT}`);
                         router.refresh();
                     }
@@ -101,8 +103,11 @@ const FormHomepageHighlight = ({ type, entries }: FormHomepageHighlightProps): R
                         <Button
                             variant="outline"
                             type="submit"
-                            className="flex-grow-0">
-                            Submit
+                            className="flex-grow-0"
+                            disabled={isSubmitting || isSubmitSuccessful}>
+                            {isSubmitting || isSubmitSuccessful
+                                ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
+                                : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                         </Button>
                     </Col>
                 </Row>

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import type { InputHookValueProps } from '@/libs/@types';
 import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
 import { reorderArray } from '@/libs/utils';
+import { fetchAction } from '@/libs/fetcher';
 
 import { deleteCookie } from 'cookies-next';
 import { SubmitHandler } from 'react-hook-form';
@@ -44,7 +45,8 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             variant: 'delete',
             relation: entries.slug,
             id,
-            onFinish: () => {
+            onFinish: (res) => {
+                fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                 router.refresh();
             },
         });
@@ -73,6 +75,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             let onFinish = undefined;
             if (i === updateReorder.length - 1) {
                 onFinish = () => {
+                    fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                     setIsReordering(undefined);
                     router.refresh();
                 };

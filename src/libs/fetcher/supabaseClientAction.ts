@@ -91,8 +91,8 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                 .from(props.relation)
                 .delete()
                 .eq('id', props.id.toString())
-                .then(() => {
-                    props?.onFinish && props.onFinish();
+                .then((res) => {
+                    props?.onFinish && props.onFinish(res);
                 });
 
             break;
