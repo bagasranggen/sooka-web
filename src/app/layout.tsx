@@ -63,5 +63,3 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         </html>
     );
 }
-
-export const revalidate = 60;
