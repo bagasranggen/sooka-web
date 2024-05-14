@@ -48,7 +48,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
         register,
         handleSubmit,
         setValue,
-        formState: { errors },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
         control,
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
@@ -341,8 +341,11 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                     <Button
                         variant="outline"
                         type="submit"
-                        className="flex-grow-0">
-                        Submit
+                        className="flex-grow-0"
+                        disabled={isSubmitting || isSubmitSuccessful}>
+                        {isSubmitting || isSubmitSuccessful
+                            ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
+                            : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                     </Button>
                 </ButtonWrapper>
             </form>

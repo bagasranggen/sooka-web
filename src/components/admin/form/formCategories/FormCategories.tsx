@@ -32,7 +32,7 @@ const FormCategories = ({ type, entries }: FormCategoriesProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
@@ -98,8 +98,11 @@ const FormCategories = ({ type, entries }: FormCategoriesProps) => {
                         <Button
                             variant="outline"
                             type="submit"
-                            className="flex-grow-0">
-                            Submit
+                            className="flex-grow-0"
+                            disabled={isSubmitting || isSubmitSuccessful}>
+                            {isSubmitting || isSubmitSuccessful
+                                ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
+                                : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                         </Button>
                     </Col>
                 </Row>
