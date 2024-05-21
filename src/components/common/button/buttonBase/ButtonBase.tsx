@@ -1,9 +1,10 @@
 import React from 'react';
-import Link from 'next/link';
 
 import type { LinkProps } from '@/libs/@types';
 import { BUTTON_TYPES, BUTTON_VARIANTS } from '@/libs/handles';
 import { joinClassnameString } from '@/libs/utils';
+
+import Link from '@/components/common/link/Link';
 
 export type ButtonCommonProps = {
     children: React.ReactNode;
