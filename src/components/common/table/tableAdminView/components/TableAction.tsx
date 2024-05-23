@@ -79,7 +79,7 @@ const TableAdminAction = ({ link, data, state, events }: TableAdminActionProps) 
                             type="anchor"
                             className="btn btn-outline-warning"
                             title="edit"
-                            href={`/admin/edit/${link.page}?slug=${link.slug}`}>
+                            href={`/admin/edit/${link.page}/${link.slug}`}>
                             <CiEdit size={24} />
                         </Button>
                     )}

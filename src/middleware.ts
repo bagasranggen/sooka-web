@@ -6,6 +6,10 @@ export function middleware(request: NextRequest) {
 
     if (!data.user) {
         return NextResponse.redirect(new URL(`/login?to=${encodeURI(request.nextUrl.pathname)}`, request.url));
+    } else {
+        if (request.nextUrl.pathname === '/admin') {
+            return NextResponse.redirect(new URL(`/admin/navigation`, request.url));
+        }
     }
     //
     // if (!currentUser && !request.nextUrl.pathname.startsWith('/login')) {
