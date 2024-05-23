@@ -1,7 +1,6 @@
 'use client';
 
 import React, { Suspense, useLayoutEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import type { NavigationItemProps } from '@/libs/@types';
@@ -11,6 +10,7 @@ import { getActivePath, joinClassnameString, NavigationEvents } from '@/libs/uti
 import { useMeasure, useMouseWheel, useWindowScroll } from 'react-use';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
+import Link from '@/components/common/link/Link';
 import Button from '@/components/common/button/Button';
 import Offcanvas from '@/components/layout/offcanvas/Offcanvas';
 import Icon from '@/components/common/icon/Icon';

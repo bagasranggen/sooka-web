@@ -1,10 +1,10 @@
 'use client';
 
 import React, { Suspense, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
 
+import type { ClassnameArrayProps } from '@/libs/@types';
 import { Init } from '@/libs/animations/init';
-import { NavigationEvents } from '@/libs/utils';
+import { joinClassnameString, NavigationEvents } from '@/libs/utils';
 import { selectGlobalInfo, useSelector } from '@/store/redux';
 
 import Preloader from '@/components/common/preloader/Preloader';
@@ -22,12 +22,11 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
 
     const animationRun = useRef<any>(null);
     const page = useRef<any>(null);
-
-    const pathname = usePathname();
-    const section = `section section-${pathname.replace(/\//g, '-')}`;
+    const section = useRef<string>('');
 
     const [pageCount, setPageCount] = useState<number>(0);
 
+    // Initialize progress bar
     nProgress.configure({ showSpinner: false });
 
     return (
@@ -38,7 +37,17 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
                     endHandler={() => nProgress.done()}
                 />
                 <NavigationEvents
-                    endHandler={() => {
+                    startHandler={() => nProgress.start()}
+                    endHandler={({ pathname }) => {
+                        let currentSection: ClassnameArrayProps = ['section'];
+                        if (pathname !== '/') currentSection.push(`section-${pathname.replace(/\//g, '-')}`);
+                        currentSection = joinClassnameString(currentSection);
+
+                        if (pathname !== '/') section.current = currentSection;
+                    }}
+                />
+                <NavigationEvents
+                    endHandler={({ pathname }) => {
                         if (page.current !== pathname) {
                             animationRun.current = false;
                             page.current = pathname;
@@ -57,7 +66,7 @@ const MainLayout = ({ children }: MainLayoutProps): React.ReactElement => {
                 />
                 {!isDev && <Preloader isOpen={pageCount <= 2} />}
             </Suspense>
-            <main className={section}>{children}</main>
+            <main {...(section.current ? { className: section.current } : {})}>{children}</main>
         </>
     );
 };

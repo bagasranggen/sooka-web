@@ -7,7 +7,7 @@ import type { InputHookValueProps } from '@/libs/@types';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { joinClassnameString } from '@/libs/utils';
-import { supabaseClientAction } from '@/libs/fetcher';
+import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 
 import { Col, Row } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -32,7 +32,7 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitting, isSubmitSuccessful },
     } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = async (formData: InputHookValueProps) => {
@@ -42,8 +42,9 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 relation: 'navigation',
                 id: parseInt(data.id),
                 data: formData,
-                onFinish: ({ error }) => {
+                onFinish: async ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                         router.refresh();
                     }
@@ -58,6 +59,7 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                 data: [{ ...formData, order: order }],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                         router.push(`/admin/${SUPABASE_VARIANTS.NAVIGATION}`);
                         router.refresh();
                     }
@@ -167,8 +169,11 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
                     <Button
                         variant="outline"
                         type="submit"
-                        className="flex-grow-0">
-                        Submit
+                        className="flex-grow-0"
+                        disabled={isSubmitting || isSubmitSuccessful}>
+                        {isSubmitting || isSubmitSuccessful
+                            ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
+                            : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                     </Button>
                 </ButtonWrapper>
             </form>
