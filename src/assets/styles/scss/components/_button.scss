@@ -1,101 +1,105 @@
 .btn {
-	&--disabled {
-		pointer-events: none;
-		opacity: var(--bs-btn-disabled-opacity);
-	}
+    &--disabled {
+        pointer-events: none;
+        opacity: var(--bs-btn-disabled-opacity);
+    }
 
-	&--unstyled {
-		padding: 0;
-		border-radius: 0;
-	}
+    &--unstyled {
+        padding: 0;
+        border-radius: 0;
+    }
 
-	&--nav-toggle {
-		@include btn-nav-toggle();
+    &-wrapper {
+        @extend %d-flex;
 
-		&.btn {
-			&--primary {
-				@include btn-nav-toggle-color($sooka-primary)
-			}
+        gap: 1.5rem;
+    }
 
-			&--light {
-				@include btn-nav-toggle-color($sooka-light)
-			}
+    &--nav-toggle {
+        @include btn-nav-toggle();
 
-			&--dark {
-				@include btn-nav-toggle-color($sooka-dark)
-			}
-		}
-	}
+        &.btn {
+            &--primary {
+                @include btn-nav-toggle-color($sooka-primary)
+            }
 
-	&--ripple {
-		@include btn-ripple();
+            &--light {
+                @include btn-nav-toggle-color($sooka-light)
+            }
 
-		&.btn {
-			&--sm {
-				@include btn-ripple-size(1.3rem, .35rem);
-			}
+            &--dark {
+                @include btn-nav-toggle-color($sooka-dark)
+            }
+        }
+    }
 
-			&--primary {
-				@include btn-ripple-color($sooka-primary, $sooka-light, $sooka-light, $sooka-primary, $sooka-primary, $sooka-primary);
-			}
+    &--ripple {
+        @include btn-ripple();
 
-			&--light {
-				@include btn-ripple-color(transparent, $sooka-primary, $sooka-primary, $sooka-light, $sooka-primary, $sooka-primary);
-			}
+        &.btn {
+            &--sm {
+                @include btn-ripple-size(1.3rem, .35rem);
+            }
 
-			&--dark {
-				@include btn-ripple-color($sooka-dark, $sooka-light, $sooka-light, $sooka-dark, $sooka-dark, $sooka-dark);
-			}
-		}
-	}
+            &--primary {
+                @include btn-ripple-color($sooka-primary, $sooka-light, $sooka-light, $sooka-primary, $sooka-primary, $sooka-primary);
+            }
 
-	&--block {
-		@include btn-block;
+            &--light {
+                @include btn-ripple-color(transparent, $sooka-primary, $sooka-primary, $sooka-light, $sooka-primary, $sooka-primary);
+            }
 
-		&.btn {
-			&--primary {
-				@include btn-block-color($sooka-primary, $sooka-light, $sooka-primary);
-				@include btn-block-color-hover($sooka-light, $sooka-primary, $sooka-primary);
-			}
+            &--dark {
+                @include btn-ripple-color($sooka-dark, $sooka-light, $sooka-light, $sooka-dark, $sooka-dark, $sooka-dark);
+            }
+        }
+    }
 
-			&--light {
-				@include btn-block-color($sooka-light, $sooka-primary, $sooka-light);
-				@include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
-			}
+    &--block {
+        @include btn-block;
 
-			&--dark {
-				@include btn-block-color($sooka-dark, $sooka-light, $sooka-dark);
-				@include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
-			}
-		}
-	}
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-primary, $sooka-light, $sooka-primary);
+                @include btn-block-color-hover($sooka-light, $sooka-primary, $sooka-primary);
+            }
 
-	&--outline {
-		@include btn-block;
+            &--light {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-light);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
 
-		&.btn {
-			&--primary {
-				@include btn-block-color($sooka-light, $sooka-primary, $sooka-primary);
-				@include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
-			}
-		}
-	}
+            &--dark {
+                @include btn-block-color($sooka-dark, $sooka-light, $sooka-dark);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
 
-	&--rounded {
-		--bs-border-radius: 5rem;
-		--bs-border-width: .1rem;
-		--bs-btn-padding-x: 3rem;
-		--bs-btn-padding-y: .75rem;
+    &--outline {
+        @include btn-block;
 
-		--bs-btn-color: #{$sooka-light};
-		--bs-btn-bg: #{$sooka-primary};
-		--bs-btn-border-color: #{$sooka-primary};
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-primary);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
 
-		--bs-btn-hover-color: #{$sooka-light};
-		--bs-btn-hover-bg: #{darken($sooka-primary, 15)};
-		--bs-btn-hover-border-color: #{darken($sooka-primary, 15)};
+    &--rounded {
+        @include btn-rounded;
 
-		@extend %text-uppercase, %fs-14, %fw-600, %d-block;
-		letter-spacing: .1rem;
-	}
+        &.btn {
+            &--primary {
+                @include btn-rounded-color($sooka-light, $sooka-primary, $sooka-primary);
+                @include btn-rounded-color-hover($sooka-light, darken($sooka-primary, 15), darken($sooka-primary, 15));
+            }
+
+            &--light {
+                @include btn-rounded-color($sooka-primary, $sooka-light, $sooka-primary);
+                @include btn-rounded-color-hover($sooka-light, $sooka-primary, $sooka-primary);
+            }
+        }
+    }
 }
