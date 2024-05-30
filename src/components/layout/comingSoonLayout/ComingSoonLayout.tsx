@@ -2,17 +2,18 @@
 
 import React, { Suspense } from 'react';
 
-import { Init } from '@/libs/animations/init';
-import { NavigationEvents } from '@/libs/utils';
+import { useAnimations } from '@/libs/animations';
 
 import Preloader from '@/components/common/preloader/Preloader';
 
 export type ComingSoonLayoutProps = {};
 
 const ComingSoonLayout = ({}: ComingSoonLayoutProps): React.ReactElement => {
+    // Initialize animations
+    useAnimations();
+
     return (
         <Suspense fallback={<div className="preloader preloader--is-open" />}>
-            <NavigationEvents endHandler={() => Init({})} />
             <Preloader
                 isOpen={true}
                 options={{ loop: true }}>
