@@ -2,9 +2,10 @@ import { BUTTON_VARIANTS } from '@/libs/handles/button';
 import { createAnimationHandles } from '@/libs/factory/createAnimationHandles';
 
 import { baseFadeInAnimation, fadeIn } from '@/libs/animations/common/fade';
-import { buttonRipple } from '@/libs/animations/buttons/ButtonRipple';
+import { buttonRipple } from '@/libs/animations/buttons/buttonRipple';
 import { baseWiggleAnimation } from '@/libs/animations/common/wiggle';
 import { preloaderAnimation } from '@/libs/animations/sections/preloader';
+import { parallax } from '@/libs/animations/common/parallax';
 
 export const COMMON_ANIMATIONS = {
     TYPE: {
@@ -12,6 +13,7 @@ export const COMMON_ANIMATIONS = {
         FADE_IN: 'fade-in',
         WIGGLE: 'wiggle',
         IMAGE_ZOOM: 'image-zoom',
+        PARALLAX: 'parallax',
     } as const,
     SECTION: {
         PRELOADER: 'preloader',
@@ -22,12 +24,18 @@ export const COMMON_ANIMATIONS = {
     ATTRIBUTES: {
         TYPE: 'data-animation',
         DELAY: 'data-animation-delay',
-    }
+        LOOP: 'data-animation-loop',
+    },
 };
 
 export const ANIMATION_HANDLES = {
-    ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.FADE, animation: baseFadeInAnimation, extendTimeline: true }),
+    ...createAnimationHandles({
+        handles: COMMON_ANIMATIONS.TYPE.FADE,
+        animation: baseFadeInAnimation,
+        extendTimeline: true,
+    }),
     ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.FADE_IN, animation: fadeIn }),
+    ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.PARALLAX, animation: parallax }),
 
     ...createAnimationHandles({ handles: COMMON_ANIMATIONS.TYPE.WIGGLE, animation: baseWiggleAnimation }),
 

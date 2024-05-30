@@ -1,45 +1,49 @@
 %pre-fade-in-animation {
-    &:not([style]) {
-        visibility: hidden;
-    }
+	&:not([style]) {
+		visibility: hidden;
+	}
 }
 
 [data-animation="fade-in"] {
-    @extend %pre-fade-in-animation;
+	@extend %pre-fade-in-animation;
 }
 
 @mixin image-zoom {
-    position: relative;
-    overflow: hidden;
+	position: relative;
+	overflow: hidden;
 
-    img {
-        @include make-transition(transform, .2s);
-    }
+	img {
+		@include make-transition(transform, .2s);
+	}
 }
 
 @mixin image-zoom-animation {
-    @include hover() {
-        img {
-            transform: scale(1.2);
-        }
-    }
+	@include hover() {
+		img {
+			transform: scale(1.2);
+		}
+	}
 }
 
 picture[data-animation='image-zoom'] {
-    @include media-breakpoint-up(lg) {
-        @include image-zoom;
-        @include image-zoom-animation;
-    }
+	@include media-breakpoint-up(lg) {
+		@include image-zoom;
+		@include image-zoom-animation;
+	}
 }
 
 [data-animation='image-zoom'] {
-    picture {
-        @include media-breakpoint-up(lg) {
-            @include image-zoom;
-        }
-    }
+	picture {
+		@include media-breakpoint-up(lg) {
+			@include image-zoom;
+		}
+	}
 
-    @include media-breakpoint-up(lg) {
-        @include image-zoom-animation;
-    }
+	@include media-breakpoint-up(lg) {
+		@include image-zoom-animation;
+	}
+}
+
+[data-animation='parallax'] {
+	@extend %overflow-hidden, %d-block;
 }

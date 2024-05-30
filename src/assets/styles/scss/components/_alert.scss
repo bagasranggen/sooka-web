@@ -1,0 +1,9 @@
+.alert {
+    &--rounded {
+        --bs-alert-bg: #{$sooka-primary};
+        --bs-alert-color: #{$sooka-light};
+        --bs-alert-border-radius: 5rem;
+
+        @extend %fs-24, %fw-100;
+    }
+}

@@ -1,0 +1,108 @@
+.product-detail {
+    @include media-breakpoint-down(lg) {
+        overflow: hidden;
+
+        .slider-wrapper {
+            overflow: unset;
+        }
+    }
+
+    &__content {
+        @extend %position-sticky;
+
+        top: 3rem;
+
+        @include make-transition(top, .3s);
+    }
+
+    &__title,
+    &__description {
+        //@extend %text-center;
+    }
+
+    &__title {
+        h1 {
+            @extend %fw-400, %fw-lg-200, %fs-40, %fs-lg-60, %fs-xl-70, %mb-1, %mb-lg-3;
+
+            line-height: 1.2;
+
+            @include media-breakpoint-up(xl) {
+                line-height: 1.1;
+            }
+        }
+
+        h2 {
+            @extend %text-uppercase, %fw-400, %fs-20, %fs-lg-30;
+
+            span {
+                @extend %fw-600, %fs-14, %fs-lg-18 ;
+            }
+
+            &.is-sold {
+                color: $sooka-primary;
+                letter-spacing: .5rem;
+            }
+        }
+    }
+
+    &__section {
+        h3 {
+            @extend %fw-400, %fw-lg-200, %fs-28, %fs-lg-40;
+
+            line-height: 1;
+        }
+    }
+
+    &__details {
+        &:not(:first-child) {
+            @extend %mt-2
+        }
+
+        h4 {
+            @extend %fs-14, %fw-700, %text-uppercase;
+
+            letter-spacing: .3rem;
+            margin-bottom: .5rem;
+        }
+    }
+
+    &__image {
+        --product-detail-border-radius: 6rem;
+
+        @include media-breakpoint-up(lg) {
+            --product-detail-border-radius: 10rem;
+        }
+
+        > picture {
+            &:first-child {
+                img {
+                    border-top-left-radius: var(--product-detail-border-radius);
+                    border-top-right-radius: var(--product-detail-border-radius);
+                }
+            }
+
+            &:last-child {
+                img {
+                    border-bottom-left-radius: var(--product-detail-border-radius);
+                    border-bottom-right-radius: var(--product-detail-border-radius);
+                }
+            }
+
+            &:not(:first-child) {
+                img {
+                    @extend %mt-2;
+                }
+            }
+        }
+    }
+}
+
+.navbar.navbar--show ~ main {
+    .product-detail {
+        &__content {
+            @extend %position-sticky;
+
+            top: calc(5rem + var(--bs-navbar-height, 0));
+        }
+    }
+}

@@ -3,16 +3,16 @@ import { NavigationProps } from '@/libs/@types';
 export const NAVIGATION: NavigationProps = [
     {
         href: '/about',
-        label: 'About'
+        label: 'About',
     },
     {
         href: '/cakes',
-        label: 'Cakes'
+        label: 'Cakes',
     },
     {
         href: '/contact-us',
-        label: 'Contact Us'
+        label: 'Contact Us',
     },
 ];
 
-export const NAVIGATION_TRANSPARENT: string[] = [ '/' ];
+export const NAVIGATION_TRANSPARENT: string[] = ['/'];

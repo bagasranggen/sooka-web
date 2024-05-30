@@ -1,29 +1,89 @@
 .input {
-    &-group {
-        &--floating {
+	&-group {
+		&--floating {
+			.form-control {
+				border-top-width: 0;
+				border-left-width: 0;
+				border-right-width: 0;
+				border-color: transparentize($sooka-dark, .85);
+				font-size: 2.8rem;
+				font-weight: 300;
 
-            .form-control {
-                border-top-width: 0;
-                border-left-width: 0;
-                border-right-width: 0;
-                border-color: transparentize($sooka-dark, .85);
-                font-size: 2.8rem;
-                font-weight: 300;
+				~ label {
+					font-weight: 200;
+				}
 
-                ~ label {
-                    font-weight: 200;
-                }
+				@include input-floating-focus('~ label') {
+					font-weight: 400;
+				}
+			}
 
-                @include input-floating-focus('~ label') {
-                    font-weight: 400;
-                }
-            }
+			label {
+				font-size: 3.5rem;
+				line-height: 1;
+			}
 
-            label {
-                font-size: 3.5rem;
-                line-height: 1;
-            }
-            
-        }
-    }
+			&.input-group {
+				&--center {
+					input,
+					label {
+						@extend %text-center;
+					}
+
+					label {
+						left: 50%;
+						width: 100%;
+						transform: translateX(-50%);
+					}
+
+					.form-control:focus,
+					.form-control:not(:placeholder-shown),
+					.form-control-plaintext,
+					.form-select {
+						~ label {
+							transform: $form-floating-label-center-transform;
+						}
+					}
+				}
+			}
+		}
+
+		&--regular {
+			label {
+				font-size: 1.2rem;
+				font-weight: 800;
+				text-transform: uppercase;
+				letter-spacing: .1rem;
+			}
+		}
+	}
+
+	&-switch {
+		@include input-switch;
+
+		&--center {
+			@extend %mx-auto;
+		}
+
+		&--right {
+			@extend %ms-auto;
+		}
+
+		&--primary {
+			@include input-switch-color($sooka-primary);
+		}
+	}
+}
+
+input {
+	&[type=number] {
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button {
+			/* display: none; <- Crashes Chrome on hover */
+			-webkit-appearance: none;
+			margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+		}
+
+		-moz-appearance: textfield;
+	}
 }

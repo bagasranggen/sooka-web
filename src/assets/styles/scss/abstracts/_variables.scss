@@ -1,6 +1,8 @@
 // Color
 $sooka-primary: #F7613F;
 $sooka-primary-rgb: 247, 97, 63;
+$sooka-secondary: #FFEAD0;
+$sooka-secondary-rgb: 255, 234, 208;
 $sooka-dark: #323031;
 $sooka-dark-rgb: 50, 48, 49;
 $sooka-light: #FFF;
@@ -38,6 +40,10 @@ $navbar-dark-hover-color: $sooka-primary;
 $navbar-dark-active-color: $sooka-primary;
 $navbar-dark-brand-color: $sooka-dark;
 
+// Footer
+$footer-height: 30rem;
+$footer-height-mobile: 30rem;
+
 // Transition Speed
 $transition-speed: .25s;
 
@@ -65,13 +71,18 @@ $form-floating-padding-x: 0;
 $form-floating-padding-y: .5rem;
 $form-floating-input-padding-t: 2rem;
 $form-floating-input-padding-b: .5rem;
-$form-floating-label-transform: scale(.35) translateY(0) translateX(.15rem);
+$form-floating-label-transform: scale(.35) translateY(-1.5rem) translateX(.15rem);
+$form-floating-label-center-transform: scale(.35) translateY(-1.5rem) translateX(calc(-50% + .15rem));
 $form-floating-transition-timing: .15s;
 $form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
+
+// Modal
+$modal-content-border-radius: 5rem;
 
 // Background Colors
 $bg-color-sets: (
     primary: $sooka-primary,
+    secondary: $sooka-secondary,
     dark: $sooka-dark,
     light: $sooka-light,
 );
@@ -81,12 +92,18 @@ $font-sizes-set: (
     10: 1rem,
     12: 1.2rem,
     14: 1.4rem,
+    18: 1.8rem,
     20: 2rem,
     24: 2.4rem,
     28: 2.8rem,
     30: 3rem,
+    40: 4rem,
+    50: 5rem,
     60: 6rem,
+    70: 7rem,
     80: 8rem,
+    90: 9rem,
+    100: 10rem,
 );
 
 // Font Weight

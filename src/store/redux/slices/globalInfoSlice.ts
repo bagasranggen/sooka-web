@@ -10,15 +10,19 @@ export interface GlobalInfoSocialState {
 }
 
 export interface GlobalInfoSliceState {
+    isComingSoon: boolean;
+    isDev: boolean;
     storeInfo: Record<'address' | 'openHour', string>;
     socialMedia: GlobalInfoSocialState[];
     contactNumber: string | undefined;
 }
 
 const initialState: GlobalInfoSliceState = {
+    isComingSoon: process.env.NEXT_PUBLIC_IS_COMING_SOON === '1',
+    isDev: process.env.NODE_ENV === 'development',
     storeInfo: {
         address: FOOTER_ADDRESS.ADDRESS,
-        openHour: FOOTER_ADDRESS.OPEN_HOUR
+        openHour: FOOTER_ADDRESS.OPEN_HOUR,
     },
     socialMedia: FOOTER_SOCIAL_MEDIA,
     contactNumber: CONTACT.NUMBER,

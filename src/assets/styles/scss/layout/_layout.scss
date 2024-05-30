@@ -1,39 +1,61 @@
 .ts {
-    &--margin,
-    &--padding {
-        &.ts--primary {
-            @extend %position-relative;
+	&--margin,
+	&--padding {
+		&.ts--primary {
+			@extend %position-relative;
 
-            &:before {
-                @extend %position-absolute;
+			&:before {
+				@extend %position-absolute;
 
-                content: '';
-                left: 0;
-                width: 100%;
-                height: var(--bs-navbar-height);
-                background-color: $sooka-primary;
-                pointer-events: none;
-            }
-        }
-    }
+				left: 0;
+				width: 100%;
+				height: var(--bs-navbar-height);
+				background-color: $sooka-primary;
+				pointer-events: none;
+			}
+		}
 
-    &--margin {
-        margin-top: var(--bs-navbar-height);
+		&:not([style]) {
+			&.ts--primary {
+				content: '';
+			}
+		}
+	}
 
-        &.ts--primary {
-            &:before {
-                top: calc(var(--bs-navbar-height) * -1);
-            }
-        }
-    }
+	&--margin {
+		margin-top: var(--bs-navbar-height);
 
-    &--padding {
-        padding-top: var(--bs-navbar-height);
+		&.ts--primary {
+			&:before {
+				top: calc(var(--bs-navbar-height) * -1);
+			}
+		}
+	}
 
-        &.ts--primary {
-            &:before {
-                top: 0;
-            }
-        }
-    }
+	&--padding {
+		padding-top: var(--bs-navbar-height);
+
+		&.ts--primary {
+			&:before {
+				top: 0;
+			}
+		}
+	}
+}
+
+//.navbar ~ main {
+//	min-height: calc(100vh - var(--bs-footer-height));
+//}
+
+.section {
+	&--login {
+		@extend %d-flex, %flex-column, %justify-content-center;
+
+		padding-top: 15rem;
+		padding-bottom: 15rem;
+	}
+
+	&[class*=admin] {
+		min-height: calc(100vh - var(--bs-footer-height));
+	}
 }

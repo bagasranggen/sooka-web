@@ -1,4 +1,4 @@
-import OffcanvasNavigation from "@/components/layout/offcanvas/offcanvasNavigation/OffcanvasNavigation";
+import OffcanvasNavigation from '@/components/layout/offcanvas/offcanvasNavigation/OffcanvasNavigation';
 
 export const OFFCANVAS_VARIANTS = {
     NAVIGATION: 'navigation',

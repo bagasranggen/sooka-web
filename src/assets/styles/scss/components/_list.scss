@@ -7,7 +7,7 @@
 
             &:not(:last-child) {
                 margin-right: .75rem;
-                
+
                 @include media-breakpoint-up(lg) {
                     margin-right: 1.25rem;
                 }
@@ -25,6 +25,116 @@
 
             &.active {
                 color: $sooka-primary;
+            }
+        }
+    }
+
+    &--admin-navigation {
+        li {
+            @extend %text-uppercase;
+
+            letter-spacing: .15rem;
+            font-weight: 700;
+
+            &:not(:first-child) {
+                @extend %mt-1;
+            }
+
+            a {
+                --bs-link-color-rgb: #{$sooka-light-rgb};
+
+                @include media-breakpoint-up(lg) {
+                    @include make-transition(color padding-left);
+                }
+            }
+
+            a:not(.active):not(:hover) {
+                //a {
+                --bs-link-opacity: .6;
+                //}
+            }
+
+            .active {
+                //a {
+                padding-left: 2.5rem;
+                //}
+            }
+
+            a:not(.active):hover {
+                //a {
+                padding-left: 1.5rem;
+                //}
+            }
+        }
+    }
+
+    &--point {
+        @extend %d-lg-flex, %flex-lg-column;
+
+        counter-reset: point-counter;
+
+        > li {
+            counter-increment: point-counter;
+
+            @include media-breakpoint-up(xl) {
+                max-width: 65%;
+            }
+
+            &:not(:first-child) {
+                @extend %mt-5;
+            }
+
+            &:nth-child(even) {
+                @extend %ms-xl-auto, %text-xl-end;
+
+                .list {
+                    &__title {
+                        @extend %ms-xl-auto;
+                    }
+                }
+            }
+        }
+
+        .list {
+            &__title {
+                @extend %position-relative, %fw-300, %fs-30, %fs-lg-40;
+
+                line-height: 1.1;
+
+                @include media-breakpoint-up(xl) {
+                    width: max-content;
+                }
+
+                &:before {
+                    @extend %fw-600, %fs-60, %fs-lg-80, %me-2;
+
+                    content: counter(point-counter, decimal-leading-zero);
+                    color: $sooka-primary;
+                    letter-spacing: -.5rem;
+                }
+
+                &:after {
+                    @extend %position-absolute;
+
+                    content: '';
+                    width: 8rem;
+                    height: 4rem;
+                    border-radius: 10rem 10rem 0 0;
+                    border-left: solid 1px $sooka-secondary;
+                    border-right: solid 1px $sooka-secondary;
+                    border-top: solid 1px $sooka-secondary;
+                    top: 0;
+                    left: -3rem;
+                    transform: rotate(-59deg);
+
+                    @include media-breakpoint-up(xl) {
+                        width: 10rem;
+                        height: 5rem;
+                        //left: -63px;
+                        left: -5rem;
+                    }
+
+                }
             }
         }
     }

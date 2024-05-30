@@ -1,0 +1,30 @@
+.modal {
+    &--confirm {
+        --bs-body-bg: #{lighten($sooka-secondary, 5)};
+        --bs-modal-padding: 1rem 2rem;
+        --bs-modal-header-padding: 1rem;
+        --bs-modal-header-border-width: 0;
+
+        .modal {
+            &-header {
+                @extend %position-absolute;
+
+                right: -1rem;
+                top: -1.3rem;
+                border-radius: 100%;
+                aspect-ratio: 1;
+                background-color: var(--bs-body-bg);
+                z-index: 2;
+
+                .btn-close {
+                    background-position-x: 25%;
+                }
+            }
+
+            &-footer {
+                --bs-modal-padding: 2.5rem;
+                --bs-modal-footer-border-width: 0;
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import type { FormRenderProps } from '@/components/common/form/FormRender';
-import { COMMON_REGEX, ERROR_MESSAGE } from '@/libs/data';
+import { COMMON_REGEX, GLOBAL_MESSAGE } from '@/libs/data';
 
 export const FORM_CONTACT_INPUT = {
     FIRST_NAME: 'firstName',
@@ -24,7 +24,7 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                     required: true,
                 },
                 validation: {
-                    message: ERROR_MESSAGE.REQUIRED
+                    message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                 },
             },
             {
@@ -42,15 +42,14 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                     pattern: COMMON_REGEX.EMAIL_VALIDATION,
                 },
                 validation: {
-                    message: ERROR_MESSAGE.REQUIRED,
-                    additionalMessage: 'Email is not valid'
+                    message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                    additionalMessage: 'Email is not valid',
                 },
             },
-        ]
+        ],
     },
     {
         children: [
-
             {
                 size: {},
                 variant: 'floating',
@@ -64,10 +63,9 @@ export const FORM_CONTACT: FormRenderProps['items'] = [
                     required: true,
                 },
                 validation: {
-                    message: ERROR_MESSAGE.REQUIRED
+                    message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                 },
             },
-        ]
+        ],
     },
-
 ];

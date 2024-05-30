@@ -2,24 +2,22 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 
 import type { DynamicPageProps } from '@/libs/@types';
-import { axiosClient } from '@/libs/fetcher';
-import { GOOGLE_SPREADSHEET_VARIANT } from '@/libs/handles';
 
-import type { FilterProductItemProps } from '@/components/common/filter/filterProduct/FilterProduct';
 import ProductListingIndex from '@/components/page/productListing/ProductListingIndex';
+import ProductListingData from '@/components/page/productListing/ProductListingData';
 
 export type PageProps = DynamicPageProps;
 
 export const generateStaticParams = async () => {
-    const { data: { data } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
+    const { path } = await ProductListingData();
 
-    return data.map((datum: FilterProductItemProps) => datum.slug);
+    return path;
 };
 
 export const generateMetadata = async ({ params }: PageProps) => {
-    const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
+    const { page } = await ProductListingData(params.slug as string);
 
-    if (!page) return notFound();
+    if (!page?.title) return notFound();
 
     return {
         title: page.title,
@@ -27,16 +25,14 @@ export const generateMetadata = async ({ params }: PageProps) => {
 };
 
 const Page = async ({ params }: PageProps): Promise<React.ReactElement> => {
-    const { data: { data: page } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PAGES + `/${params.slug}`);
-    // const { data: { data: categories } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.CATEGORIES);
-    const { data: { data: products } } = await axiosClient().get(GOOGLE_SPREADSHEET_VARIANT.PRODUCT_LISTING + `/${params.slug}`);
+    const { page, products } = await ProductListingData(params.slug as string);
 
-    return <ProductListingIndex
-        page={page}
-        entries={{
-            products: products,
-            categories: [],
-        }} />;
+    return (
+        <ProductListingIndex
+            page={page}
+            entries={{ products: products ?? [], categories: [] }}
+        />
+    );
 };
 
 export default Page;

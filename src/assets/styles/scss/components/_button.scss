@@ -9,6 +9,12 @@
         border-radius: 0;
     }
 
+    &-wrapper {
+        @extend %d-flex;
+
+        gap: 1.5rem;
+    }
+
     &--nav-toggle {
         @include btn-nav-toggle();
 
@@ -45,6 +51,54 @@
 
             &--dark {
                 @include btn-ripple-color($sooka-dark, $sooka-light, $sooka-light, $sooka-dark, $sooka-dark, $sooka-dark);
+            }
+        }
+    }
+
+    &--block {
+        @include btn-block;
+
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-primary, $sooka-light, $sooka-primary);
+                @include btn-block-color-hover($sooka-light, $sooka-primary, $sooka-primary);
+            }
+
+            &--light {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-light);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+
+            &--dark {
+                @include btn-block-color($sooka-dark, $sooka-light, $sooka-dark);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
+
+    &--outline {
+        @include btn-block;
+
+        &.btn {
+            &--primary {
+                @include btn-block-color($sooka-light, $sooka-primary, $sooka-primary);
+                @include btn-block-color-hover($sooka-primary, $sooka-light, $sooka-primary);
+            }
+        }
+    }
+
+    &--rounded {
+        @include btn-rounded;
+
+        &.btn {
+            &--primary {
+                @include btn-rounded-color($sooka-light, $sooka-primary, $sooka-primary);
+                @include btn-rounded-color-hover($sooka-light, darken($sooka-primary, 15), darken($sooka-primary, 15));
+            }
+
+            &--light {
+                @include btn-rounded-color($sooka-primary, $sooka-light, $sooka-primary);
+                @include btn-rounded-color-hover($sooka-light, $sooka-primary, $sooka-primary);
             }
         }
     }

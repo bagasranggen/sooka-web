@@ -1,16 +1,10 @@
-import { axiosClient } from '@/libs/fetcher';
-
 import HomepageIndex from '@/components/page/homepage/HomepageIndex';
+import HomepageData from '@/components/page/homepage/HomepageData';
 
 const Home = async () => {
-    const { data: { data } } = await axiosClient().get('homepage');
+    const { carousel, highlight } = await HomepageData();
 
-    // console.log(data.carousel);
-
-    return <HomepageIndex
-        entries={{
-            carousel: data.carousel
-        }} />;
+    return <HomepageIndex entries={{ carousel, highlight }} />;
 };
 
 export default Home;

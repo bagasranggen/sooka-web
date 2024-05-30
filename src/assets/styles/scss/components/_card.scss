@@ -1,77 +1,221 @@
 .card {
-    &--image {
-        --bs-card-border-width: 0;
-        --bs-card-caption-padding-x: 3rem;
-        --bs-card-animation-duration: .2s;
+	&--image {
+		--bs-card-border-width: 0;
+		--bs-card-caption-padding-x: 3rem;
+		--bs-card-animation-duration: .2s;
 
-        h3 {
-            @extend %fw-700, %fs-12, %text-uppercase, %mb-0;
+		h3 {
+			@extend %fw-700, %fs-12, %text-uppercase, %mb-0;
 
-            letter-spacing: .15rem;
-        }
+			letter-spacing: .15rem;
+		}
 
-        h2 {
-            @extend %fw-200, %fs-24, %fs-lg-28, %mb-1, %mb-lg-0;
-        }
+		h2 {
+			@extend %fw-200, %fs-24, %fs-lg-28, %mb-1, %mb-lg-0;
+		}
 
-        .btn {
-            pointer-events: initial;
+		.btn {
+			pointer-events: initial;
 
-            @include media-breakpoint-up(lg) {
-                position: absolute;
-                left: var(--bs-card-caption-padding-x);
-                bottom: 0;
-                transform: translateY(130%);
+			@include media-breakpoint-up(lg) {
+				position: absolute;
+				left: var(--bs-card-caption-padding-x);
+				bottom: 0;
+				transform: translateY(130%);
 
-                @include make-transition(transform, var(--bs-card-animation-duration));
-            }
-        }
+				@include make-transition(transform, var(--bs-card-animation-duration));
+			}
+		}
 
-        .card {
-            &__caption {
-                padding-top: 1rem;
-                pointer-events: none;
+		.card {
+			&__caption {
+				padding-top: 1rem;
+				pointer-events: none;
 
-                @include media-breakpoint-up(lg) {
-                    overflow: hidden;
-                    position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    width: 80%;
-                    padding: 3rem var(--bs-card-caption-padding-x) 0;
-                    background-color: $sooka-light;
-                }
+				@include media-breakpoint-up(lg) {
+					overflow: hidden;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 80%;
+					padding: 3rem var(--bs-card-caption-padding-x) 0;
+					background-color: $sooka-light;
+				}
 
-                p {
-                    @extend %fs-14, %mb-lg-0;
+				div {
+					@extend %fs-14, %mb-lg-0;
 
-                    b {
-                        @extend %fs-10, %text-uppercase;
+					b {
+						@extend %fs-10, %text-uppercase;
 
-                        letter-spacing: .1rem;
-                    }
-                }
-            }
-        }
+						letter-spacing: .1rem;
+					}
 
-        @include media-breakpoint-up(lg) {
-            .card {
-                &__caption {
-                    @include make-transition(padding, var(--bs-card-animation-duration))
-                }
-            }
+					p {
+						@extend %d-inline;
+					}
+				}
+			}
+		}
 
-            @include hover() {
-                .card {
-                    &__caption {
-                        padding-bottom: 5rem;
-                    }
-                }
+		@include media-breakpoint-up(lg) {
+			.card {
+				&__caption {
+					@include make-transition(padding, var(--bs-card-animation-duration))
+				}
+			}
 
-                .btn {
-                    transform: none;
-                }
-            }
-        }
-    }
+			@include hover() {
+				.card {
+					&__caption {
+						padding-bottom: 5rem;
+					}
+				}
+
+				.btn {
+					transform: none;
+				}
+			}
+		}
+	}
+
+	&--rounded {
+		@extend %position-relative;
+
+		--card-border-radius: 4rem;
+		--card-button-spacing: 2rem;
+		--card-button-border-radius: 4rem;
+
+		@include media-breakpoint-up(lg) {
+			--card-border-radius: 6rem;
+			--card-button-spacing: 4rem;
+		}
+
+		border-radius: var(--card-border-radius);
+		background-color: $sooka-secondary;
+		border-width: 0;
+		height: 100%;
+
+		> a:first-child {
+			@extend %d-flex, %flex-column;
+
+			height: 100%;
+		}
+
+		h2 {
+			@extend %fw-200, %fs-24, %fs-lg-30, %mb-0;
+
+			line-height: 1.2;
+
+			@include media-breakpoint-up(lg) {
+				line-height: 1.3;
+			}
+		}
+
+		h3 {
+			@extend %fw-700, %fs-14, %text-uppercase, %mb-0;
+
+			letter-spacing: .15rem;
+
+			span {
+				@extend %fs-10;
+			}
+		}
+
+		.card {
+			&__title {
+				@extend %text-center, %d-flex, %flex-column, %justify-content-between;
+
+				flex-grow: 1;
+				color: $sooka-dark;
+				padding: 2rem 2.5rem 1.5rem;
+
+				@include media-breakpoint-up(lg) {
+					padding: 3.5rem 2.5rem 2rem;
+				}
+			}
+
+			&__image {
+				@extend %d-block, %overflow-hidden;
+
+				border-bottom-left-radius: var(--card-border-radius);
+				border-bottom-right-radius: var(--card-border-radius);
+			}
+
+			&__button {
+				@extend %position-absolute, %d-flex, %align-items-center, %justify-content-between;
+
+				color: $sooka-dark;
+				background-color: $sooka-secondary;
+
+				bottom: 2rem;
+				border-radius: var(--card-button-border-radius);
+				left: var(--card-button-spacing);
+				width: calc(100% - (var(--card-button-spacing) * 2));
+
+				@include media-breakpoint-up(lg) {
+					bottom: 3.5rem;
+					background-color: transparent;
+
+					@include make-transition(background-color);
+				}
+
+				.button {
+					&__text {
+						@extend %text-center;
+
+						flex-grow: 1;
+						padding-left: 3rem;
+						padding-right: 3rem;
+
+						@include media-breakpoint-up(lg) {
+							opacity: 0;
+
+							@include make-transition(opacity);
+						}
+					}
+
+					&__icon {
+						padding: 1.25rem;
+						background-color: $sooka-secondary;
+						border-radius: 100%;
+
+						@include media-breakpoint-up(lg) {
+							padding: 1.5rem;
+						}
+
+						@include media-breakpoint-down(lg) {
+							padding-left: 0;
+						}
+
+						svg {
+							@extend %position-relative;
+
+							left: -.15rem;
+
+							@include media-breakpoint-down(lg) {
+								height: 3rem;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@include media-breakpoint-up(lg) {
+			@include hover() {
+				.card {
+					&__button {
+						background-color: $sooka-secondary;
+
+						.button {
+							&__text {
+								opacity: 1;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
