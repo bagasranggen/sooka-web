@@ -15,6 +15,11 @@ const ButtonRounded = (props: ButtonRoundedProps): React.ReactElement => {
     const { className, variant, ...rest } = props;
 
     let btnClass: string | string[] = ['btn', 'btn--rounded'];
+    if (props.color) {
+        btnClass.push(`btn--${props.color}`);
+    } else {
+        btnClass.push(`btn--primary`);
+    }
     btnClass = joinClassnameString(btnClass);
 
     return (

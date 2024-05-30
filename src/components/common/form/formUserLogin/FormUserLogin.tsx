@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import type { InputHookValueProps } from '@/libs/@types';
@@ -14,6 +14,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import Input from '@/components/common/input/Input';
 import Button from '@/components/common/button/Button';
 import Icon from '@/components/common/icon/Icon';
+import Alert from '@/components/common/alert/Alert';
 
 export type FormUserLoginProps = {
     variant: typeof FORM_VARIANTS.USER_LOGIN;
@@ -24,6 +25,8 @@ const FormUserLogin = ({ events }: FormUserLoginProps): React.ReactElement => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const paramsHref = searchParams?.get('to') ?? '/admin/navigation';
+
+    const [errorLogin, setErrorLogin] = useState(undefined);
 
     const {
         register,
@@ -36,8 +39,15 @@ const FormUserLogin = ({ events }: FormUserLoginProps): React.ReactElement => {
             variant: 'user-login',
             data: formData,
             onFinish: (res) => {
-                setCookie('user', res.data);
-                router.replace(paramsHref as string);
+                if (res?.error) {
+                    setErrorLogin(res.error.message);
+                } else {
+                    setCookie('user', res.data);
+                    router.replace(paramsHref as string);
+                }
+            },
+            onError: (err) => {
+                setErrorLogin(err.message);
             },
         });
     };
@@ -54,6 +64,11 @@ const FormUserLogin = ({ events }: FormUserLoginProps): React.ReactElement => {
 
             <div className="row justify-content-center text-center">
                 <div className="col-md-8 col-xl-6">
+                    <Alert
+                        variant="rounded"
+                        className="mb-4">
+                        {errorLogin}
+                    </Alert>
                     <Input
                         variant="floating"
                         options={{
@@ -71,7 +86,6 @@ const FormUserLogin = ({ events }: FormUserLoginProps): React.ReactElement => {
                             label: 'Email',
                         }}
                     />
-
                     <Input
                         variant="floating"
                         className="mt-3"
@@ -90,14 +104,13 @@ const FormUserLogin = ({ events }: FormUserLoginProps): React.ReactElement => {
                             label: 'Password',
                         }}
                     />
-
                     <Button
                         variant="ripple"
                         color="primary"
                         className="mx-auto mt-5 text-uppercase"
                         type="submit"
-                        disabled={isSubmitting || isSubmitSuccessful}>
-                        {isSubmitting || isSubmitSuccessful
+                        disabled={(isSubmitting || isSubmitSuccessful) && !errorLogin}>
+                        {(isSubmitting || isSubmitSuccessful) && !errorLogin
                             ? GLOBAL_MESSAGE.ADMIN_BUTTON_PROCESSING
                             : GLOBAL_MESSAGE.ADMIN_BUTTON_SUBMIT}
                     </Button>

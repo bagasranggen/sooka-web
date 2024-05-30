@@ -5,11 +5,12 @@ import React from 'react';
 import type { SupabaseVariantProps } from '@/libs/fetcher';
 import type { InputHookValueProps } from '@/libs/@types';
 import { COMMON_REGEX } from '@/libs/data';
+import { modalSlice, useDispatch } from '@/store/redux';
 
 import { CiCircleCheck, CiCircleRemove, CiEdit, CiLineHeight, CiTrash } from 'react-icons/ci';
 import { useForm } from 'react-hook-form';
 
-import Button, { ButtonGroup } from '@/components/common/button/Button';
+import Button, { ButtonWrapper } from '@/components/common/button/Button';
 import Input from '@/components/common/input/Input';
 
 export type TableAdminActionLinkProps = {
@@ -34,6 +35,7 @@ export type TableAdminActionProps = {
 };
 
 const TableAdminAction = ({ link, data, state, events }: TableAdminActionProps) => {
+    const dispatch = useDispatch();
     const { register, handleSubmit, setValue } = useForm<InputHookValueProps>({ mode: 'onChange' });
 
     const typeInputId = 'type';
@@ -64,7 +66,7 @@ const TableAdminAction = ({ link, data, state, events }: TableAdminActionProps) 
                     }}
                 />
 
-                <ButtonGroup>
+                <ButtonWrapper>
                     {state?.isReordering ? (
                         <Button
                             variant="base"
@@ -141,13 +143,16 @@ const TableAdminAction = ({ link, data, state, events }: TableAdminActionProps) 
                                 }
 
                                 if (!state?.isReordering) {
-                                    setValue(typeInputId, 'delete');
+                                    // setValue(typeInputId, 'delete');
+
+                                    dispatch(modalSlice.actions.modalActive('confirm'));
+                                    dispatch(modalSlice.actions.modalConfirmSetData({ id: data.id }));
                                 }
                             },
                         }}>
                         {state?.isReordering ? <CiCircleRemove size={24} /> : <CiTrash size={20} />}
                     </Button>
-                </ButtonGroup>
+                </ButtonWrapper>
             </form>
         </td>
     );
