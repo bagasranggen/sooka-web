@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { type ReadonlyURLSearchParams, usePathname, useSearchParams } from 'next/navigation';
 import { pageTransitionSlice, selectPageTransition, useDispatch, useSelector } from '@/store/redux';
 
@@ -22,24 +22,24 @@ export const NavigationEvents = ({
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    useEffect(() => {
-        const handleStart = () => {
-            // console.log('start');
-            startHandler && startHandler({ pathname, searchParams });
-        };
+    const handleStart = useCallback(() => {
+        // console.log('start');
+        startHandler && startHandler({ pathname, searchParams });
+    }, [page]);
 
+    const handleStop = useCallback(() => {
+        // console.log('end');
+        if (page.isTransitioning) {
+            dispatch(pageTransitionSlice.actions.pageTransition({ count: page.count + 1, isTransitioning: false }));
+        }
+        endHandler && endHandler({ pathname, searchParams });
+    }, [page, pathname, searchParams]);
+
+    useEffect(() => {
         if (page.isTransitioning) handleStart();
     }, [page]);
 
     useEffect(() => {
-        const handleStop = () => {
-            // console.log('end');
-            if (page.isTransitioning) {
-                dispatch(pageTransitionSlice.actions.pageTransition({ count: page.count + 1, isTransitioning: false }));
-            }
-            endHandler && endHandler({ pathname, searchParams });
-        };
-
         handleStop();
     }, [pathname, searchParams]);
 
