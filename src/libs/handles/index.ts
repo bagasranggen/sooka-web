@@ -1,5 +1,6 @@
 export * from './admin';
 export * from './adminForm';
+export * from './alert';
 export * from './animations';
 export * from './banner';
 export * from './button';
