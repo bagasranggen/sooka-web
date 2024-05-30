@@ -4,15 +4,18 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { InputHookValueProps } from '@/libs/@types';
+import { MODAL_VARIANTS } from '@/libs/handles';
 import { supabaseClientAction, SupabaseVariantProps } from '@/libs/fetcher/supabaseClientAction';
 import { reorderArray } from '@/libs/utils';
 import { fetchAction } from '@/libs/fetcher';
+import { selectModal, useSelector, useDispatch, modalSlice } from '@/store/redux';
 
 import { deleteCookie } from 'cookies-next';
 import { SubmitHandler } from 'react-hook-form';
 
 import Table, { type TableAdminViewProps, type TableAdminActionLinkProps } from '@/components/common/table/Table';
 import Button from '@/components/common/button/Button';
+import Modal from '@/components/common/modal/Modal';
 
 export type AdminIndexProps = {
     entries: {
@@ -24,13 +27,15 @@ export type AdminIndexProps = {
 };
 
 const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
+    const dispatch = useDispatch();
+    const { isShow, data } = useSelector(selectModal);
+
     const router = useRouter();
     const [isReordering, setIsReordering] = useState<undefined | boolean>(undefined);
 
     const onSubmitHandler: SubmitHandler<InputHookValueProps> = (data: InputHookValueProps) => {
         switch (data.type) {
             case 'reorder':
-                console.log('reorder');
                 updateOrderHandler(entries.data, parseInt(data.orderFrom), parseInt(data.orderTo) - 1);
                 break;
 
@@ -46,6 +51,7 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
             relation: entries.slug,
             id,
             onFinish: (res) => {
+                dispatch(modalSlice.actions.modalReset());
                 fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });
                 router.refresh();
             },
@@ -136,6 +142,16 @@ const AdminIndex = ({ entries }: AdminIndexProps): React.ReactElement => {
                     ADD
                 </Button>
             )}
+
+            <Modal
+                variant="confirm"
+                show={isShow === MODAL_VARIANTS.CONFIRM}
+                options={{ centered: true }}
+                events={{
+                    onHide: () => dispatch(modalSlice.actions.modalReset()),
+                    onConfirm: () => data?.confirm?.id && deleteDataHandler(data.confirm.id),
+                }}
+            />
         </>
     );
 };

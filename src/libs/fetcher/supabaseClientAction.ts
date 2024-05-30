@@ -7,6 +7,7 @@ export type SupabaseVariantProps = (typeof SUPABASE_VARIANTS)[keyof typeof SUPAB
 
 export type SupabaseEventsProps = {
     onFinish?: (res?: any) => void;
+    onError?: (err?: any) => void;
 };
 
 export type SupabaseInsertActionProps = {
@@ -134,6 +135,7 @@ export const supabaseClientAction = async (props: SupabaseActionProps) => {
                     });
             } catch (err) {
                 console.log(err);
+                props.onError && props.onError(err);
             }
 
             break;

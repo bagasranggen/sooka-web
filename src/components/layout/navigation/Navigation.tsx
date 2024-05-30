@@ -68,7 +68,14 @@ const Navigation = ({ items }: NavigationProps): React.ReactElement => {
     return (
         <>
             <Suspense fallback={null}>
-                <NavigationEvents endHandler={() => setShow(false)} />
+                <NavigationEvents
+                    startHandler={() => {
+                        setTransform(0);
+                    }}
+                    endHandler={() => {
+                        setShow(false);
+                    }}
+                />
             </Suspense>
 
             <Navbar

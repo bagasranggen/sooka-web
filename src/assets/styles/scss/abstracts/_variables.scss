@@ -76,6 +76,9 @@ $form-floating-label-center-transform: scale(.35) translateY(-1.5rem) translateX
 $form-floating-transition-timing: .15s;
 $form-floating-transition: opacity $form-floating-transition-timing ease-in-out, transform $form-floating-transition-timing ease-in-out, font-weight $form-floating-transition-timing ease-in-out, color $form-floating-transition-timing ease-in-out;
 
+// Modal
+$modal-content-border-radius: 5rem;
+
 // Background Colors
 $bg-color-sets: (
     primary: $sooka-primary,

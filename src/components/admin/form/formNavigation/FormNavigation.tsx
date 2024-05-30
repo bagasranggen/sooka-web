@@ -11,6 +11,7 @@ import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 
 import { Col, Row } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import slugify from 'react-slugify';
 
 import Input, { InputSelectItem } from '@/components/common/input/Input';
 import FormTitle, { FormTitleProps } from '@/components/admin/form/components/FormTitle';
@@ -53,10 +54,19 @@ const FormNavigation = ({ type, entries }: FormNavigationProps) => {
         }
 
         if (type === 'add') {
+            const hasSlug = 'slug' in formData;
+            const formAddData = [
+                {
+                    ...formData,
+                    ...(!hasSlug ? { slug: slugify(formData.label) } : {}),
+                    order: order,
+                },
+            ];
+
             await supabaseClientAction({
                 variant: 'insert',
                 relation: 'navigation',
-                data: [{ ...formData, order: order }],
+                data: formAddData,
                 onFinish: ({ error }) => {
                     if (!error) {
                         fetchAction({ variant: 'revalidate', path: { url: '/', type: 'layout' } });

@@ -7,7 +7,7 @@ type ButtonGroupProps = {
 };
 
 const ButtonGroup = ({ className, children }: ButtonGroupProps): React.ReactElement => {
-    let btnClass: string | string[] = ['btn-group'];
+    let btnClass: string | string[] = ['btn-wrapper'];
     if (className) btnClass.push(className);
     btnClass = joinClassnameString(btnClass);
 

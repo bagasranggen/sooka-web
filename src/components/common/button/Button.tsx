@@ -16,15 +16,6 @@ export type ButtonProps =
     | ButtonRoundedProps
     | ButtonBlockProps;
 
-export type ButtonWrapperProps = {
-    className?: string;
-    children: React.ReactNode;
-};
-
-export const ButtonWrapper = ({ className, children }: ButtonWrapperProps): React.ReactElement => (
-    <div className={`btn-group${className ? ` ${className}` : ''}`}>{children}</div>
-);
-
 const Button = (props: ButtonProps): React.ReactElement =>
     createDynamicElement({
         handles: BUTTON_HANDLES,
@@ -35,6 +26,7 @@ const Button = (props: ButtonProps): React.ReactElement =>
 export default Button;
 
 export * from './buttonGroup/ButtonGroup';
+export * from './buttonWrapper/ButtonWrapper';
 
 export type * from '@/components/common/button/buttonBase/ButtonBase';
 export type * from '@/components/common/button/buttonNavToggle/ButtonNavToggle';
