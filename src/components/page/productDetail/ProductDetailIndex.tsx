@@ -22,7 +22,7 @@ export type ProductDetailProps = {
     slides: Array<PictureItemProps[]>;
     details: {
         dimension: string;
-        flavours: ProductDetailFlavourProps[];
+        flavours: ProductDetailFlavourProps[] | boolean;
     };
 };
 
@@ -79,18 +79,20 @@ const ProductDetailIndex = ({
                                     <p>{details.dimension}</p>
                                 </div>
 
-                                <div className="product-detail__details">
-                                    <h4>Flavour</h4>
-                                    {details.flavours.map((item: ProductDetailFlavourProps, i: number) => (
-                                        <Rate
-                                            key={i}
-                                            variant="meter"
-                                            value={item.value}
-                                            start={item.start}
-                                            end={item.end}
-                                        />
-                                    ))}
-                                </div>
+                                {typeof details.flavours !== 'boolean' && (
+                                    <div className="product-detail__details">
+                                        <h4>Flavour</h4>
+                                        {details.flavours.map((item: ProductDetailFlavourProps, i: number) => (
+                                            <Rate
+                                                key={i}
+                                                variant="meter"
+                                                value={item.value}
+                                                start={item.start}
+                                                end={item.end}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
                             </ProductDetailSection>
 
                             <ButtonGroup className="d-flex mt-5">
