@@ -7,7 +7,7 @@ import type { InputHookValueProps } from '@/libs/@types';
 import { COMMON_ADMIN, GLOBAL_MESSAGE } from '@/libs/data';
 import { SUPABASE_VARIANTS } from '@/libs/handles';
 import { joinClassnameString } from '@/libs/utils';
-import { supabaseClientAction } from '@/libs/fetcher';
+import { fetchAction, supabaseClientAction } from '@/libs/fetcher';
 
 import { Col, Row } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -85,6 +85,7 @@ const FormPages = ({ type, entries }: FormPagesProps): React.ReactElement => {
                 data: [submitData],
                 onFinish: ({ error }) => {
                     if (!error) {
+                        fetchAction({ variant: 'revalidate', path: [{ url: '/[slug]' }] });
                         router.push(`/admin/${SUPABASE_VARIANTS.PAGES}`);
                         router.refresh();
                     }
