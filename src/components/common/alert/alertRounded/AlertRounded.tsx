@@ -10,8 +10,8 @@ export type AlertRoundedProps = {
     children?: React.ReactNode;
 };
 
-const AlertRounded = ({ className, children }: AlertRoundedProps): React.ReactElement => {
-    if (!children) return <></>;
+const AlertRounded = ({ className, children }: AlertRoundedProps): React.ReactElement | null => {
+    if (!children) return null;
 
     let alertClass: ClassnameArrayProps = ['alert alert--rounded'];
     if (className) alertClass.push(className);

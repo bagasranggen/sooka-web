@@ -2,6 +2,7 @@ import { createGoogleDriveImage } from '@/libs/factory';
 import { convertNumberToCurrency } from '@/libs/utils';
 
 import type { CardRoundedItemProps } from '@/components/common/card/Card';
+import type { ProductDetailProps } from '@/components/page/productDetail/ProductDetailIndex';
 
 export type ProductListingDataProps = CardRoundedItemProps;
 
@@ -34,6 +35,27 @@ export const createProductListingData = (datum: any) => {
 
     const slides = [images, ...imageGallery];
 
+    let flavours: ProductDetailProps['details']['flavours'] = false;
+    if (datum?.show_flavour) {
+        flavours = [
+            {
+                start: 'Fresh',
+                end: 'Creamy',
+                value: datum.flavour_1,
+            },
+            {
+                start: 'Custardy',
+                end: 'Spongy',
+                value: datum.flavour_2,
+            },
+            {
+                start: 'Tangy',
+                end: 'Sweet',
+                value: datum.flavour_3,
+            },
+        ];
+    }
+
     return {
         name: datum.name,
         description: datum.description,
@@ -47,23 +69,7 @@ export const createProductListingData = (datum: any) => {
         isSold: datum['is_sold'],
         details: {
             dimension: datum.dimension,
-            flavours: [
-                {
-                    start: 'Fresh',
-                    end: 'Creamy',
-                    value: datum.flavour_1,
-                },
-                {
-                    start: 'Custardy',
-                    end: 'Spongy',
-                    value: datum.flavour_2,
-                },
-                {
-                    start: 'Tangy',
-                    end: 'Sweet',
-                    value: datum.flavour_3,
-                },
-            ],
+            flavours,
         },
     };
 };
