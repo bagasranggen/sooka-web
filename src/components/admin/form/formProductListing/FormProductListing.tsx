@@ -251,6 +251,24 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                             }}
                         />
                     </Col>
+                    <Col xs={12}>
+                        <Input
+                            variant="regular"
+                            label="Show Flavour Details"
+                            input={{
+                                id: 'show_flavour',
+                                type: 'switch',
+                                color: 'primary',
+                                align: 'left',
+                                isChecked: data?.show_flavour ?? true,
+                                hook: { register: register },
+                            }}
+                            validation={{
+                                isError: !!errors?.show_flavour,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
                     <Col md={4}>
                         <Input
                             variant="regular"
