@@ -1,6 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 
+import { MEDIA_COLLAGE, MEDIA_FIRST, MEDIA_SECOND } from '@/libs/mock';
 import { getWhatsappEncoded } from '@/libs/utils';
 import { createAnimation } from '@/libs/factory';
 
@@ -35,30 +36,7 @@ const Page = ({}: PageProps): React.ReactElement => {
                 <Container>
                     <Row className="align-items-center gy-3">
                         <Col md={5}>
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/15/600/700',
-                                        width: 600,
-                                        height: 700,
-                                        media: 992,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/300/700',
-                                        width: 300,
-                                        height: 700,
-                                        media: 768,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/300',
-                                        width: 400,
-                                        height: 300,
-                                        alt: 'a',
-                                    },
-                                ]}
-                            />
+                            <Picture items={MEDIA_FIRST} />
                         </Col>
 
                         <Col md={7}>
@@ -120,31 +98,7 @@ const Page = ({}: PageProps): React.ReactElement => {
                             md={7}
                             lg={8}
                             className="order-first order-md-last">
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/15/800/600',
-                                        width: 800,
-                                        height: 600,
-                                        media: 992,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/400',
-                                        width: 400,
-                                        height: 400,
-                                        media: 768,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/300',
-                                        width: 400,
-                                        height: 300,
-                                        media: 768,
-                                        alt: 'a',
-                                    },
-                                ]}
-                            />
+                            <Picture items={MEDIA_SECOND} />
                         </Col>
                     </Row>
                 </Container>
@@ -155,63 +109,15 @@ const Page = ({}: PageProps): React.ReactElement => {
                 {...createAnimation({ type: 'fade-in' })}>
                 <Container fluid>
                     <Row className="gy-3 justify-content-center">
-                        <Col md={4}>
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/15/900/600',
-                                        width: 900,
-                                        height: 600,
-                                        media: 992,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/300',
-                                        width: 400,
-                                        height: 300,
-                                        alt: 'a',
-                                    },
-                                ]}
-                            />
-                        </Col>
-                        <Col md={4}>
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/15/900/600',
-                                        width: 900,
-                                        height: 600,
-                                        media: 992,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/300',
-                                        width: 400,
-                                        height: 300,
-                                        alt: 'a',
-                                    },
-                                ]}
-                            />
-                        </Col>
-                        <Col md={4}>
-                            <Picture
-                                items={[
-                                    {
-                                        src: 'https://picsum.photos/id/15/900/600',
-                                        width: 900,
-                                        height: 600,
-                                        media: 992,
-                                        alt: 'a',
-                                    },
-                                    {
-                                        src: 'https://picsum.photos/id/15/400/300',
-                                        width: 400,
-                                        height: 300,
-                                        alt: 'a',
-                                    },
-                                ]}
-                            />
-                        </Col>
+                        {MEDIA_COLLAGE.map((item, i: number) => {
+                            return (
+                                <Col
+                                    key={i}
+                                    md={4}>
+                                    <Picture items={item.media} />
+                                </Col>
+                            );
+                        })}
                     </Row>
                 </Container>
             </section>
@@ -235,7 +141,6 @@ const Page = ({}: PageProps): React.ReactElement => {
                                     openNewTab
                                     href={getWhatsappEncoded('')}>
                                     Let&apos;s Collabs
-                                    {/*{isSold ? GLOBAL_MESSAGE.SOLD_OUT : 'Order'}*/}
                                 </Button>
                             </ButtonGroup>
                         </Col>
