@@ -1,11 +1,16 @@
 import { CONTACT } from '@/libs/mock';
 
-export const getWhatsappEncoded = (product: string) => {
+export const getWhatsappEncoded = (product?: string) => {
+    let encoded = `https://wa.me/${CONTACT?.NUMBER ?? ''}`;
+
     const message = (product: string) => `Hai, Sooka!
 
 Saya ingin pesan *${product}*, apakah masih tersedia?`;
 
-    const text = encodeURI(message(product));
+    if (product) {
+        const text = encodeURI(message(product));
+        encoded += `?text=${text}`;
+    }
 
-    return `https://wa.me/${CONTACT?.NUMBER ?? ''}?text=${text}`;
+    return encoded;
 };
