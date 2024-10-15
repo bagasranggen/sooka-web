@@ -25,7 +25,7 @@ const initialState: GlobalInfoSliceState = {
         address: FOOTER_ADDRESS.ADDRESS,
         openHour: FOOTER_ADDRESS.OPEN_HOUR,
     },
-    ffSpecialEvents: process.env.FF_SPECIAL_EVENTS === '1',
+    ffSpecialEvents: process.env.NEXT_PUBLIC_FF_SPECIAL_EVENTS === '1',
     socialMedia: FOOTER_SOCIAL_MEDIA,
     contactNumber: CONTACT.NUMBER,
 };
