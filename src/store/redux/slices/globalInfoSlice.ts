@@ -13,6 +13,7 @@ export interface GlobalInfoSliceState {
     isComingSoon: boolean;
     isDev: boolean;
     storeInfo: Record<'address' | 'openHour', string>;
+    ffSpecialEvents: boolean;
     socialMedia: GlobalInfoSocialState[];
     contactNumber: string | undefined;
 }
@@ -24,6 +25,7 @@ const initialState: GlobalInfoSliceState = {
         address: FOOTER_ADDRESS.ADDRESS,
         openHour: FOOTER_ADDRESS.OPEN_HOUR,
     },
+    ffSpecialEvents: process.env.FF_SPECIAL_EVENTS === '1',
     socialMedia: FOOTER_SOCIAL_MEDIA,
     contactNumber: CONTACT.NUMBER,
 };

@@ -43,6 +43,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         })
     );
 
+    if (globalInfo.ffSpecialEvents) {
+        navigation?.push({
+            label: 'Event Collabs',
+            href: '/event-collabs',
+        });
+    }
+
     return (
         <html lang="en">
             <body

@@ -20,6 +20,7 @@ const ButtonRounded = (props: ButtonRoundedProps): React.ReactElement => {
     } else {
         btnClass.push(`btn--primary`);
     }
+    if (className) btnClass.push(className);
     btnClass = joinClassnameString(btnClass);
 
     return (
