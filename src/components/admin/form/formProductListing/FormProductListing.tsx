@@ -151,7 +151,7 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                 </Row>
 
                 <Row className={gutterClass}>
-                    <Col lg={6}>
+                    <Col lg={3}>
                         <Input
                             variant="regular"
                             label="Price"
@@ -163,6 +163,38 @@ const FormProductListing = ({ type, entries }: FormProductListingProps): React.R
                             }}
                             validation={{
                                 isError: !!errors?.price,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={3}>
+                        <Input
+                            variant="regular"
+                            label="Special Price"
+                            input={{
+                                id: 'price_special',
+                                type: 'text',
+                                value: data?.price_special ?? 0,
+                                hook: { register: register, options: { required: true } },
+                            }}
+                            validation={{
+                                isError: !!errors?.price_special,
+                                message: GLOBAL_MESSAGE.ERROR_REQUIRED,
+                            }}
+                        />
+                    </Col>
+                    <Col lg={3}>
+                        <Input
+                            variant="regular"
+                            label="Special Price Label"
+                            input={{
+                                id: 'price_special_label',
+                                type: 'text',
+                                value: data?.price_special_label ?? '',
+                                hook: { register: register },
+                            }}
+                            validation={{
+                                isError: !!errors?.price_special_label,
                                 message: GLOBAL_MESSAGE.ERROR_REQUIRED,
                             }}
                         />

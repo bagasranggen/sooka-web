@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ReactHtmlParser from 'react-html-parser';
 import { Col, Container, Row } from 'react-bootstrap';
 
 import { GLOBAL_MESSAGE } from '@/libs/data/globalMessage';
@@ -18,8 +17,11 @@ export type ProductDetailProps = {
     title?: string;
     description?: string;
     price: string;
+    priceSpecial?: string;
+    priceSpecialLabel?: string;
     isSold: boolean;
     slides: Array<PictureItemProps[]>;
+    packages: any;
     details: {
         dimension: string;
         flavours: ProductDetailFlavourProps[] | boolean;
@@ -30,14 +32,26 @@ const ProductDetailIndex = ({
     title,
     description,
     price,
+    priceSpecial,
+    priceSpecialLabel,
     isSold,
     slides,
+    packages,
     details,
 }: ProductDetailProps): React.ReactElement => {
+    let specialPrice: string | React.ReactNode = price;
+    if (priceSpecial)
+        specialPrice = (
+            <>
+                <s>{price}</s> {priceSpecial}
+            </>
+        );
+
     let productPrice = (
         <>
+            {priceSpecialLabel ? <div className="fs-18 text-capitalize lh-1">{priceSpecialLabel}</div> : null}
             <span>Rp</span>
-            {price}
+            {specialPrice}
         </>
     );
     if (isSold) productPrice = <>{GLOBAL_MESSAGE.SOLD_OUT}</>;
@@ -67,7 +81,15 @@ const ProductDetailIndex = ({
                                 <ProductDetailSection
                                     className="mt-3 mt-lg-5"
                                     title="Product Description">
-                                    <div className="product-detail__description">{ReactHtmlParser(description)}</div>
+                                    <div className="product-detail__description">{description}</div>
+                                </ProductDetailSection>
+                            )}
+
+                            {packages && (
+                                <ProductDetailSection
+                                    className="mt-3 mt-lg-5"
+                                    title="Product Package">
+                                    <div className="product-detail__description">{packages}</div>
                                 </ProductDetailSection>
                             )}
 
