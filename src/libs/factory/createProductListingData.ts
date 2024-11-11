@@ -69,6 +69,8 @@ export const createProductListingData = (datum: any) => {
         images,
         slides,
         price: convertNumberToCurrency({ price: datum.price }),
+        priceSpecial: datum?.price_special > 0 ? convertNumberToCurrency({ price: datum.price_special }) : undefined,
+        priceSpecialLabel: datum?.price_special_label ?? undefined,
         isSold: datum['is_sold'],
         details: {
             dimension: datum.dimension,
