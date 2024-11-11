@@ -1,6 +1,8 @@
 import { createGoogleDriveImage } from '@/libs/factory';
 import { convertNumberToCurrency } from '@/libs/utils';
 
+import ReactHtmlParser from 'react-html-parser';
+
 import type { CardRoundedItemProps } from '@/components/common/card/Card';
 import type { ProductDetailProps } from '@/components/page/productDetail/ProductDetailIndex';
 
@@ -58,10 +60,11 @@ export const createProductListingData = (datum: any) => {
 
     return {
         name: datum.name,
-        description: datum.description,
+        description: ReactHtmlParser(datum?.description ?? ''),
         href: `/${datum.category}/${datum.slug}`,
         category: datum.category,
         isPackage: datum?.package !== '',
+        packages: ReactHtmlParser(datum?.package ?? ''),
         ingredients: datum?.ingredients !== '' ? datum.ingredients : datum?.package ?? '',
         images,
         slides,
